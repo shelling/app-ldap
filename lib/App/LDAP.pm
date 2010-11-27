@@ -3,6 +3,19 @@ use strict;
 use warnings;
 our $VERSION = '0.01';
 
+use App::LDAP::Command;
+
+sub new {
+  my $class = shift;
+  bless {@_}, $class;
+}
+
+sub run {
+  my ($self,) = @_;
+  App::LDAP::Command->dispatch;
+}
+
+
 1;
 __END__
 
