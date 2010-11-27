@@ -5,23 +5,46 @@ INSTALLATION
 App::LDAP installation is straightforward. If your CPAN shell is set up,
 you should just be able to do
 
-    % cpan App::LDAP
+    $ cpan App::LDAP
 
 Download it, unpack it, then build it as per the usual:
 
-    % perl Makefile.PL
-    % make && make test
+    $ perl Makefile.PL
+    $ make && make test
 
 Then install it:
 
-    % make install
+    $ make install
 
 DOCUMENTATION
 
 App::LDAP documentation is available as in POD. So you can do:
 
-    % perldoc App::LDAP
+    $ perldoc App::LDAP
 
 to read the documentation online with your favorite pager.
+
+USAGE
+
+    Following usage example assume that root DN is ou=your,ou=domain.
+
+    $ ldap add user shelling         # add posixAccount shelling to LDAP server
+
+    $ ldap del user shelling         # delete posixAccount shelling from LDAP server
+
+    $ ldap passwd                    # change password of yourself
+
+    $ sudo ldap passwd shelling      # using priviledge of root to change passwd of user shelling on LDAP server
+                                     # your ldap.conf and ldap.secret should provide settings identifying root 
+                                     # as cn=admin,ou=your,ou=domain
+
+    $ sudo ldap passwd -l shelling   # lock posixAccount shelling
+
+    $ ldap add host dns              # add host dns.your.domain
+
+    $ ldap add group maintainer      # add group maintainer
+
+    $ ldap add sudoer shelling       # set shelling as SUDOer
+                                     # the ldap should have schema of SUDOers
 
 shelling
