@@ -47,4 +47,6 @@ USAGE
     $ ldap add sudoer shelling       # set shelling as SUDOer
                                      # the ldap should have schema of SUDOers
 
+    $ ldap ls /                      # show subnodes of root DN
+
 shelling
