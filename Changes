@@ -1,4 +1,8 @@
 Revision history for Perl extension App::LDAP
 
+0.02    Thu Dec 02 01:34:20 2010
+        - verify user via UID
+        - be able to $ ldap import ldif_files
+
 0.01    Wed Nov 24 15:11:39 2010
         - original version
