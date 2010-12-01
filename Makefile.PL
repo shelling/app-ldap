@@ -10,6 +10,7 @@ perl_version '5.010';
 requires "Net::LDAP";
 requires "App::CLI";
 requires "Rubyish::Attribute";
+requires "Term::ReadPassword";
 
 test_requires 'Test::More';
 

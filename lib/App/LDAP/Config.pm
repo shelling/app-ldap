@@ -6,9 +6,10 @@ package App::LDAP::Config;
 
 
 use constant locations => qw(
+  $ENV{HOME}/.ldaprc
+  /etc/ldap.conf
   /etc/ldap/ldap.conf
   /usr/local/etc/ldap.conf
-  /etc/ldap.conf
 );
 
 sub new {
