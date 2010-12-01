@@ -6,6 +6,8 @@ repository "http://github.com/shelling/app-ldap";
 license "gpl";
 perl_version '5.010';
 
+install_script "bin/ldap";
+
 # requires '';
 requires "Net::LDAP";
 requires "App::CLI";
@@ -17,7 +19,6 @@ test_requires 'Test::More';
 tests 't/*.t';
 author_tests 'xt';
 
-install_script "bin/ldap";
 
 auto_include;
 WriteAll;
