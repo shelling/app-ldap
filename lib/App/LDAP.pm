@@ -1,9 +1,18 @@
+use 5.010;
+use strict;
+use warnings;
+
 package App::LDAP;
 use strict;
 use warnings;
 our $VERSION = '0.01';
 
+use Rubyish::Attribute;
+
+attr_accessor "config";
+
 use App::LDAP::Command;
+use App::LDAP::Config;
 
 sub new {
   my $class = shift;
@@ -12,8 +21,10 @@ sub new {
 
 sub run {
   my ($self,) = @_;
+  $self->config( App::LDAP::Config->read );
   App::LDAP::Command->dispatch;
 }
+
 
 
 1;
