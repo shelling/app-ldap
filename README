@@ -49,4 +49,6 @@ USAGE
 
     $ ldap ls /                      # show subnodes of root DN
 
+    $ ldap import blah.ldif          # add content of blah.ldif into DB of ldap server
+
 shelling
