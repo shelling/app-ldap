@@ -3,7 +3,7 @@ name 'App-LDAP';
 all_from 'lib/App/LDAP.pm';
 author 'shelling <navyblueshellingford@gmail.com>';
 repository "http://github.com/shelling/app-ldap";
-license "gpl";
+license "MIT";
 perl_version '5.010';
 
 install_script "bin/ldap";
