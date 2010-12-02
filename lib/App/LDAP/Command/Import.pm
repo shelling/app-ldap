@@ -21,7 +21,6 @@ sub process {
   say "import $file...";
   my $LDAP = $self->{app_info}->connection;
   my $LDIF = Net::LDAP::LDIF->new($file, "r", onerror => 'die');
-  # $LDAP->bind("cn=admin,dc=ntucpel,dc=org", password => "baseconfig");
   while (!$LDIF->eof) {
     my $entry = $LDIF->read_entry;
     my $msg = $LDAP->add($entry);
