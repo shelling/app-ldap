@@ -23,7 +23,7 @@ sub read {
   my $self = $class->new;
   for ($class->locations) {
     if (-f $_) {
-      open my $config, "<$_";
+      open my $config, "<", $_;
       while (<$config>) {
         unless ($_ =~ /(^#|^\n)/) {
           my ($key, $value) = split /\s+/, $_;

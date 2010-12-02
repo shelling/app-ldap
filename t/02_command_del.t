@@ -1,7 +1,14 @@
 use strict;
-use Test::More tests => 1;
+use Test::More;
 
-BEGIN { use_ok qw(
-  App::LDAP::Command::Del
-  App::LDAP::Command::Del::User
-) }
+BEGIN { 
+  my @modules = qw(
+    App::LDAP::Command::Del
+    App::LDAP::Command::Del::User
+  );
+  for (@modules) {
+    use_ok $_
+  }
+}
+
+done_testing;

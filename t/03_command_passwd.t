@@ -1,6 +1,8 @@
 use strict;
-use Test::More tests => 1;
+use Test::More;
 
-BEGIN { use_ok qw(
-  App::LDAP::Command::Passwd
-) }
+BEGIN { 
+  use_ok 'App::LDAP::Command::Passwd'
+}
+
+done_testing;
