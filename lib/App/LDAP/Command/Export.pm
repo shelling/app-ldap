@@ -5,5 +5,9 @@ use warnings;
 package App::LDAP::Command::Export;
 use base qw(App::CLI::Command);
 
+sub run {
+  my ($self,) = @_;
+  say "command->export";
+}
 
 1;
