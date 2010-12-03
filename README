@@ -1,6 +1,6 @@
-This is Perl module App::LDAP.
+# App::LDAP.
 
-INSTALLATION
+## INSTALLATION
 
 App::LDAP installation is straightforward. If your CPAN shell is set up,
 you should just be able to do
@@ -16,7 +16,7 @@ Then install it:
 
     $ make install
 
-DOCUMENTATION
+## DOCUMENTATION
 
 App::LDAP documentation is available as in POD. So you can do:
 
@@ -24,7 +24,7 @@ App::LDAP documentation is available as in POD. So you can do:
 
 to read the documentation online with your favorite pager.
 
-USAGE
+## USAGE
 
     Following usage example assume that root DN is ou=your,ou=domain.
 
@@ -51,4 +51,12 @@ USAGE
 
     $ ldap import blah.ldif          # add content of blah.ldif into DB of ldap server
 
-shelling
+    $ ldap export -o out.ldif --base 'ou=People,dc=example,dc=com'
+
+                                     # export content under ou=People,dc=example,dc=com
+
+## LICENSE
+
+Copyright (C) 2010 shelling
+
+MIT (X11) License

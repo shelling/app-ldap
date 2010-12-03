@@ -13,6 +13,8 @@ requires "Net::LDAP";
 requires "App::CLI";
 requires "Rubyish::Attribute";
 requires "Term::ReadPassword";
+requires "Authen::SASL";
+requires "Digest::MD5";
 
 test_requires 'Test::More';
 
