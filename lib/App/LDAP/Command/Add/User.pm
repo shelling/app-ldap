@@ -6,34 +6,47 @@ package App::LDAP::Command::Add::User;
 use base qw(App::CLI::Command);
 use App::LDAP::LDIF::User;
 use Net::LDAP::Entry;
+use Term::ReadPassword;
 
 sub run {
   my ($self,) = @_;
   my $LDAP = $self->{app_info}->connection;
   my $config = $self->{app_info}->config;
 
-  my $uid = $LDAP->search(
+  my $uidnext = $LDAP->search(
     base    => $config->{base},
     filter  => "(objectClass=uidNext)",
-  )->entry(0)->get_value("uidNumber");
+  )->entry(0);
+  my $uid = $uidnext->get_value("uidNumber");
 
-  my $gid = $LDAP->search(
+  my $gidnext = $LDAP->search(
     base    => $config->{base},
     filter  => "(objectClass=gidNext)",
-  )->entry(0)->get_value("gidNumber");
+  )->entry(0);
+  my $gid = $gidnext->get_value("gidNumber");
+
+  my $username = $ARGV[0];
+  $username or die "no username specified";
+  my $password = read_password("password: ");
+  my $comfirm  = read_password("comfirm password: ");
+  ($password eq $comfirm) or die "not the same";
 
   my ($base, $scope) = split /\?/, $config->{nss_base_passwd};
   my $user = App::LDAP::LDIF::User->new(
-    dn          => "uid=google,$base",
+    dn          => "uid=$username,$base",
     uid         => $uid,
     gid         => $gid,
-    name        => "google",
-    password    => "facebook",
+    name        => $username,
+    password    => $password,
   );
 
-  say $user->entry->ldif;
   my $msg = $LDAP->add($user->entry);
-  say $msg->error() if $msg->code;
+  die $msg->error() if $msg->code;
+
+  $uidnext->replace(uidNumber => $uid+1)->update($LDAP);
+  $gidnext->replace(gidNumber => $gid+1)->update($LDAP);
+
+  say "add user $username successfully";
 }
 
 
