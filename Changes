@@ -1,5 +1,8 @@
 Revision history for Perl extension App::LDAP
 
+0.05    Fri Dec 03 14:11:24 2010
+        - use Crypt::Password to crypt password
+
 0.04    Fri Dec 03 13:25:12 2010
         - be able to $ ldap add user <username>
 
