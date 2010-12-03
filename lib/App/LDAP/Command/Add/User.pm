@@ -7,6 +7,7 @@ use base qw(App::CLI::Command);
 use App::LDAP::LDIF::User;
 use Net::LDAP::Entry;
 use Term::ReadPassword;
+use Digest::MD5 qw(md5_base64);
 
 sub run {
   my ($self,) = @_;
@@ -30,6 +31,7 @@ sub run {
   my $password = read_password("password: ");
   my $comfirm  = read_password("comfirm password: ");
   ($password eq $comfirm) or die "not the same";
+  $password = "{MD5}".md5_base64($password)."= =";
 
   my ($base, $scope) = split /\?/, $config->{nss_base_passwd};
   my $user = App::LDAP::LDIF::User->new(
