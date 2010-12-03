@@ -41,8 +41,8 @@ sub connect {
     onerror    => 'die',
   );
   if ($< == 0) {
-    my $userdn = $config->{rootdn};
-    my $userpw = $config->{rootpw};
+    my $userdn = $config->{rootbinddn};
+    my $userpw = read_password("ldap admin password: ");
     $ldap->bind($userdn, password => $userpw);
   } else {
     my ($base, $scope) = split /\?/, $config->{nss_base_passwd};

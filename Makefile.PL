@@ -15,6 +15,8 @@ requires "Rubyish::Attribute";
 requires "Term::ReadPassword";
 requires "Authen::SASL";
 requires "Digest::MD5";
+requires "Crypt::Password";
+requires "Crypt::Salt";
 
 test_requires 'Test::More';
 
