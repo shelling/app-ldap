@@ -1,5 +1,7 @@
 steps = FindVersion, ChangeVersion, CheckChangeLog, Manifest, DistTest, Commit, Tag, MakeDist, UploadCPAN, Twitter
 
+git.push_to = origin
+
 twitter.config = ~/.twitter
 twitter.distname = App::LDAP
 twitter.message = shipped %d %v - soon at %u
