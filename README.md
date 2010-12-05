@@ -1,12 +1,12 @@
 # App::LDAP
 
 App::LDAP is aimed at being a handy tool for system administrator to create/delete accounts, groups, sudoers,
-hosts, and more without edit LDIF directly. Besides, it alos provide the abilities similar to migration tools
-provided by PADL which makes you easily migrate to LDAP fast within only one tool set. The tool retrive all 
-infomation via /etc/ldap.conf or the same file at different location so that you can just command almost the
-same as the time you are using /etc/* files. And all permission would be determined with UID of users. So, 
-just configure your LDAP server and client well and install App::LDAP, it would serves there as the tools you
-are familiar to.
+hosts, and more without editing LDIF directly. Besides, it alos provides the abilities similar to migration tools
+provided by PADL which makes you easily migrate to LDAP fast within only one tool set. The tool retrives all 
+infomation via /etc/ldap.conf or the same file at different locations so that you can command almost the same 
+as the time you are using /etc/* files. And all permission would be determined via the UID of users. So, just
+configure your LDAP server and client well and install App::LDAP, it would serves there as the tools you are
+familiar to.
 
 ## INSTALLATION
 
