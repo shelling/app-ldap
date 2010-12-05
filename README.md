@@ -6,7 +6,7 @@ and a institute browser, that can make you easily migrate to LDAP fast within on
 infomation via /etc/ldap.conf or the same file at different locations so that you can command almost the same as the
 time you are using /etc/* files. And all permission would be determined via the UID of users. So, just configure your
 LDAP server and client well and install App::LDAP, it would serves there as the tools you are familiar to and help you
-migrate/import/export data rapidly. Enjoy the time managing hundreds of computers wihout more loading.
+migrate/import/export data rapidly. Enjoy the time managing hundreds of computers without more loading.
 
 ## INSTALLATION
 
