@@ -33,22 +33,27 @@ sub run {
 
 sub connect {
   my ($self) = @_;
-  my $config = $self->config;
-  my $ldap = $self->handshake();
-  if ($< == 0) {
-    my $userdn = $config->{rootbinddn};
-    my $userpw = read_password("ldap admin password: ");
-    $ldap->bind($userdn, password => $userpw);
-  } else {
-    my ($base, $scope) = split /\?/, $config->{nss_base_passwd};
-    my $userdn = $ldap->search( base => $base, scope => $scope, filter => "uidNumber=$<")
-                      ->entry(0)
-                      ->dn;
-    my $userpw = read_password("your password: ");
-    $ldap->bind($userdn, password => $userpw);
-  }
-  say "bind as ", $ldap->who_am_i->response;
-  $self->connection($ldap);
+  $self->connection( $self->handshake() );
+  ($< == 0) ? $self->bindroot() : $self->binduser();
+  say "bind as ", $self->connection->who_am_i->response;
+}
+
+sub bindroot {
+  my ($self) = @_;
+  my $userdn = $self->config->{rootbinddn};
+  my $userpw = read_password("ldap admin password: ");
+  $self->connection->bind($userdn, password => $userpw);
+}
+
+sub binduser {
+  my ($self) = @_;
+  my ($base, $scope) = split /\?/, $self->config->{nss_base_passwd};
+  my $userdn = $self->connection
+                    ->search(base => $base, scope => $scope, filter => "uidNumber=$<")
+                    ->entry(0)
+                    ->dn;
+  my $userpw = read_password("your password: ");
+  $self->connection->bind($userdn, password => $userpw);
 }
 
 sub handshake {
