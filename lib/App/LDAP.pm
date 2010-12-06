@@ -3,8 +3,6 @@ use strict;
 use warnings;
 
 package App::LDAP;
-use strict;
-use warnings;
 our $VERSION = '0.05';
 
 use Rubyish::Attribute;
@@ -26,8 +24,7 @@ sub new {
 
 sub run {
   my ($self,) = @_;
-  $self->config( App::LDAP::Config->read );
-  $self->connect;
+  $self->config( App::LDAP::Config->read )->connect;
   App::LDAP::Command->dispatch(app_info => $self);
 }
 
