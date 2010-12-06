@@ -34,12 +34,7 @@ sub run {
 sub connect {
   my ($self) = @_;
   my $config = $self->config;
-  my $ldap = Net::LDAP->new(
-    $config->{uri},
-    port       => $config->{port},
-    version    => $config->{ldap_version},
-    onerror    => 'die',
-  );
+  my $ldap = $self->handshake();
   if ($< == 0) {
     my $userdn = $config->{rootbinddn};
     my $userpw = read_password("ldap admin password: ");
@@ -56,6 +51,16 @@ sub connect {
   $self->connection($ldap);
 }
 
+sub handshake {
+  my ($self,) = @_;
+  my $config = $self->config;
+  return Net::LDAP->new(
+    $config->{uri},
+    port       => $config->{port},
+    version    => $config->{ldap_version},
+    onerror    => 'die',
+  );
+}
 
 
 
