@@ -31,7 +31,7 @@ sub run {
   my $password = read_password("password: ");
   my $comfirm  = read_password("comfirm password: ");
   ($password eq $comfirm) or die "not the same";
-  $password = '{crypt}'.password($password, undef, "sha512");
+  $password = '{crypt}'.password($password, undef, "sha512")->{crypted};
 
   my ($base, $scope) = split /\?/, $config->{nss_base_passwd};
   my $user = App::LDAP::LDIF::User->new(
