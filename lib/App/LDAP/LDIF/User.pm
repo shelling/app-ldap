@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 package App::LDAP::LDIF::User;
+use Net::LDAP::Entry;
 
 my @attributes = qw(
   uid
@@ -35,6 +36,7 @@ my @require = qw(dn uid gid name password login_shell);
 sub new {
   my $self = bless {}, shift;
   $self->set(@_);
+  $self->validate();
   $self;
 }
 
@@ -55,7 +57,6 @@ sub attributes {
 
 sub entry {
   my ($self) = @_;
-  $self->validate();
   my $entry = Net::LDAP::Entry->new($self->{dn});
   my %attributes = $self->attributes();
   for (@attributes) {

@@ -5,7 +5,6 @@ use warnings;
 package App::LDAP::Command::Add::User;
 use base qw(App::CLI::Command);
 use App::LDAP::LDIF::User;
-use Net::LDAP::Entry;
 use Term::ReadPassword;
 use Crypt::Password;
 
