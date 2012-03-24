@@ -136,17 +136,17 @@ my $user = App::LDAP::LDIF::User->new(
 is_deeply (
     [sort map {$_->name} App::LDAP::LDIF::User->meta->get_all_attributes],
     [sort qw( dn
-         uid
-         cn
-         objectClass
-         userPassword
-         shadowLastChange
-         shadowMax
-         shadowWarning
-         loginShell
-         uidNumber
-         gidNumber
-         homeDirectory )],
+              uid
+              cn
+              objectClass
+              userPassword
+              shadowLastChange
+              shadowMax
+              shadowWarning
+              loginShell
+              uidNumber
+              gidNumber
+              homeDirectory )],
     "ensure the attributes",
 );
 
