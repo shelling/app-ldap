@@ -67,7 +67,7 @@ sub entry {
              userPassword
              gidNumber ))
     {
-        $entry->add($_ => $self->{$_});
+        $entry->add($_ => $self->$_);
     }
 
     $entry;

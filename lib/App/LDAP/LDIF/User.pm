@@ -122,7 +122,7 @@ sub entry {
              gidNumber
              homeDirectory ))
     {
-        $entry->add($_ => $self->{$_});
+        $entry->add($_ => $self->$_);
     }
 
     $entry;
