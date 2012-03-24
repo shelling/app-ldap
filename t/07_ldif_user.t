@@ -13,18 +13,18 @@ around BUILDARGS => sub {
     my $self = shift;
 
     my $args = {@_};
-    my $base     = $args->{base};
+    my $ou       = $args->{ou};
     my $name     = $args->{name};
     my $id       = $args->{id};
     my $password = $args->{password};
 
     $self->$orig(
-        dn => "uid=$name,$base",
-        uid => $name,
-        cn => $name,
-        userPassword => $password,
-        uidNumber => $id,
-        gidNumber => $id,
+        dn            => "uid=$name,$ou",
+        uid           => $name,
+        cn            => $name,
+        userPassword  => $password,
+        uidNumber     => $id,
+        gidNumber     => $id,
         homeDirectory => "/home/$name",
     );
 
@@ -127,7 +127,7 @@ package main;
 use 5.010;
 
 my $user = App::LDAP::LDIF::User->new(
-    base     => "ou=People,dc=example,dc=com",
+    ou       => "ou=People,dc=example,dc=com",
     name     => "nobody",
     password => "appldap0000",
     id       => 1001,
@@ -153,7 +153,7 @@ is_deeply (
 is (
     $user->dn,
     "uid=nobody,ou=People,dc=example,dc=com",
-    "dn is compose of name and base",
+    "dn is compose of name and its ou",
 );
 
 is (
