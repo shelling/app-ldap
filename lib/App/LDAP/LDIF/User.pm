@@ -1,7 +1,5 @@
 package App::LDAP::LDIF::User;
 
-use Modern::Perl;
-
 use Moose;
 
 use Net::LDAP::Entry;
