@@ -1,89 +1,135 @@
-use 5.010;
-use strict;
-use warnings;
-
 package App::LDAP::LDIF::User;
+
+use Modern::Perl;
+
+use Moose;
+
 use Net::LDAP::Entry;
 
-my @attributes = qw(
-  uid
-  cn
-  objectClass
-  userPassword
-  shadowLastChange
-  shadowMax
-  shadowWarning
-  loginShell
-  uidNumber
-  gidNumber
-  homeDirectory
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $self = shift;
+
+    my $args = {@_};
+    my $ou       = $args->{ou};
+    my $name     = $args->{name};
+    my $id       = $args->{id};
+    my $password = $args->{password};
+
+    $self->$orig(
+        dn            => "uid=$name,$ou",
+        uid           => $name,
+        cn            => $name,
+        userPassword  => $password,
+        uidNumber     => $id,
+        gidNumber     => $id,
+        homeDirectory => "/home/$name",
+    );
+
+};
+
+has dn => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
 );
 
-my %default = (
-  objectClass       => [qw(
-                          account 
-                          posixAccount
-                          top
-                          shadowAccount
-                        )],
-  shadowLastChange  => 13735,
-  shadowMax         => 99999,
-  shadowWarning     => 7,
+has uid => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
 );
 
-my @require = qw(dn uid gid name password login_shell);
+has cn => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
+);
 
-sub new {
-  my $self = bless {}, shift;
-  $self->set(@_);
-  $self->validate();
-  $self;
-}
+has objectClass => (
+    is      => "rw",
+    isa     => "ArrayRef[Str]",
+    default => sub {
+        [
+            qw( account
+                posixAccount
+                top
+                shadowAccount )
+        ],
+    },
+);
 
-sub attributes {
-  my ($self) = @_;
-  my $password    = "suspend";
-  my $id          = "1017";
-  my %attributes            = %default;
-  $attributes{uid}          = $self->{name};
-  $attributes{cn}           = $self->{name};
-  $attributes{userPassword} = $self->{password};
-  $attributes{loginShell}   = $self->{login_shell};
-  $attributes{uidNumber}    = $self->{uid};
-  $attributes{gidNumber}    = $self->{gid};
-  $attributes{homeDirectory}= "/home/".$self->{name};
-  return %attributes;
-}
+has userPassword => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
+);
+
+has shadowLastChange => (
+    is      => "rw",
+    isa     => "Str",
+    default => "00000",
+);
+
+has shadowMax => (
+    is      => "rw",
+    isa     => "Str",
+    default => "99999",
+);
+
+has shadowWarning => (
+    is      => "rw",
+    isa     => "Str",
+    default => "7",
+);
+
+has loginShell => (
+    is      => "rw",
+    isa     => "Str",
+    default => "/bin/bash",
+);
+
+has uidNumber => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
+);
+
+has gidNumber => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
+);
+
+has homeDirectory => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
+);
 
 sub entry {
-  my ($self) = @_;
-  my $entry = Net::LDAP::Entry->new($self->{dn});
-  my %attributes = $self->attributes();
-  for (@attributes) {
-    $entry->add($_ => $attributes{$_});
-  }
-  $entry;
+    my ($self) = shift;
+
+    my $entry = Net::LDAP::Entry->new( $self->dn );
+
+    for (qw( uid
+             cn
+             objectClass
+             userPassword
+             shadowLastChange
+             shadowMax
+             shadowWarning
+             loginShell
+             uidNumber
+             gidNumber
+             homeDirectory ))
+    {
+        $entry->add($_ => $self->{$_});
+    }
+
+    $entry;
 }
 
-sub validate {
-  my ($self) = @_;
-  $self->{login_shell} //= '/bin/bash';
-  for (@require) {
-    defined($self->{$_}) or die "not yet assign all required columns$@";
-  }
-}
-
-sub set {
-  my ($self, %columns) = @_;
-  for (@require) {
-    $self->{$_} = $columns{$_}
-  }
-  return $self;
-}
-
-sub get {
-  my ($self, $column) = @_;
-  return $self->{$column};
-}
-
+__PACKAGE__->meta->make_immutable;
+no Moose;
 1;

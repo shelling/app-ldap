@@ -34,11 +34,10 @@ sub run {
 
   my ($base, $scope) = split /\?/, $config->{nss_base_passwd};
   my $user = App::LDAP::LDIF::User->new(
-    dn          => "uid=$username,$base",
-    uid         => $uid,
-    gid         => $gid,
-    name        => $username,
-    password    => $password,
+      ou       => $base,
+      name     => $username,
+      password => $password,
+      id       => $uid,
   );
 
   my $msg = $LDAP->add($user->entry);
