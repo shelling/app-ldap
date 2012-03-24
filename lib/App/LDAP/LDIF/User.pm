@@ -133,3 +133,28 @@ sub entry {
 __PACKAGE__->meta->make_immutable;
 no Moose;
 1;
+
+=pod
+
+=head1 NAME
+
+App::LDAP::LDIF::User - the presentation of users in LDAP
+
+=head1 SYNOPSIS
+
+    my $user = App::LDAP::LDIF::User->new(
+        ou       => $ou,         # the OU (organization unit) which the user belongs to
+        name     => $name,       # user name
+        password => $password,   # the password used by the user
+        id       => $id,         # the uid of the user, copying to be gid as default
+    );
+
+    $user->loginShell("/bin/zsh")
+    # set zsh as the user's shell
+
+    $uesr->gidNumber("27")
+    # set the user to have 27 as group id
+
+    my $entry = $user->entry     # get the user as a instance of Net::LDAP::Entry
+
+=cut
