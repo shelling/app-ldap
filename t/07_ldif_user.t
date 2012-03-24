@@ -112,9 +112,23 @@ has homeDirectory => (
 sub entry {
     my ($self) = shift;
 
-    my $entry = Net::LDAP::Entry->new(
-        dn => ""
-    );
+    my $entry = Net::LDAP::Entry->new( $self->dn );
+
+    for (qw( uid
+             cn
+             objectClass
+             userPassword
+             shadowLastChange
+             shadowMax
+             shadowWarning
+             loginShell
+             uidNumber
+             gidNumber
+             homeDirectory ))
+    {
+        $entry->add($_ => $self->{$_});
+    }
+
     $entry;
 }
 
@@ -204,5 +218,28 @@ is (
     "default shell should be bash",
 );
 
+is (
+    $user->entry->ldif,
+<<LDIF
+
+dn: uid=nobody,ou=People,dc=example,dc=com
+uid: nobody
+cn: nobody
+objectClass: account
+objectClass: posixAccount
+objectClass: top
+objectClass: shadowAccount
+userPassword: appldap0000
+shadowLastChange: 00000
+shadowMax: 99999
+shadowWarning: 7
+loginShell: /bin/bash
+uidNumber: 1001
+gidNumber: 1001
+homeDirectory: /home/nobody
+LDIF
+,
+    "provide the same order as openldap utils",
+);
 
 done_testing;
