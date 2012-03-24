@@ -1,0 +1,6 @@
+
+** validate the four parameters received by LDIF::User#new()
+*** die when the key does not exist.
+*** ou, name, password are Str
+*** id is Num
+
