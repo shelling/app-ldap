@@ -62,13 +62,11 @@ sub entry {
 
     my $entry = Net::LDAP::Entry->new( $self->dn );
 
-    for (qw( objectClass
-             cn
-             userPassword
-             gidNumber ))
-    {
-        $entry->add($_ => $self->$_);
-    }
+    $entry->add($_ => $self->$_)
+      for qw( objectClass
+              cn
+              userPassword
+              gidNumber );
 
     $entry;
 }

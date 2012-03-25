@@ -110,20 +110,18 @@ sub entry {
 
     my $entry = Net::LDAP::Entry->new( $self->dn );
 
-    for (qw( uid
-             cn
-             objectClass
-             userPassword
-             shadowLastChange
-             shadowMax
-             shadowWarning
-             loginShell
-             uidNumber
-             gidNumber
-             homeDirectory ))
-    {
-        $entry->add($_ => $self->$_);
-    }
+    $entry->add($_ => $self->$_)
+      for qw( uid
+              cn
+              objectClass
+              userPassword
+              shadowLastChange
+              shadowMax
+              shadowWarning
+              loginShell
+              uidNumber
+              gidNumber
+              homeDirectory );
 
     $entry;
 }
