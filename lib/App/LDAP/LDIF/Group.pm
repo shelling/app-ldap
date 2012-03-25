@@ -80,9 +80,16 @@ no Moose;
 
 =head1 NAME
 
-App::LDAP::LDIF::Group - the presentation of groups in LDAP
+App::LDAP::LDIF::Group - the representation of groups in LDAP
 
 =head1 SYNOPSIS
 
+    my $group = App::LDAP::LDIF::Group->new(
+        ou   => $ou,              # The OU (organization unit) which the group belongs to
+        name => $name,            # the group name
+        id   => $id,              # the gid of the group
+    );
+
+    my $entry = $group->entry;    # get the group as a instance of Net::LDAP::Entry
 
 =cut

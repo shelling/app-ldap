@@ -67,3 +67,21 @@ __PACKAGE__->meta->make_immutable;
 no Moose;
 
 1;
+
+=pod
+
+=head1 NAME
+
+App::LDAP::LDIF::Host - the representation of hosts in LDAP
+
+=head1 SYNOPSIS
+
+    my $host = App::LDAP::LDIF::Host->new(
+        ou   => $ou,             # the OU (organization unit) which the host belongs to
+        name => $name,           # the host name
+        ip   => $ip,             # the ip of this host
+    );
+
+    my $entry = $host->entry;    # get the host as a instance of Net::Ldap::Entry
+
+=cut

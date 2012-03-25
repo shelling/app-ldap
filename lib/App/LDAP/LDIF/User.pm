@@ -134,7 +134,7 @@ no Moose;
 
 =head1 NAME
 
-App::LDAP::LDIF::User - the presentation of users in LDAP
+App::LDAP::LDIF::User - the representation of users in LDAP
 
 =head1 SYNOPSIS
 
