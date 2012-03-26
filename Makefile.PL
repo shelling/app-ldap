@@ -9,6 +9,7 @@ perl_version   '5.010';
 
 install_script 'bin/ldap';
 
+requires       'Modern::Perl';
 requires       'Net::LDAP';
 requires       'Moose';
 requires       'App::CLI';
