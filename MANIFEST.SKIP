@@ -19,3 +19,7 @@
 ^\.shipit$
 ^\.git/
 \.sw[po]$
+\.gitignore
+\.travis\.yml
+^MYMETA
+TODO\.org
