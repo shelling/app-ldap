@@ -3,4 +3,6 @@ perl:
   - "5.10"
   - "5.12"
   - "5.14"
-before_install: cpanm --notest Module::Install::AuthorTests
+before_install: 
+  - "cpanm --notest Module::Install"
+  - "cpanm --notest --force Module::Install::AuthorTests"
