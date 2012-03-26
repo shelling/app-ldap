@@ -4,3 +4,4 @@ perl:
   - "5.12"
   - "5.14"
 before_install: cpanm --installdeps --notest .
+after_install: cat /home/vagrant/.cpanm/build.log
