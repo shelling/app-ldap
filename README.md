@@ -8,6 +8,13 @@ time you are using /etc/* files. And all permission would be determined via the 
 LDAP server and client well and install App::LDAP, it would serves there as the tools you are familiar to and help you
 migrate/import/export data rapidly. Enjoy the time managing hundreds of computers without more loading.
 
+## WARNING
+
+This software is under the heavy development and considered ALPHA
+quality till the version hits v1.0.0. Things might be broken, not all
+features have been implemented, and APIs will be likely to change. YOU
+HAVE BEEN WARNED.
+
 ## INSTALLATION
 
 App::LDAP installation is straightforward. If your CPAN shell is set up,
