@@ -26,19 +26,7 @@ around BUILDARGS => sub {
 
 };
 
-has dn => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
-has uid => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
-has cn => (
+has [qw(dn uid cn userPassword uidNumber gidNumber homeDirectory)] => (
     is       => "rw",
     isa      => "Str",
     required => 1,
@@ -55,12 +43,6 @@ has objectClass => (
                 shadowAccount )
         ],
     },
-);
-
-has userPassword => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
 );
 
 has shadowLastChange => (
@@ -85,24 +67,6 @@ has loginShell => (
     is      => "rw",
     isa     => "Str",
     default => "/bin/bash",
-);
-
-has uidNumber => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
-has gidNumber => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
-has homeDirectory => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
 );
 
 sub entry {
