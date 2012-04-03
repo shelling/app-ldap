@@ -1,8 +1,5 @@
 #!/usr/bin/env perl
-
-use 5.010;
-use strict;
-use warnings;
-
+use lib 'lib';
+use Modern::Perl;
 use App::LDAP;
 App::LDAP->new()->run();
