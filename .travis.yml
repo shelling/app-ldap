@@ -6,3 +6,5 @@ perl:
 before_install: 
   - "cpanm --notest Module::Install"
   - "cpanm --notest Module::Install::AuthorTests"
+install:
+  - "cpanm --notest --installdeps ."
