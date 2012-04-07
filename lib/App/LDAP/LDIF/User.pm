@@ -48,7 +48,7 @@ has objectClass => (
 has shadowLastChange => (
     is      => "rw",
     isa     => "Str",
-    default => "00000",
+    default => "11111",
 );
 
 has shadowMax => (

@@ -1,4 +1,4 @@
-use strict;
+use Modern::Perl;
 use Test::More;
 
 BEGIN { 
@@ -6,4 +6,3 @@ BEGIN {
 }
 
 done_testing;
-

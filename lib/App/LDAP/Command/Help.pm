@@ -1,8 +1,16 @@
-use 5.010;
-use strict;
-use warnings;
-
 package App::LDAP::Command::Help;
-use base qw(App::CLI::Command::Help);
+
+use Modern::Perl;
+
+use Namespace::Dispatch;
+
+use Moose;
+
+use MooseX::Getopt;
+
+sub run {
+    say "command->help";
+}
 
 1;
+

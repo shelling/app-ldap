@@ -1,4 +1,4 @@
-use strict;
+use Modern::Perl;
 use Test::More;
 
 BEGIN { 

@@ -1,9 +1,19 @@
-use 5.010;
-use strict;
-use warnings;
-
 package App::LDAP::Command::Del::Sudoer;
-use base qw(App::CLI::Command);
+
+use Modern::Perl;
+
+use Namespace::Dispatch;
+
+use Moose;
+
+with 'MooseX::Getopt';
+
+sub run {
+
+}
+
+__PACKAGE__->meta->make_immutable;
+no Moose;
 
 
 1;

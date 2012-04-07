@@ -1,13 +1,14 @@
-use 5.010;
-use strict;
-use warnings;
-use Net::LDAP::LDIF;
-
 package App::LDAP::Command::Import;
-use base qw(App::CLI::Command);
-use constant options => (
 
-);
+use Modern::Perl;
+
+use Namespace::Dispatch;
+
+use Moose;
+
+with 'MooseX::Getopt';
+
+use Net::LDAP::LDIF;
 
 sub run {
   my ($self) = @_;

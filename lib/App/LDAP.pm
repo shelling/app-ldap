@@ -1,13 +1,18 @@
-use 5.010;
-use strict;
-use warnings;
-
 package App::LDAP;
-our $VERSION = '0.05';
 
-use Rubyish::Attribute;
+our $VERSION = '0.06';
 
-attr_accessor "config", "connection";
+use Modern::Perl;
+
+use Moose;
+
+has config => (
+    is  => "rw",
+);
+
+has connection => (
+    is  => "rw",
+);
 
 use Net::LDAP;
 use Term::ReadPassword;
@@ -16,16 +21,14 @@ use App::LDAP::Command;
 use App::LDAP::Config;
 use Net::LDAP::Extension::WhoAmI;
 
-
-sub new {
-  my $class = shift;
-  bless {@_}, $class;
-}
-
 sub run {
   my ($self,) = @_;
-  $self->config( App::LDAP::Config->read )->connect;
-  App::LDAP::Command->dispatch(app_info => $self);
+  $self->config( App::LDAP::Config->read );
+  $self->connect;
+  my $command = App::LDAP::Command
+                  ->dispatch(@ARGV)
+                  ->new_with_options
+                  ->run($self);
 }
 
 sub connect {
@@ -64,7 +67,8 @@ sub handshake {
   );
 }
 
-
+__PACKAGE__->meta->make_immutable;
+no Moose;
 
 1;
 __END__
