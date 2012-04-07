@@ -59,7 +59,7 @@ is (
 
 is (
     $user->shadowLastChange,
-    "00000",
+    "11111",
     "shadowLastChange has default",
 );
 
@@ -93,7 +93,7 @@ objectClass: posixAccount
 objectClass: top
 objectClass: shadowAccount
 userPassword: appldap0000
-shadowLastChange: 00000
+shadowLastChange: 11111
 shadowMax: 99999
 shadowWarning: 7
 loginShell: /bin/bash
