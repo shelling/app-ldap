@@ -1,5 +1,12 @@
 Revision history for Perl extension App::LDAP
 
+0.06    Sun Apr 08 00:58:20 2012
+        - replace App::CLI with Namespace::Dispatch
+        - drop Rubyish::Attribute. adopt Moose
+        - all new LDIF::* with Moose
+        - use MooseX::Getopt
+        - new implementation in Add::User
+
 0.05    Fri Dec 03 14:11:24 2010
         - use Crypt::Password to crypt password
 
