@@ -20,7 +20,7 @@ sub run {
 sub process {
   my ($self, $file) = @_;
   say "import $file...";
-  my $LDAP = $self->{app_info}->connection;
+  my $LDAP = $self->{app_info}->ldap;
   my $LDIF = Net::LDAP::LDIF->new($file, "r", onerror => 'die');
   while (!$LDIF->eof) {
     my $entry = $LDIF->read_entry;

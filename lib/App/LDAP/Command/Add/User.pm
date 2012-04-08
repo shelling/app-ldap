@@ -33,7 +33,7 @@ use Crypt::Password;
 sub run {
     my ($self, $app) = @_;
 
-    my $ldap   = $app->connection;
+    my $ldap   = $app->ldap;
     my $config = $app->config;
 
     my $uid = next_uid($app);

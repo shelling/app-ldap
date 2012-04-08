@@ -11,7 +11,7 @@ with 'MooseX::Getopt';
 sub run {
   my ($self,) = @_;
   my $user = $ARGV[0];
-  my $LDAP = $self->{app_info}->connection;
+  my $LDAP = $self->{app_info}->ldap;
   my ($base, $scope) = split /\?/, $self->{app_info}->config->{nss_base_passwd};
 
   my $result = $LDAP->search(

@@ -10,7 +10,7 @@ has config => (
     is  => "rw",
 );
 
-has connection => (
+has ldap => (
     is  => "rw",
 );
 
@@ -33,38 +33,38 @@ sub run {
 
 sub connect {
   my ($self) = @_;
-  $self->connection( $self->handshake() );
+  $self->ldap( $self->handshake() );
   ($< == 0) ? $self->bindroot() : $self->binduser();
-  say "bind as ", $self->connection->who_am_i->response;
+  say "bind as ", $self->ldap->who_am_i->response;
 }
 
 sub bindroot {
   my ($self) = @_;
   my $userdn = $self->config->{rootbinddn};
   my $userpw = read_password("ldap admin password: ");
-  $self->connection->bind($userdn, password => $userpw);
+  $self->ldap->bind($userdn, password => $userpw);
 }
 
 sub binduser {
   my ($self) = @_;
   my ($base, $scope) = split /\?/, $self->config->{nss_base_passwd};
-  my $userdn = $self->connection
+  my $userdn = $self->ldap
                     ->search(base => $base, scope => $scope, filter => "uidNumber=$<")
                     ->entry(0)
                     ->dn;
   my $userpw = read_password("your password: ");
-  $self->connection->bind($userdn, password => $userpw);
+  $self->ldap->bind($userdn, password => $userpw);
 }
 
 sub handshake {
-  my ($self,) = @_;
-  my $config = $self->config;
-  return Net::LDAP->new(
-    $config->{uri},
-    port       => $config->{port},
-    version    => $config->{ldap_version},
-    onerror    => 'die',
-  );
+    my ($self,) = @_;
+    my $config = $self->config;
+    Net::LDAP->new(
+        $config->{uri},
+        port       => $config->{port},
+        version    => $config->{ldap_version},
+        onerror    => 'die',
+    );
 }
 
 __PACKAGE__->meta->make_immutable;
@@ -75,15 +75,19 @@ __END__
 
 =head1 NAME
 
-App::LDAP -
+App::LDAP - CLI tool providing common manipulation on LDAP servers
 
 =head1 SYNOPSIS
 
-  use App::LDAP;
+    use App::LDAP;
+
+    App::LDAP->new->run;
 
 =head1 DESCRIPTION
 
-App::LDAP is
+App::LDAP is intent on providing client-side solution of
+L<RFC 2307|http://www.ietf.org/rfc/rfc2307.txt>,
+L<RFC 2798|http://www.ietf.org/rfc/rfc2798.txt>.
 
 =head1 AUTHOR
 
@@ -95,6 +99,6 @@ shelling E<lt>navyblueshellingford@gmail.comE<gt>
 
 Copyright (C) shelling
 
-MIT
+The MIT License
 
 =cut
