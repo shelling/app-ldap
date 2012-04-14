@@ -13,6 +13,7 @@ requires       'Modern::Perl';
 requires       'Net::LDAP';
 requires       'Moose';
 requires       'Term::ReadPassword';
+requires       'Term::Prompt';
 requires       'Authen::SASL';
 requires       'Crypt::Password';
 requires       'Namespace::Dispatch';
