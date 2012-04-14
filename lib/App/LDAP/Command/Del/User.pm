@@ -9,23 +9,26 @@ use Moose;
 with 'MooseX::Getopt';
 
 sub run {
-  my ($self,) = @_;
-  my $user = $ARGV[0];
-  my $LDAP = $self->{app_info}->ldap;
-  my ($base, $scope) = split /\?/, $self->{app_info}->config->{nss_base_passwd};
+    my ($self, $app) = @_;
 
-  my $result = $LDAP->search(
-      base => $base,
-      scope => $scope,
-      filter => "cn=$user"
-  );
+    my $user   = $ARGV[2];
+    my $ldap   = $app->ldap;
+    my $config = $app->config;
 
-  if ($result->count) {
-    $LDAP->delete($result->entry(0)->dn);
-    say "user $user has been delete";
-  } else {
-    say "user $user not found";
-  }
+    my ($base, $scope) = split /\?/, $config->{nss_base_passwd};
+
+    my $result = $ldap->search(
+        base   => $base,
+        scope  => $scope,
+        filter => "uid=$user",
+    );
+
+    if ($result->count) {
+        $ldap->delete($result->entry(0)->dn);
+        say "user $user has been delete";
+    } else {
+        say "user $user not found";
+    }
 }
 
 __PACKAGE__->meta->make_immutable;
