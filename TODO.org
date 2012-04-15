@@ -4,3 +4,8 @@
 *** ou, name, password are Str
 *** id is Num
 
+** encrypted connection
+
+** sudo-like session
+
+** user, group, host, sudoer should act as models
