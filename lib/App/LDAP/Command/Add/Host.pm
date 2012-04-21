@@ -21,9 +21,8 @@ use App::LDAP::LDIF::Host;
 sub run {
     my ($self) = shift;
 
-    my $app    = App::LDAP->instance;
-    my $ldap   = $app->ldap;
-    my $config = $app->config;
+    my $ldap   = App::LDAP->instance->ldap;
+    my $config = App::LDAP::Config->instance;
 
     my $hostname = $ARGV[2] or die "no hostname specified";
 

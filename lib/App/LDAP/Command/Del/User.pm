@@ -14,7 +14,7 @@ sub run {
 
     my $app    = App::LDAP->instance;
     my $ldap   = $app->ldap;
-    my $config = $app->config;
+    my $config = App::LDAP::Config->instance;
 
     my $user   = $ARGV[2];
 

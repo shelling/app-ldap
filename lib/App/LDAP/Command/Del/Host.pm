@@ -13,7 +13,7 @@ sub run {
 
     my $app    = App::LDAP->instance;
     my $ldap   = $app->ldap;
-    my $config = $app->config;
+    my $config = App::LDAP::Config->instance;
 
     my $hostname = $ARGV[2] or die "no hostname specified";
 

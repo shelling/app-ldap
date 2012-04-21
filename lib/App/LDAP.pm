@@ -7,10 +7,6 @@ use Modern::Perl;
 use Moose;
 use MooseX::Singleton;
 
-has config => (
-    is  => "rw",
-);
-
 has ldap => (
     is  => "rw",
 );
@@ -24,7 +20,7 @@ use Net::LDAP::Extension::WhoAmI;
 
 sub run {
   my ($self,) = @_;
-  $self->config( App::LDAP::Config->read );
+  App::LDAP::Config->read;
   $self->connect;
   my $command = App::LDAP::Command
                   ->dispatch(@ARGV)
@@ -41,14 +37,14 @@ sub connect {
 
 sub bindroot {
   my ($self) = @_;
-  my $userdn = $self->config->{rootbinddn};
+  my $userdn = App::LDAP::Config->instance->{rootbinddn};
   my $userpw = read_password("ldap admin password: ");
   $self->ldap->bind($userdn, password => $userpw);
 }
 
 sub binduser {
   my ($self) = @_;
-  my ($base, $scope) = split /\?/, $self->config->{nss_base_passwd};
+  my ($base, $scope) = split /\?/, App::LDAP::Config->instance->{nss_base_passwd};
   my $userdn = $self->ldap
                     ->search(base => $base, scope => $scope, filter => "uidNumber=$<")
                     ->entry(0)
@@ -59,7 +55,7 @@ sub binduser {
 
 sub handshake {
     my ($self,) = @_;
-    my $config = $self->config;
+    my $config = App::LDAP::Config->instance;
     Net::LDAP->new(
         $config->{uri},
         port       => $config->{port},

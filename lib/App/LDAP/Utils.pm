@@ -10,7 +10,7 @@ our @EXPORT = qw( next_uid
 sub next_uid {
     my $app    = shift;
     my $ldap   = $app->ldap;
-    my $config = $app->config;
+    my $config = App::LDAP::Config->instance;
 
     my $entry = $ldap->search(
         base   => $config->{base},
@@ -21,7 +21,7 @@ sub next_uid {
 sub next_gid {
     my $app    = shift;
     my $ldap   = $app->ldap;
-    my $config = $app->config;
+    my $config = App::LDAP::Config->instance;
 
     $ldap->search(
         base   => $config->{base},

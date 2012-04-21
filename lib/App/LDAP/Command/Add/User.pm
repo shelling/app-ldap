@@ -40,7 +40,7 @@ sub run {
 
     my $app    = App::LDAP->instance;
     my $ldap   = $app->ldap;
-    my $config = $app->config;
+    my $config = App::LDAP::Config->instance;
 
     my $uid = next_uid($app);
     my $gid = next_gid($app);
