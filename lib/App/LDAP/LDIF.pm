@@ -1,7 +1,62 @@
-use 5.010;
-use strict;
-use warnings;
-
 package App::LDAP::LDIF;
 
+use Modern::Perl;
+
+use Moose::Role;
+
+sub create {
+
+}
+
+sub read {
+
+}
+
+sub update {
+
+}
+
+sub delete {
+
+}
+
+sub save {
+    my ($self) = shift;
+
+    my $msg = App::LDAP->instance
+                       ->ldap
+                       ->add($self->entry);
+
+    die $msg->error if $msg->code;
+}
+
 1;
+
+=head1 NAME
+
+App::LDAP::LDIF - base class of models in App::LDAP
+
+=head1 SYNOPSIS
+
+    package App::LDAP::LDIF::Animal
+
+    use Moose;
+    with 'App::LDAP::LDIF';
+
+    use Net::LDAP::Entry;
+
+    has name => (
+        is  => "rw",
+        isa => "Str",
+    );
+
+    package Controler;
+    my $dog = App::LDAP::LDIF::Animal->new( name => "lucky" );
+
+    my $dog->save;
+
+    my $cat = App::LDAP::LDIF::Animal->find( name => "mou" );
+    say $cat->entry->ldif;
+
+=cut
+

@@ -13,7 +13,6 @@ has base => (
     isa => "Str",
 );
 
-
 use Term::Prompt;
 
 use App::LDAP::LDIF::Host;
@@ -21,12 +20,9 @@ use App::LDAP::LDIF::Host;
 sub run {
     my ($self) = shift;
 
-    my $ldap   = App::LDAP->instance->ldap;
-    my $config = App::LDAP::Config->instance;
-
     my $hostname = $ARGV[2] or die "no hostname specified";
 
-    my ($base, $scope) = split /\?/, $config->{nss_base_hosts};
+    my ($base, $scope) = split /\?/, App::LDAP::Config->instance->{nss_base_hosts};
     $base = $self->base // $base;
 
     my $ip = prompt('x', 'ip address:', '', '');
@@ -37,8 +33,7 @@ sub run {
         ip   => $ip,
     );
 
-    my $msg = $ldap->add($host->entry); die $msg->error if $msg->code;
-
+    $host->save;
 }
 
 __PACKAGE__->meta->make_immutable;
