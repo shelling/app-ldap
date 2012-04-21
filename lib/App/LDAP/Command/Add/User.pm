@@ -23,6 +23,11 @@ has group => (
     isa => "Str",
 );
 
+has base => (
+    is  => "rw",
+    isa => "Str",
+);
+
 use App::LDAP::Utils;
 use App::LDAP::LDIF::User;
 
@@ -46,6 +51,7 @@ sub run {
     ($password eq $comfirm) or die "not the same";
 
     my ($base, $scope) = split /\?/, $config->{nss_base_passwd};
+    $base = $self->base // $base;
 
     my $user = App::LDAP::LDIF::User->new(
         ou       => $base,
