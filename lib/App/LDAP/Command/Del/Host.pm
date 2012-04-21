@@ -8,29 +8,20 @@ use Moose;
 
 with 'MooseX::Getopt';
 
+use App::LDAP::LDIF::Host;
+
 sub run {
     my ($self) = shift;
 
-    my $app    = App::LDAP->instance;
-    my $ldap   = $app->ldap;
-    my $config = App::LDAP::Config->instance;
-
     my $hostname = $ARGV[2] or die "no hostname specified";
 
-    my ($base, $scope) = split /\?/, $config->{nss_base_hosts};
+    my ($base, $scope) = split /\?/, App::LDAP::Config->instance->{nss_base_hosts};
 
-    my $result = $ldap->search(
+    App::LDAP::LDIF::Host->delete(
         base   => $base,
         scope  => $scope,
         filter => "cn=$hostname",
     );
-
-    if ($result->count) {
-        $ldap->delete($result->entry(0)->dn);
-        say "host $hostname has been delete";
-    } else {
-        say "host $hostname not found";
-    }
 
 }
 

@@ -17,7 +17,18 @@ sub update {
 }
 
 sub delete {
+    my ($self) = shift;
+    my %options = @_;
 
+    my $ldap = App::LDAP->instance->ldap;
+
+    my $search = $ldap->search(@_);
+
+    if ($search->count) {
+        $ldap->delete($search->entry(0)->dn);
+    } else {
+        die $options{filter}." not found";
+    }
 }
 
 sub save {
