@@ -1,11 +1,19 @@
+#+STARTUP: showall
 
-** validate the four parameters received by LDIF::User#new()
+
+** TODO validate the four parameters received by LDIF::User#new()
 *** die when the key does not exist.
 *** ou, name, password are Str
 *** id is Num
 
-** encrypted connection
+** TODO encrypted connection
 
-** sudo-like session
+** TODO sudo-like session
 
-** user, group, host, sudoer should act as models
+** TODO user, group, host, sudoer should act as models
+
+** TODO alias in Namespace::Dispatch
+
+** DONE App::LDAP as a Singleton
+
+** DONE App::LDAP::Config as a Singleton
