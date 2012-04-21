@@ -42,8 +42,8 @@ sub run {
     my $ldap   = $app->ldap;
     my $config = App::LDAP::Config->instance;
 
-    my $uid = next_uid($app);
-    my $gid = next_gid($app);
+    my $uid = next_uid;
+    my $gid = next_gid;
 
     my $username = $ARGV[2] or die "no username specified";
     # should verify whether the username is available
@@ -61,10 +61,10 @@ sub run {
         id       => $uid->get_value("uidNumber"),
     );
 
-    $user->loginShell( $self->shell )    if $self->shell;
-    $user->homeDirectory( $self->home )  if $self->home;
+    $user->loginShell    ( $self->shell )  if $self->shell;
+    $user->homeDirectory ( $self->home  )  if $self->home;
 
-    my $msg = $ldap->add($user->entry); die $msg->error() if $msg->code;
+    $user->save;
 
     $uid->replace(uidNumber => $uid->get_value("uidNumber")+1)->update($ldap);
     $gid->replace(gidNumber => $gid->get_value("gidNumber")+1)->update($ldap);
