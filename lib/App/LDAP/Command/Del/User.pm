@@ -9,11 +9,14 @@ use Moose;
 with 'MooseX::Getopt';
 
 sub run {
-    my ($self, $app) = @_;
+    my ($self) = shift;
 
-    my $user   = $ARGV[2];
+
+    my $app    = App::LDAP->instance;
     my $ldap   = $app->ldap;
     my $config = $app->config;
+
+    my $user   = $ARGV[2];
 
     my ($base, $scope) = split /\?/, $config->{nss_base_passwd};
 

@@ -11,7 +11,9 @@ with 'MooseX::Getopt';
 use Net::LDAP::LDIF;
 
 sub run {
-    my ($self, $app) = @_;
+    my ($self) = shift;
+
+    my $app  = App::LDAP->instance;
     my $ldap = $app->ldap;
 
     shift @ARGV;

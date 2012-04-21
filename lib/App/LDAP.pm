@@ -5,6 +5,7 @@ our $VERSION = '0.06';
 use Modern::Perl;
 
 use Moose;
+use MooseX::Singleton;
 
 has config => (
     is  => "rw",
@@ -28,7 +29,7 @@ sub run {
   my $command = App::LDAP::Command
                   ->dispatch(@ARGV)
                   ->new_with_options
-                  ->run($self);
+                  ->run();
 }
 
 sub connect {

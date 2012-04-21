@@ -36,8 +36,9 @@ use Crypt::Password;
 
 # {{{ sub run
 sub run {
-    my ($self, $app) = @_;
+    my ($self) = shift;
 
+    my $app    = App::LDAP->instance;
     my $ldap   = $app->ldap;
     my $config = $app->config;
 
