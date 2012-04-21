@@ -1,9 +1,8 @@
-use 5.010;
-use strict;
-use warnings;
-
 package App::LDAP::Config;
 
+use Modern::Perl;
+use Moose;
+use MooseX::Singleton;
 
 use constant locations => qw(
   $ENV{HOME}/.ldaprc
@@ -11,12 +10,6 @@ use constant locations => qw(
   /etc/ldap/ldap.conf
   /usr/local/etc/ldap.conf
 );
-
-sub new {
-  my $class = shift;
-  bless {} ,$class;
-}
-
 
 sub read {
   my ($class, ) = @_;
@@ -35,6 +28,5 @@ sub read {
   }
   $self;
 }
-
 
 1;
