@@ -11,9 +11,7 @@ with 'MooseX::Getopt';
 sub run {
     my ($self) = shift;
 
-
-    my $app    = App::LDAP->instance;
-    my $ldap   = $app->ldap;
+    my $ldap   = App::LDAP->instance->ldap;
     my $config = App::LDAP::Config->instance;
 
     my $user   = $ARGV[2];
@@ -28,7 +26,7 @@ sub run {
 
     if ($result->count) {
         $ldap->delete($result->entry(0)->dn);
-        say "user $user has been delete";
+        say "user $user has been deleted";
     } else {
         say "user $user not found";
     }
