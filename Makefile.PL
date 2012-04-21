@@ -12,12 +12,13 @@ install_script 'bin/ldap';
 requires       'Modern::Perl';
 requires       'Net::LDAP';
 requires       'Moose';
+requires       'MooseX::Getopt';
+requires       'MooseX::Singleton';
 requires       'Term::ReadPassword';
 requires       'Term::Prompt';
 requires       'Authen::SASL';
 requires       'Crypt::Password';
 requires       'Namespace::Dispatch';
-requires       'MooseX::Getopt';
 
 test_requires  'Test::More';
 
