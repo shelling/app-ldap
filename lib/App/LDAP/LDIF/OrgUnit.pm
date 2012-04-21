@@ -2,6 +2,8 @@ package App::LDAP::LDIF::OrgUnit;
 
 use Moose;
 
+with 'App::LDAP::LDIF';
+
 use Net::LDAP::Entry;
 
 around BUILDARGS => sub {

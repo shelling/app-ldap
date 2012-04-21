@@ -2,6 +2,8 @@ package App::LDAP::LDIF::Sudoer;
 
 use Moose;
 
+with 'App::LDAP::LDIF';
+
 use Net::LDAP::Entry;
 
 around BUILDARGS => sub {
