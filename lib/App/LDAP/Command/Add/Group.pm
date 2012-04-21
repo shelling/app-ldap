@@ -31,9 +31,9 @@ sub run {
     $base = $self->base // $base;
 
     my $group = App::LDAP::LDIF::Group->new(
-        ou => $base,
+        ou   => $base,
         name => $groupname,
-        id => $gid->get_value("gidNumber"),
+        id   => $gid->get_value("gidNumber"),
     );
 
     $group->save;
