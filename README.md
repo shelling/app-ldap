@@ -1,5 +1,7 @@
 # App::LDAP
 
+[![http://travis-ci.org/shelling/app-ldap.png](http://travis-ci.org/shelling/app-ldap.png)](http://travis-ci.org/shelling/app-ldap)
+
 App::LDAP is aimed at being a handy tool for system administrator to create/delete accounts, groups, sudoers, hosts, and
 more without editing LDIF directly. Besides, it also provides the abilities similar to migration tools provided by PADL
 and a instinctive browser, that can make you easily migrate to LDAP fast within only one tool set. The tool retrives all
