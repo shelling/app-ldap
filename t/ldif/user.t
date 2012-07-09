@@ -4,7 +4,7 @@ use Test::More;
 use App::LDAP::LDIF::User;
 
 my $user = App::LDAP::LDIF::User->new(
-    ou       => "ou=People,dc=example,dc=com",
+    base     => "ou=People,dc=example,dc=com",
     name     => "nobody",
     password => "appldap0000",
     id       => 1001,

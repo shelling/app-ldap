@@ -11,11 +11,11 @@ around BUILDARGS => sub {
     my $self = shift;
 
     my $args = {@_};
-    my $ou   = $args->{ou};
+    my $base = $args->{base};
     my $name = $args->{name};
 
     $self->$orig(
-        dn       => "cn=$name,$ou",
+        dn       => "cn=$name,$base",
         cn       => $name,
         sudoUser => $name,
     );

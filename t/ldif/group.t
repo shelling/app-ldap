@@ -4,7 +4,7 @@ use Test::More;
 use App::LDAP::LDIF::Group;
 
 my $group = App::LDAP::LDIF::Group->new(
-    ou   => "ou=Group,dc=example,dc=com",
+    base => "ou=Group,dc=example,dc=com",
     name => "nobody",
     id   => 1001,
 );

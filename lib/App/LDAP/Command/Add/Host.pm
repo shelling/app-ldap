@@ -28,7 +28,7 @@ sub run {
     my $ip = prompt('x', 'ip address:', '', '');
 
     my $host = App::LDAP::LDIF::Host->new(
-        ou   => $base,
+        base => $base,
         name => $hostname,
         ip   => $ip,
     );

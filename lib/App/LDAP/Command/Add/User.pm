@@ -53,7 +53,7 @@ sub run {
     $base = $self->base // $base;
 
     my $user = App::LDAP::LDIF::User->new(
-        ou       => $base,
+        base     => $base,
         name     => $username,
         password => '{crypt}'.password($password, undef, "sha512"),
         id       => $uid->get_value("uidNumber"),

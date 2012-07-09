@@ -4,7 +4,7 @@ use Test::More;
 use App::LDAP::LDIF::Host;
 
 my $host = App::LDAP::LDIF::Host->new(
-    ou   => "ou=Hosts,dc=example,dc=com",
+    base => "ou=Hosts,dc=example,dc=com",
     name => "perl-taiwan",
     ip   => "140.112.1.1",
 );

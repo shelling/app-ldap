@@ -11,13 +11,13 @@ around BUILDARGS => sub {
     my $self = shift;
 
     my $args = {@_};
-    my $ou       = $args->{ou};
+    my $base     = $args->{base};
     my $name     = $args->{name};
     my $id       = $args->{id};
     my $password = $args->{password};
 
     $self->$orig(
-        dn            => "uid=$name,$ou",
+        dn            => "uid=$name,$base",
         uid           => $name,
         cn            => $name,
         userPassword  => $password,
@@ -105,7 +105,7 @@ App::LDAP::LDIF::User - the representation of users in LDAP
 =head1 SYNOPSIS
 
     my $user = App::LDAP::LDIF::User->new(
-        ou       => $ou,         # the OU (organization unit) which the user belongs to
+        base     => $base,       # the OU (organization unit) which the user belongs to
         name     => $name,       # user name
         password => $password,   # the password used by the user
         id       => $id,         # the uid of the user, copying to be gid as default

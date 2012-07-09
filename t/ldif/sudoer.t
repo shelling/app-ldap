@@ -4,7 +4,7 @@ use Test::More;
 use App::LDAP::LDIF::Sudoer;
 
 my $sudoer = App::LDAP::LDIF::Sudoer->new(
-    ou => "ou=Sudoer,dc=example,dc=com",
+    base => "ou=Sudoer,dc=example,dc=com",
     name => "first",
 );
 
