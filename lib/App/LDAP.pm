@@ -16,6 +16,7 @@ use Term::ReadPassword;
 
 use App::LDAP::Command;
 use App::LDAP::Config;
+use App::LDAP::Utils;
 use Net::LDAP::Extension::WhoAmI;
 
 sub run {
@@ -37,16 +38,19 @@ sub connect {
 
 sub bindroot {
   my ($self) = @_;
-  my $userdn = App::LDAP::Config->instance->{rootbinddn};
   my $userpw = read_password("ldap admin password: ");
-  $self->ldap->bind($userdn, password => $userpw);
+  $self->ldap->bind(
+      config->{rootbinddn},
+      password => $userpw
+  );
 }
 
 sub binduser {
   my ($self) = @_;
-  my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_passwd}};
   my $userdn = $self->ldap
-                    ->search(base => $base, scope => $scope, filter => "uidNumber=$<")
+                    ->search( base   => config->{nss_base_passwd}->[0],
+                              scope  => config->{nss_base_passwd}->[1],
+                              filter => "uidNumber=$<" )
                     ->entry(0)
                     ->dn;
   my $userpw = read_password("your password: ");
@@ -55,11 +59,10 @@ sub binduser {
 
 sub handshake {
     my ($self,) = @_;
-    my $config = App::LDAP::Config->instance;
     Net::LDAP->new(
-        $config->{uri},
-        port       => $config->{port},
-        version    => $config->{ldap_version},
+        config->{uri},
+        port       => config->{port},
+        version    => config->{ldap_version},
         onerror    => 'die',
     );
 }

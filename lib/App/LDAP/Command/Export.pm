@@ -6,6 +6,8 @@ use Namespace::Dispatch;
 
 use Moose;
 
+use App::LDAP::Utils;
+
 with 'MooseX::Getopt';
 
 has base => (
@@ -28,7 +30,6 @@ sub run {
 
     my $app    = App::LDAP->instance;
     my $ldap   = $app->ldap;
-    my $config = App::LDAP::Config->instance;
 
     my $file = $ARGV[1];
 
@@ -37,8 +38,8 @@ sub run {
         exit;
     }
 
-    my $base   = $self->base   // $config->{base};
-    my $scope  = $self->scope  // $config->{scope};
+    my $base   = $self->base   // config->{base};
+    my $scope  = $self->scope  // config->{scope};
     my $filter = $self->filter // "objectClass=*";
 
     my @entries = $ldap->search(
