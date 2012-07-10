@@ -10,16 +10,16 @@ with 'MooseX::Getopt';
 
 use App::LDAP::LDIF::Host;
 
+use App::LDAP::Utils;
+
 sub run {
     my ($self) = shift;
 
     my $hostname = $ARGV[2] or die "no hostname specified";
 
-    my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_hosts}};
-
     App::LDAP::LDIF::Host->delete(
-        base   => $base,
-        scope  => $scope,
+        base   => config->{nss_base_hosts}->[0],
+        scope  => config->{nss_base_hosts}->[1],
         filter => "cn=$hostname",
     );
 

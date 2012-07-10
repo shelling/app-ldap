@@ -10,16 +10,16 @@ with 'MooseX::Getopt';
 
 use App::LDAP::LDIF::Group;
 
+use App::LDAP::Utils;
+
 sub run {
     my ($self) = shift;
 
     my $group = $ARGV[2] or die "no group name specified";
 
-    my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_group}};
-
     App::LDAP::LDIF::Group->delete(
-        base   => $base,
-        scope  => $scope,
+        base   => config->{nss_base_group}->[0],
+        scope  => config->{nss_base_group}->[1],
         filter => "cn=$group",
     );
 

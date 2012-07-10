@@ -12,16 +12,16 @@ use App::LDAP::Command::Del::Group;
 
 use App::LDAP::LDIF::User;
 
+use App::LDAP::Utils;
+
 sub run {
     my ($self) = shift;
 
     my $user   = $ARGV[2] or die "no username specified";
 
-    my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_passwd}};
-
     App::LDAP::LDIF::User->delete(
-        base   => $base,
-        scope  => $scope,
+        base   => config->{nss_base_passwd}->[0],
+        scope  => config->{nss_base_passwd}->[1],
         filter => "uid=$user",
     );
 
