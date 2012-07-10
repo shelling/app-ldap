@@ -23,12 +23,10 @@ sub run {
 
     my $hostname = $ARGV[2] or die "no hostname specified";
 
-    my $base = $self->base // config->{nss_base_hosts}->[0];
-
     my $ip = prompt('x', 'ip address:', '', '');
 
     my $host = App::LDAP::LDIF::Host->new(
-        base => $base,
+        base => $self->base // config->{nss_base_hosts}->[0],
         name => $hostname,
         ip   => $ip,
     );

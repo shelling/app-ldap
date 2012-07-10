@@ -48,10 +48,8 @@ sub run {
     my $comfirm  = read_password("comfirm password: ");
     ($password eq $comfirm) or die "not the same";
 
-    my $base = $self->base // config->{nss_base_passwd}->[0];
-
     my $user = App::LDAP::LDIF::User->new(
-        base     => $base,
+        base     => $self->base // config->{nss_base_passwd}->[0],
         name     => $username,
         password => '{crypt}'.password($password, undef, "sha512"),
         id       => $uid->get_value("uidNumber"),
@@ -74,3 +72,18 @@ __PACKAGE__->meta->make_immutable;
 no Moose;
 
 1;
+
+=pod
+
+=head1 NAME
+
+App::LDAP::Command::Add::User - handler for adding users
+
+=head1 SYNOPSIS
+
+    # ldap add user hello
+
+    # ldap add user mark --shell zsh --home /home/developer/mark
+
+
+=cut

@@ -38,14 +38,10 @@ sub run {
         exit;
     }
 
-    my $base   = $self->base   // config->{base};
-    my $scope  = $self->scope  // config->{scope};
-    my $filter = $self->filter // "objectClass=*";
-
     my @entries = $ldap->search(
-        base   => $base,
-        scope  => $scope,
-        filter => $filter,
+        base   => $self->base   // config->{base},
+        scope  => $self->scope  // config->{scope},
+        filter => $self->filter // "objectClass=*",
     )->entries;
 
 

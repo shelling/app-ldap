@@ -26,10 +26,8 @@ sub run {
 
     my $groupname = $ARGV[2] or die "no group name specified";
 
-    my $base = $self->base // config->{nss_base_group}->[0];
-
     my $group = App::LDAP::LDIF::Group->new(
-        base => $base,
+        base => $self->base // config->{nss_base_group}->[0],
         name => $groupname,
         id   => $gid->get_value("gidNumber"),
     );
