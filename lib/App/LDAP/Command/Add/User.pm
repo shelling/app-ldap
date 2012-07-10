@@ -40,7 +40,6 @@ sub run {
     my ($self) = shift;
 
     my $ldap   = App::LDAP->instance->ldap;
-    my $config = App::LDAP::Config->instance;
 
     my $uid = next_uid;
 
@@ -49,8 +48,7 @@ sub run {
     my $comfirm  = read_password("comfirm password: ");
     ($password eq $comfirm) or die "not the same";
 
-    my ($base, $scope) = @{$config->{nss_base_passwd}};
-    $base = $self->base // $base;
+    my $base = $self->base // config->{nss_base_passwd}->[0];
 
     my $user = App::LDAP::LDIF::User->new(
         base     => $base,

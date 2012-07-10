@@ -4,7 +4,8 @@ use Modern::Perl;
 
 use base "Exporter";
 
-our @EXPORT = qw( next_uid
+our @EXPORT = qw( config
+                  next_uid
                   next_gid );
 
 sub next_uid {
@@ -25,6 +26,10 @@ sub next_gid {
         base   => $config->{base},
         filter => "(objectClass=gidnext)",
     )->entry(0);
+}
+
+sub config {
+    App::LDAP::Config->instance;
 }
 
 

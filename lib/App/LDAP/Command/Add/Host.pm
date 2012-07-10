@@ -15,6 +15,7 @@ has base => (
 
 use Term::Prompt;
 
+use App::LDAP::Utils;
 use App::LDAP::LDIF::Host;
 
 sub run {
@@ -22,8 +23,7 @@ sub run {
 
     my $hostname = $ARGV[2] or die "no hostname specified";
 
-    my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_hosts}};
-    $base = $self->base // $base;
+    my $base = $self->base // config->{nss_base_hosts}->[0];
 
     my $ip = prompt('x', 'ip address:', '', '');
 
