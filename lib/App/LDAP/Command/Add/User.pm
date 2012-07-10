@@ -51,7 +51,7 @@ sub run {
     my $user = App::LDAP::LDIF::User->new(
         base     => $self->base // config->{nss_base_passwd}->[0],
         name     => $username,
-        password => '{crypt}'.password($password, undef, "sha512"),
+        password => encrypt($password),
         id       => $uid->get_value("uidNumber"),
     );
 

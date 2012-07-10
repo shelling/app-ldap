@@ -2,9 +2,12 @@ package App::LDAP::Utils;
 
 use Modern::Perl;
 
+use Crypt::Password;
+
 use base "Exporter";
 
 our @EXPORT = qw( config
+                  encrypt
                   next_uid
                   next_gid );
 
@@ -30,6 +33,11 @@ sub next_gid {
 
 sub config {
     App::LDAP::Config->instance;
+}
+
+sub encrypt {
+    my $plain = shift;
+    "{crypt}".password($plain, undef, "sha512");
 }
 
 
