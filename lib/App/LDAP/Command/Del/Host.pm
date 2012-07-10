@@ -15,7 +15,7 @@ sub run {
 
     my $hostname = $ARGV[2] or die "no hostname specified";
 
-    my ($base, $scope) = split /\?/, App::LDAP::Config->instance->{nss_base_hosts};
+    my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_hosts}};
 
     App::LDAP::LDIF::Host->delete(
         base   => $base,

@@ -22,7 +22,7 @@ sub run {
 
     my $hostname = $ARGV[2] or die "no hostname specified";
 
-    my ($base, $scope) = split /\?/, App::LDAP::Config->instance->{nss_base_hosts};
+    my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_hosts}};
     $base = $self->base // $base;
 
     my $ip = prompt('x', 'ip address:', '', '');

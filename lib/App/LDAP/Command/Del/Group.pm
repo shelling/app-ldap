@@ -15,7 +15,7 @@ sub run {
 
     my $group = $ARGV[2] or die "no group name specified";
 
-    my ($base, $scope) = split /\?/, App::LDAP::Config->instance->{nss_base_group};
+    my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_group}};
 
     App::LDAP::LDIF::Group->delete(
         base   => $base,

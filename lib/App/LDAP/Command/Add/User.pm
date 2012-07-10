@@ -49,7 +49,7 @@ sub run {
     my $comfirm  = read_password("comfirm password: ");
     ($password eq $comfirm) or die "not the same";
 
-    my ($base, $scope) = split /\?/, $config->{nss_base_passwd};
+    my ($base, $scope) = @{$config->{nss_base_passwd}};
     $base = $self->base // $base;
 
     my $user = App::LDAP::LDIF::User->new(

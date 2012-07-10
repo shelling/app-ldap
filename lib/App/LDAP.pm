@@ -44,7 +44,7 @@ sub bindroot {
 
 sub binduser {
   my ($self) = @_;
-  my ($base, $scope) = split /\?/, App::LDAP::Config->instance->{nss_base_passwd};
+  my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_passwd}};
   my $userdn = $self->ldap
                     ->search(base => $base, scope => $scope, filter => "uidNumber=$<")
                     ->entry(0)

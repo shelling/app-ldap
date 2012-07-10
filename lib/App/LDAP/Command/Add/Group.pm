@@ -27,7 +27,7 @@ sub run {
 
     my $groupname = $ARGV[2] or die "no group name specified";
 
-    my ($base, $scope) = split /\?/, $config->{nss_base_group};
+    my ($base, $scope) = @{$config->{nss_base_group}};
     $base = $self->base // $base;
 
     my $group = App::LDAP::LDIF::Group->new(

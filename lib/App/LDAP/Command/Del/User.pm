@@ -17,7 +17,7 @@ sub run {
 
     my $user   = $ARGV[2] or die "no username specified";
 
-    my ($base, $scope) = split /\?/, App::LDAP::Config->instance->{nss_base_passwd};
+    my ($base, $scope) = @{App::LDAP::Config->instance->{nss_base_passwd}};
 
     App::LDAP::LDIF::User->delete(
         base   => $base,
