@@ -32,9 +32,6 @@ use App::LDAP::Utils;
 use App::LDAP::LDIF::User;
 use App::LDAP::Command::Add::Group;
 
-use Term::ReadPassword;
-use Crypt::Password;
-
 # {{{ sub run
 sub run {
     my ($self) = shift;
@@ -44,14 +41,11 @@ sub run {
     my $uid = next_uid;
 
     my $username = $ARGV[2] or die "no username specified"; # should validate the username
-    my $password = read_password("password: ");
-    my $comfirm  = read_password("comfirm password: ");
-    ($password eq $comfirm) or die "not the same";
 
     my $user = App::LDAP::LDIF::User->new(
         base     => $self->base // config->{nss_base_passwd}->[0],
         name     => $username,
-        password => encrypt($password),
+        password => encrypt(new_password()),
         id       => $uid->get_value("uidNumber"),
     );
 
