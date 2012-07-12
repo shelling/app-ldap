@@ -55,6 +55,7 @@ sub new_password {
     }
 }
 
+use Net::LDAP::Extension::WhoAmI;
 sub current_user {
     my $dn = App::LDAP->instance->ldap->who_am_i->response;
     $dn =~ s{dn:}{};

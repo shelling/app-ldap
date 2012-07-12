@@ -17,7 +17,6 @@ use Term::ReadPassword;
 use App::LDAP::Command;
 use App::LDAP::Config;
 use App::LDAP::Utils;
-use Net::LDAP::Extension::WhoAmI;
 
 sub run {
   my ($self,) = @_;
@@ -33,7 +32,6 @@ sub connect {
   my ($self) = @_;
   $self->ldap( $self->handshake() );
   ($< == 0) ? $self->bindroot() : $self->binduser();
-  say "bind as ", $self->ldap->who_am_i->response;
 }
 
 sub bindroot {
