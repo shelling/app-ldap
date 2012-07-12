@@ -9,6 +9,7 @@ use base "Exporter";
 our @EXPORT = qw( config
                   encrypt
                   new_password
+                  current_user
                   next_uid
                   next_gid );
 
@@ -51,6 +52,23 @@ sub new_password {
         return $password;
     } else {
         die "not the same";
+    }
+}
+
+sub current_user {
+    my $dn = App::LDAP->instance->ldap->who_am_i->response;
+    $dn =~ s{dn:}{};
+
+    my $search = App::LDAP->instance->ldap->search(
+        base   => $dn,
+        scope  => "base",
+        filter => "objectClass=*",
+    );
+
+    if ($search->count > 0) {
+        return $search->entry(0);
+    } else {
+        die "$dn not found";
     }
 }
 
