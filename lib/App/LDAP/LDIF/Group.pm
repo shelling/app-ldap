@@ -4,8 +4,6 @@ use Moose;
 
 with 'App::LDAP::LDIF';
 
-use Net::LDAP::Entry;
-
 around BUILDARGS => sub {
     my $orig = shift;
     my $self = shift;

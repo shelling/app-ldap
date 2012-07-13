@@ -4,6 +4,8 @@ use Modern::Perl;
 
 use Moose::Role;
 
+use Net::LDAP::Entry;
+
 sub create {
 
 }
