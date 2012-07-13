@@ -22,10 +22,11 @@ sub run {
   my ($self,) = @_;
   App::LDAP::Config->read;
   $self->connect;
-  my $command = App::LDAP::Command
-                  ->dispatch(@ARGV)
-                  ->new_with_options
-                  ->run();
+
+  App::LDAP::Command
+      ->dispatch(@ARGV)
+      ->new_with_options
+      ->run();
 }
 
 sub connect {
