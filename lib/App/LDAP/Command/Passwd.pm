@@ -15,7 +15,7 @@ sub run {
 
     if ( $< == 0 ) {
         $ARGV[1]
-        ? change_password(find_user_by_name($ARGV[1]))
+        ? change_password( find_user( uid => $ARGV[1] ) )
         : change_password(current_user);
     } else {
         $ARGV[1]
@@ -31,17 +31,17 @@ sub change_password {
     )->update(ldap);
 }
 
-sub find_user_by_name {
-    my $name = shift;;
+sub find_user {
+    my ( $attr, $value ) = @_;
     my $search = ldap->search(
         base   => config->{nss_base_passwd}->[0],
         scope  => config->{nss_base_passwd}->[1],
-        filter => "uid=$name",
+        filter => "$attr=$value",
     );
     if ($search->count > 0) {
         return $search->entry(0);
     } else {
-        die "user $name not found";
+        die "user $attr=$value not found";
     }
 }
 
