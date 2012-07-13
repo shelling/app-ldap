@@ -6,6 +6,8 @@ use Moose::Role;
 
 use Net::LDAP::Entry;
 
+use App::LDAP::Utils;
+
 sub create {
 
 }
@@ -22,12 +24,10 @@ sub delete {
     my ($self) = shift;
     my %options = @_;
 
-    my $ldap = App::LDAP->instance->ldap;
-
-    my $search = $ldap->search(@_);
+    my $search = ldap->search(@_);
 
     if ($search->count) {
-        $ldap->delete($search->entry(0)->dn);
+        ldap->delete($search->entry(0)->dn);
     } else {
         die $options{filter}." not found";
     }
@@ -36,9 +36,7 @@ sub delete {
 sub save {
     my ($self) = shift;
 
-    my $msg = App::LDAP->instance
-                       ->ldap
-                       ->add($self->entry);
+    my $msg = ldap->add($self->entry);
 
     die $msg->error if $msg->code;
 }

@@ -36,8 +36,6 @@ use App::LDAP::Command::Add::Group;
 sub run {
     my ($self) = shift;
 
-    my $ldap   = App::LDAP->instance->ldap;
-
     my $uid = next_uid;
 
     my $username = $ARGV[2] or die "no username specified"; # should validate the username
@@ -54,7 +52,7 @@ sub run {
 
     $user->save;
 
-    $uid->replace(uidNumber => $uid->get_value("uidNumber")+1)->update($ldap);
+    $uid->replace(uidNumber => $uid->get_value("uidNumber")+1)->update(ldap());
 
     App::LDAP::Command::Add::Group->new->run;
 

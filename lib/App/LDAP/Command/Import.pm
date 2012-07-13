@@ -10,18 +10,17 @@ with 'MooseX::Getopt';
 
 use Net::LDAP::LDIF;
 
+use App::LDAP::Utils;
+
 sub run {
     my ($self) = shift;
 
-    my $app  = App::LDAP->instance;
-    my $ldap = $app->ldap;
-
     shift @ARGV;
-    process($ldap, $_) for @ARGV;
+    process($_) for @ARGV;
 }
 
 sub process {
-    my ($ldap, $file) = @_;
+    my ($file) = @_;
 
     if (-f $file) {
 
@@ -31,7 +30,7 @@ sub process {
 
         while (!$ldif->eof) {
             my $entry = $ldif->read_entry;
-            my $msg = $ldap->add($entry);
+            my $msg = ldap->add($entry);
             warn $msg->error() if $msg->code;
         }
 

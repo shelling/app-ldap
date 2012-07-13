@@ -7,6 +7,7 @@ use Crypt::Password;
 use base "Exporter";
 
 our @EXPORT = qw( config
+                  ldap
                   encrypt
                   new_password
                   current_user
@@ -14,27 +15,25 @@ our @EXPORT = qw( config
                   next_gid );
 
 sub next_uid {
-    my $ldap   = App::LDAP->instance->ldap;
-    my $config = App::LDAP::Config->instance;
-
-    my $entry = $ldap->search(
-        base   => $config->{base},
+    ldap()->search(
+        base   => config()->{base},
         filter => "(objectClass=uidnext)",
     )->entry(0);
 }
 
 sub next_gid {
-    my $ldap   = App::LDAP->instance->ldap;
-    my $config = App::LDAP::Config->instance;
-
-    $ldap->search(
-        base   => $config->{base},
+    ldap()->search(
+        base   => config()->{base},
         filter => "(objectClass=gidnext)",
     )->entry(0);
 }
 
 sub config {
     App::LDAP::Config->instance;
+}
+
+sub ldap {
+    App::LDAP::Connection->instance;
 }
 
 sub encrypt {
@@ -55,12 +54,13 @@ sub new_password {
     }
 }
 
+use Net::LDAP;
 use Net::LDAP::Extension::WhoAmI;
 sub current_user {
-    my $dn = App::LDAP->instance->ldap->who_am_i->response;
+    my $dn = ldap()->who_am_i->response;
     $dn =~ s{dn:}{};
 
-    my $search = App::LDAP->instance->ldap->search(
+    my $search = ldap()->search(
         base   => $dn,
         scope  => "base",
         filter => "objectClass=*",

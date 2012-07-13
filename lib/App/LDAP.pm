@@ -7,21 +7,21 @@ use Modern::Perl;
 use Moose;
 use MooseX::Singleton;
 
-has ldap => (
-    is  => "rw",
-);
-
-use Net::LDAP;
 use Term::ReadPassword;
 
 use App::LDAP::Command;
 use App::LDAP::Config;
 use App::LDAP::Utils;
+use App::LDAP::Connection;
 
 sub run {
   my ($self,) = @_;
+
   App::LDAP::Config->read;
-  $self->connect;
+
+  $self->handshake;
+
+  ($< == 0) ? $self->bindroot() : $self->binduser();
 
   App::LDAP::Command
       ->dispatch(@ARGV)
@@ -29,16 +29,10 @@ sub run {
       ->run();
 }
 
-sub connect {
-  my ($self) = @_;
-  $self->ldap( $self->handshake() );
-  ($< == 0) ? $self->bindroot() : $self->binduser();
-}
-
 sub bindroot {
   my ($self) = @_;
   my $userpw = read_password("ldap admin password: ");
-  $self->ldap->bind(
+  ldap->bind(
       config->{rootbinddn},
       password => $userpw
   );
@@ -46,19 +40,18 @@ sub bindroot {
 
 sub binduser {
   my ($self) = @_;
-  my $userdn = $self->ldap
-                    ->search( base   => config->{nss_base_passwd}->[0],
-                              scope  => config->{nss_base_passwd}->[1],
-                              filter => "uidNumber=$<" )
-                    ->entry(0)
+  my $userdn = ldap->search( base   => config->{nss_base_passwd}->[0],
+                             scope  => config->{nss_base_passwd}->[1],
+                             filter => "uidNumber=$<" )
+                   ->entry(0)
                     ->dn;
   my $userpw = read_password("your password: ");
-  $self->ldap->bind($userdn, password => $userpw);
+  ldap->bind($userdn, password => $userpw);
 }
 
 sub handshake {
     my ($self,) = @_;
-    Net::LDAP->new(
+    App::LDAP::Connection->new(
         config->{uri},
         port       => config->{port},
         version    => config->{ldap_version},

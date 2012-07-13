@@ -28,9 +28,6 @@ has filter => (
 sub run {
     my ($self) = shift;
 
-    my $app    = App::LDAP->instance;
-    my $ldap   = $app->ldap;
-
     my $file = $ARGV[1];
 
     if (! defined($file)) {
@@ -38,7 +35,7 @@ sub run {
         exit;
     }
 
-    my @entries = $ldap->search(
+    my @entries = ldap->search(
         base   => $self->base   // config->{base},
         scope  => $self->scope  // config->{scope},
         filter => $self->filter // "objectClass=*",

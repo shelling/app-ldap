@@ -28,12 +28,12 @@ sub change_password {
     my $user = shift;
     $user->replace(
         userPassword => encrypt(new_password())
-    )->update(App::LDAP->instance->ldap);
+    )->update(ldap);
 }
 
 sub find_user_by_name {
     my $name = shift;;
-    my $search = App::LDAP->instance->ldap->search(
+    my $search = ldap->search(
         base   => config->{nss_base_passwd}->[0],
         scope  => config->{nss_base_passwd}->[1],
         filter => "uid=$name",

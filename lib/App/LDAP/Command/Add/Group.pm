@@ -20,8 +20,6 @@ use App::LDAP::LDIF::Group;
 sub run {
     my ($self) = shift;
 
-    my $ldap   = App::LDAP->instance->ldap;
-
     my $gid = next_gid;
 
     my $groupname = $ARGV[2] or die "no group name specified";
@@ -34,7 +32,7 @@ sub run {
 
     $group->save;
 
-    $gid->replace(gidNumber => $gid->get_value("gidNumber")+1)->update($ldap);
+    $gid->replace(gidNumber => $gid->get_value("gidNumber")+1)->update(ldap());
 }
 # }}}
 
