@@ -40,11 +40,7 @@ sub bindroot {
 
 sub binduser {
   my ($self) = @_;
-  my $userdn = ldap->search( base   => config->{nss_base_passwd}->[0],
-                             scope  => config->{nss_base_passwd}->[1],
-                             filter => "uidNumber=$<" )
-                   ->entry(0)
-                    ->dn;
+  my $userdn = find_user("uidNumber", $<)->dn;
   my $userpw = read_password("your password: ");
   ldap->bind($userdn, password => $userpw);
 }

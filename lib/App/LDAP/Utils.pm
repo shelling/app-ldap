@@ -9,6 +9,7 @@ use base "Exporter";
 our @EXPORT = qw( config
                   ldap
                   encrypt
+                  find_user
                   new_password
                   current_user
                   next_uid
@@ -41,6 +42,19 @@ sub encrypt {
     "{crypt}".password($plain, undef, "sha512");
 }
 
+sub find_user {
+    my ( $attr, $value ) = @_;
+    my $search = ldap->search(
+        base   => config->{nss_base_passwd}->[0],
+        scope  => config->{nss_base_passwd}->[1],
+        filter => "$attr=$value",
+    );
+    if ($search->count > 0) {
+        return $search->entry(0);
+    } else {
+        die "user $attr=$value not found";
+    }
+}
 
 use Term::ReadPassword;
 sub new_password {
