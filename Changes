@@ -1,5 +1,17 @@
 Revision history for Perl extension App::LDAP
 
+0.07    Sat Jul 14 18:32:12 2012
+        - reorganize tests suit
+        - reimplement existed command modules 
+        - implement command modules Add::Host, Del::Host, Export, 
+          Passwd, Add::Ou, Del::Ou
+        - App::LDAP and App::LDAP::Config use MooseX::Singleton
+        - add App::LDAP::Connection as a Singleton of Net::LDAP
+        - App::LDAP::LDIF as a role like ORMs for App::LDAP::LDIF::*
+        - uniform APIs of LDIFs to use 'base' rather than 'ou'
+        - add many shortcuts in App::LDAP::Utils such as find_user(), 
+          current_user(), config() and ldap()
+
 0.06    Sun Apr 08 00:58:20 2012
         - replace App::CLI with Namespace::Dispatch
         - drop Rubyish::Attribute. adopt Moose
