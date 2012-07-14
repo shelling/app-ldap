@@ -10,18 +10,51 @@ use App::LDAP::Utils;
 
 with 'MooseX::Getopt';
 
+has lock => (
+    is  => "rw",
+    isa => "Bool",
+);
+
+has unlock => (
+    is  => "rw",
+    isa => "Bool",
+);
+
 sub run {
     my ($self,) = @_;
 
+    my $name = $self->extra_argv->[1];
+
+    my $user = $name ? find_user(uid => $name) : current_user();
+
     if ( $< == 0 ) {
-        $ARGV[1]
-        ? change_password( find_user( uid => $ARGV[1] ) )
-        : change_password(current_user);
+        $self->distinguish->($user);
     } else {
-        $ARGV[1]
-        ? die "you may not view or modify password information for ".$ARGV[1]
-        : change_password(current_user);
+        if ($name and ( find_user(uid => $name)->dn ne current_user->dn ) ) {
+            die "you may not view or modify password information for " . $user->dn;
+        }
+        $self->distinguish->($user);
     }
+}
+
+sub distinguish {
+    my $self = shift;
+
+    if ($self->lock && $self->unlock) {
+        say "I'm dazzled with your key :p";
+        exit;
+    }
+    
+    if ($self->unlock) { 
+        return \&unlock_user if $> == 0;
+        die "Permission denied";
+    }
+
+    if ($self->lock) { 
+        return \&lock_user if $> == 0;
+        die "Permission denied";
+    }
+    return \&change_password;
 }
 
 sub change_password {
@@ -30,6 +63,29 @@ sub change_password {
         userPassword => encrypt(new_password())
     )->update(ldap);
 }
+
+sub lock_user {
+    my $user = shift;
+    my $password = $user->get_value("userPassword");
+
+    $password =~ s{{crypt}\$}{{crypt}!\$};
+
+    $user->replace(
+        userPassword => $password,
+    )->update(ldap);
+}
+
+sub unlock_user {
+    my $user = shift;
+    my $password = $user->get_value("userPassword");
+
+    $password =~ s{{crypt}!\$}{{crypt}\$};
+
+    $user->replace(
+        userPassword => $password,
+    )->update(ldap);
+}
+
 
 __PACKAGE__->meta->make_immutable;
 no Moose;
