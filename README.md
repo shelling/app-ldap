@@ -71,7 +71,7 @@ to read the documentation online with your favorite pager.
 
     $ ldap import blah.ldif          # add content of blah.ldif into DB of ldap server
 
-    $ ldap export -o out.ldif --base 'ou=People,dc=example,dc=com'
+    $ ldap export out.ldif --base 'ou=People,dc=example,dc=com'
 
                                      # export content under ou=People,dc=example,dc=com
 
