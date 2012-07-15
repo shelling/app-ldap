@@ -22,7 +22,7 @@ sub run {
 
     my $gid = next_gid;
 
-    my $groupname = $ARGV[2] or die "no group name specified";
+    my $groupname = $self->extra_argv->[2] or die "no group name specified";
 
     my $group = App::LDAP::LDIF::Group->new(
         base => $self->base // config->{nss_base_group}->[0],

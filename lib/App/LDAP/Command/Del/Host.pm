@@ -15,7 +15,7 @@ use App::LDAP::Utils;
 sub run {
     my ($self) = shift;
 
-    my $hostname = $ARGV[2] or die "no hostname specified";
+    my $hostname = $self->extra_argv->[2] or die "no hostname specified";
 
     App::LDAP::LDIF::Host->delete(
         base   => config->{nss_base_hosts}->[0],

@@ -30,7 +30,6 @@ has base => (
 
 use App::LDAP::Utils;
 use App::LDAP::LDIF::User;
-use App::LDAP::Command::Add::Group;
 
 # {{{ sub run
 sub run {
@@ -38,7 +37,7 @@ sub run {
 
     my $uid = next_uid;
 
-    my $username = $ARGV[2] or die "no username specified"; # should validate the username
+    my $username = $self->extra_argv->[2] or die "no username specified"; # should validate the username
 
     my $user = App::LDAP::LDIF::User->new(
         base     => $self->base // config->{nss_base_passwd}->[0],
@@ -54,9 +53,6 @@ sub run {
 
     $uid->replace(uidNumber => $uid->get_value("uidNumber")+1)->update(ldap());
 
-    App::LDAP::Command::Add::Group->new->run;
-
-    say "add user $username successfully";
 }
 # }}}
 

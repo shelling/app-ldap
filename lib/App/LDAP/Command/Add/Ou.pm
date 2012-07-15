@@ -19,7 +19,7 @@ use App::LDAP::LDIF::OrgUnit;
 sub run {
     my ($self, ) = @_;
 
-    my $name = $ARGV[2] or die "no organization name specified";
+    my $name = $self->extra_argv->[2] or die "no organization name specified";
 
     my $ou = App::LDAP::LDIF::OrgUnit->new(
         base => $self->base // config->{base},

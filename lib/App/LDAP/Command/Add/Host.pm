@@ -21,7 +21,7 @@ use App::LDAP::LDIF::Host;
 sub run {
     my ($self) = shift;
 
-    my $hostname = $ARGV[2] or die "no hostname specified";
+    my $hostname = $self->extra_argv->[2] or die "no hostname specified";
 
     my $ip = prompt('x', 'ip address:', '', '');
 

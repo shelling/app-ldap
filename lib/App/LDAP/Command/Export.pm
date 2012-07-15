@@ -28,7 +28,7 @@ has filter => (
 sub run {
     my ($self) = shift;
 
-    my $file = $ARGV[1];
+    my $file = $self->extra_argv->[1];
 
     if (! defined($file)) {
         say "you must give the file name to export";

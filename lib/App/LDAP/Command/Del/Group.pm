@@ -15,7 +15,7 @@ use App::LDAP::Utils;
 sub run {
     my ($self) = shift;
 
-    my $group = $ARGV[2] or die "no group name specified";
+    my $group = $self->extra_argv->[2] or die "no group name specified";
 
     App::LDAP::LDIF::Group->delete(
         base   => config->{nss_base_group}->[0],

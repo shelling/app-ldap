@@ -19,7 +19,7 @@ use App::LDAP::LDIF::OrgUnit;
 sub run {
     my ($self, ) = @_;
 
-    my $ou = $ARGV[2] or die "no organization name specified";
+    my $ou = $self->extra_argv->[2] or die "no organization name specified";
 
     App::LDAP::LDIF::OrgUnit->delete(
         base   => config->{base},
