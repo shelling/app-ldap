@@ -26,7 +26,6 @@ has base => (
     isa => "Str",
 );
 
-use App::LDAP::Utils;
 use App::LDAP::LDIF::User;
 
 # {{{ sub run
@@ -38,7 +37,7 @@ sub run {
     my $username = $self->extra_argv->[2] or die "no username specified"; # should validate the username
 
     my $user = App::LDAP::LDIF::User->new(
-        base     => $self->base // config->{nss_base_passwd}->[0],
+        base     => $self->base // config()->{nss_base_passwd}->[0],
         name     => $username,
         password => encrypt(new_password()),
         id       => $uid->get_value("uidNumber"),

@@ -8,8 +8,6 @@ with 'App::LDAP::Role::Command';
 
 use Net::LDAP::LDIF;
 
-use App::LDAP::Utils;
-
 sub run {
     my ($self) = shift;
 
@@ -28,7 +26,7 @@ sub process {
 
         while (!$ldif->eof) {
             my $entry = $ldif->read_entry;
-            my $msg = ldap->add($entry);
+            my $msg = ldap()->add($entry);
             warn $msg->error() if $msg->code;
         }
 

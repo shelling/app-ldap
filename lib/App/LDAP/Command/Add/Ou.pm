@@ -11,7 +11,6 @@ has base => (
     isa => "Str",
 );
 
-use App::LDAP::Utils;
 use App::LDAP::LDIF::OrgUnit;
 
 sub run {
@@ -20,7 +19,7 @@ sub run {
     my $name = $self->extra_argv->[2] or die "no organization name specified";
 
     my $ou = App::LDAP::LDIF::OrgUnit->new(
-        base => $self->base // config->{base},
+        base => $self->base // config()->{base},
         name => $name,
     );
 

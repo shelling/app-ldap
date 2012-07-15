@@ -8,16 +8,14 @@ with 'App::LDAP::Role::Command';
 
 use App::LDAP::LDIF::Group;
 
-use App::LDAP::Utils;
-
 sub run {
     my ($self) = shift;
 
     my $group = $self->extra_argv->[2] or die "no group name specified";
 
     App::LDAP::LDIF::Group->delete(
-        base   => config->{nss_base_group}->[0],
-        scope  => config->{nss_base_group}->[1],
+        base   => config()->{nss_base_group}->[0],
+        scope  => config()->{nss_base_group}->[1],
         filter => "cn=$group",
     );
 

@@ -11,7 +11,6 @@ has base => (
     isa => "Str",
 );
 
-use App::LDAP::Utils;
 use App::LDAP::LDIF::Group;
 
 # {{{
@@ -23,7 +22,7 @@ sub run {
     my $groupname = $self->extra_argv->[2] or die "no group name specified";
 
     my $group = App::LDAP::LDIF::Group->new(
-        base => $self->base // config->{nss_base_group}->[0],
+        base => $self->base // config()->{nss_base_group}->[0],
         name => $groupname,
         id   => $gid->get_value("gidNumber"),
     );

@@ -13,7 +13,6 @@ has base => (
 
 use Term::Prompt;
 
-use App::LDAP::Utils;
 use App::LDAP::LDIF::Host;
 
 sub run {
@@ -24,7 +23,7 @@ sub run {
     my $ip = prompt('x', 'ip address:', '', '');
 
     my $host = App::LDAP::LDIF::Host->new(
-        base => $self->base // config->{nss_base_hosts}->[0],
+        base => $self->base // config()->{nss_base_hosts}->[0],
         name => $hostname,
         ip   => $ip,
     );

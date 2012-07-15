@@ -6,8 +6,6 @@ use Moose;
 
 with 'App::LDAP::Role::Command';
 
-use App::LDAP::Utils;
-
 has base => (
     is  => "rw",
     isa => "Str",
@@ -33,9 +31,9 @@ sub run {
         exit;
     }
 
-    my @entries = ldap->search(
-        base   => $self->base   // config->{base},
-        scope  => $self->scope  // config->{scope},
+    my @entries = ldap()->search(
+        base   => $self->base   // config()->{base},
+        scope  => $self->scope  // config()->{scope},
         filter => $self->filter // "objectClass=*",
     )->entries;
 

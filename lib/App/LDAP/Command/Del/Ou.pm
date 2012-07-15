@@ -11,7 +11,6 @@ has base => (
     isa => "Str",
 );
 
-use App::LDAP::Utils;
 use App::LDAP::LDIF::OrgUnit;
 
 sub run {
@@ -20,8 +19,8 @@ sub run {
     my $ou = $self->extra_argv->[2] or die "no organization name specified";
 
     App::LDAP::LDIF::OrgUnit->delete(
-        base   => config->{base},
-        scope  => config->{scope},
+        base   => config()->{base},
+        scope  => config()->{scope},
         filter => "ou=$ou",
     );
 

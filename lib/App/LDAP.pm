@@ -11,8 +11,9 @@ use Term::ReadPassword;
 
 use App::LDAP::Command;
 use App::LDAP::Config;
-use App::LDAP::Utils;
 use App::LDAP::Connection;
+
+with 'App::LDAP::Role';
 
 sub run {
   my ($self,) = @_;
@@ -30,27 +31,24 @@ sub run {
 }
 
 sub bindroot {
-  my ($self) = @_;
-  my $userpw = read_password("ldap admin password: ");
-  ldap->bind(
-      config->{rootbinddn},
-      password => $userpw
-  );
+    ldap()->bind(
+        config()->{rootbinddn},
+        password => read_password("ldap admin password: "),
+    );
 }
 
 sub binduser {
-  my ($self) = @_;
-  my $userdn = find_user("uidNumber", $<)->dn;
-  my $userpw = read_password("your password: ");
-  ldap->bind($userdn, password => $userpw);
+    ldap()->bind(
+        find_user("uidNumber", $<)->dn,
+        password => read_password("your password: "),
+    );
 }
 
 sub handshake {
-    my ($self,) = @_;
     App::LDAP::Connection->new(
-        config->{uri},
-        port       => config->{port},
-        version    => config->{ldap_version},
+        config()->{uri},
+        port       => config()->{port},
+        version    => config()->{ldap_version},
         onerror    => 'die',
     );
 }

@@ -2,11 +2,11 @@ package App::LDAP::LDIF;
 
 use Modern::Perl;
 
-use Moose::Role;
-
 use Net::LDAP::Entry;
 
-use App::LDAP::Utils;
+use Moose::Role;
+
+with 'App::LDAP::Role';
 
 sub create {
 
@@ -24,10 +24,10 @@ sub delete {
     my ($self) = shift;
     my %options = @_;
 
-    my $search = ldap->search(@_);
+    my $search = ldap()->search(@_);
 
     if ($search->count) {
-        ldap->delete($search->entry(0)->dn);
+        ldap()->delete($search->entry(0)->dn);
     } else {
         die $options{filter}." not found";
     }
@@ -36,7 +36,7 @@ sub delete {
 sub save {
     my ($self) = shift;
 
-    my $msg = ldap->add($self->entry);
+    my $msg = ldap()->add($self->entry);
 
     die $msg->error if $msg->code;
 }

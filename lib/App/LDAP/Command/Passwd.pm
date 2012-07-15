@@ -6,8 +6,6 @@ use Moose;
 
 with 'App::LDAP::Role::Command';
 
-use App::LDAP::Utils;
-
 has lock => (
     is  => "rw",
     isa => "Bool",
@@ -42,13 +40,13 @@ sub distinguish {
         say "I'm dazzled with your key :p";
         exit;
     }
-    
-    if ($self->unlock) { 
+
+    if ($self->unlock) {
         return \&unlock_user if $> == 0;
         die "Permission denied";
     }
 
-    if ($self->lock) { 
+    if ($self->lock) {
         return \&lock_user if $> == 0;
         die "Permission denied";
     }
@@ -59,7 +57,7 @@ sub change_password {
     my $user = shift;
     $user->replace(
         userPassword => encrypt(new_password())
-    )->update(ldap);
+    )->update(ldap());
 }
 
 sub lock_user {
@@ -70,7 +68,7 @@ sub lock_user {
 
     $user->replace(
         userPassword => $password,
-    )->update(ldap);
+    )->update(ldap());
 }
 
 sub unlock_user {
@@ -81,9 +79,27 @@ sub unlock_user {
 
     $user->replace(
         userPassword => $password,
-    )->update(ldap);
+    )->update(ldap());
 }
 
+use Net::LDAP;
+use Net::LDAP::Extension::WhoAmI;
+sub current_user {
+    my $dn = ldap()->who_am_i->response;
+    $dn =~ s{dn:}{};
+
+    my $search = ldap()->search(
+        base   => $dn,
+        scope  => "base",
+        filter => "objectClass=*",
+    );
+
+    if ($search->count > 0) {
+        return $search->entry(0);
+    } else {
+        die "$dn not found";
+    }
+}
 
 __PACKAGE__->meta->make_immutable;
 no Moose;
