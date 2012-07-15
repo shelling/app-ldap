@@ -11,23 +11,7 @@ our @EXPORT = qw( config
                   encrypt
                   find_user
                   new_password
-                  current_user
-                  next_uid
-                  next_gid );
-
-sub next_uid {
-    ldap()->search(
-        base   => config()->{base},
-        filter => "(objectClass=uidnext)",
-    )->entry(0);
-}
-
-sub next_gid {
-    ldap()->search(
-        base   => config()->{base},
-        filter => "(objectClass=gidnext)",
-    )->entry(0);
-}
+                  current_user );
 
 sub config {
     App::LDAP::Config->instance;

@@ -18,7 +18,7 @@ use App::LDAP::LDIF::Group;
 sub run {
     my ($self) = shift;
 
-    my $gid = next_gid;
+    my $gid = next_gid();
 
     my $groupname = $self->extra_argv->[2] or die "no group name specified";
 
@@ -33,6 +33,13 @@ sub run {
     $gid->replace(gidNumber => $gid->get_value("gidNumber")+1)->update(ldap());
 }
 # }}}
+
+sub next_gid {
+    ldap()->search(
+        base   => config()->{base},
+        filter => "(objectClass=gidnext)",
+    )->entry(0);
+}
 
 __PACKAGE__->meta->make_immutable;
 no Moose;

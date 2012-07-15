@@ -33,7 +33,7 @@ use App::LDAP::LDIF::User;
 sub run {
     my ($self) = shift;
 
-    my $uid = next_uid;
+    my $uid = next_uid();
 
     my $username = $self->extra_argv->[2] or die "no username specified"; # should validate the username
 
@@ -53,6 +53,13 @@ sub run {
 
 }
 # }}}
+
+sub next_uid {
+    ldap()->search(
+        base   => config()->{base},
+        filter => "(objectClass=uidnext)",
+    )->entry(0);
+}
 
 __PACKAGE__->meta->make_immutable;
 no Moose;
