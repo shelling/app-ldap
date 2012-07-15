@@ -1,8 +1,19 @@
 use Modern::Perl;
 use Test::More;
 
-BEGIN { 
-  use_ok 'App::LDAP::Command::Passwd'
+BEGIN {
+    my @modules = qw( App::LDAP::Command::Passwd );
+
+    for my $module (@modules) {
+        use_ok $module;
+    }
+
+    for my $module (@modules) {
+        ok (
+            $module->can("dispatch"),
+            "$module can dispatch",
+        );
+    }
 }
 
 done_testing;

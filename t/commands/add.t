@@ -8,10 +8,19 @@ BEGIN {
                       App::LDAP::Command::Add::User
                       App::LDAP::Command::Add::Group
                       App::LDAP::Command::Add::Host
-                      App::LDAP::Command::Add::Sudoer );
+                      App::LDAP::Command::Add::Sudoer
+                      App::LDAP::Command::Add::Ou );
 
-    use_ok $_ for (@modules);
+    for my $module (@modules) {
+        use_ok $module;
+    }
 
+    for my $module (@modules) {
+        ok (
+            $module->can("dispatch"),
+            "$module can dispatch",
+        );
+    }
 }
 
 is (

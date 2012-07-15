@@ -9,8 +9,16 @@ BEGIN {
                       App::LDAP::Command::Migrate::Host
                       App::LDAP::Command::Migrate::Sudoer );
 
-    use_ok $_ for (@modules);
+    for my $module (@modules) {
+        use_ok $module;
+    }
 
+    for my $module (@modules) {
+        ok (
+            $module->can("dispatch"),
+            "$module can dispatch",
+        );
+    }
 }
 
 done_testing;
