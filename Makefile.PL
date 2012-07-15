@@ -17,8 +17,8 @@ requires       'MooseX::Singleton';
 requires       'Term::ReadPassword';
 requires       'Term::Prompt';
 requires       'Authen::SASL';
-requires       'Crypt::Password';
-requires       'Namespace::Dispatch';
+requires       'Crypt::Password'     => '0.28';
+requires       'Namespace::Dispatch' => '0.04';
 
 test_requires  'Test::More';
 
