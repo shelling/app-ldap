@@ -2,13 +2,11 @@ package App::LDAP::Command::Passwd;
 
 use Modern::Perl;
 
-use Namespace::Dispatch;
-
 use Moose;
 
-use App::LDAP::Utils;
+with 'App::LDAP::Role::Command';
 
-with 'MooseX::Getopt';
+use App::LDAP::Utils;
 
 has lock => (
     is  => "rw",

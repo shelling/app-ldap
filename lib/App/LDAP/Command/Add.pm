@@ -2,15 +2,13 @@ package App::LDAP::Command::Add;
 
 use Modern::Perl;
 
-use Namespace::Dispatch;
-
 use Moose;
 
-with 'MooseX::Getopt';
+with 'App::LDAP::Role::Command';
 
 sub run {
-  my ($self,) = @_;
-  say $self->dump;
+    my ($self,) = @_;
+    say "command->add";
 }
 
 __PACKAGE__->meta->make_immutable;

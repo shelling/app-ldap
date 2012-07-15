@@ -2,13 +2,12 @@ package App::LDAP::Command;
 
 use Modern::Perl;
 
-use Namespace::Dispatch;
-
 use Moose;
 
-with 'MooseX::Getopt';
+with 'App::LDAP::Role::Command';
 
 sub run {
+    my ($self,) = @_;
     say "ldap main dispather";
 }
 

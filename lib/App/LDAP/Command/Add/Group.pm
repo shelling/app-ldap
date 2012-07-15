@@ -2,11 +2,9 @@ package App::LDAP::Command::Add::Group;
 
 use Modern::Perl;
 
-use Namespace::Dispatch;
-
 use Moose;
 
-with 'MooseX::Getopt';
+with 'App::LDAP::Role::Command';
 
 has base => (
     is  => "rw",

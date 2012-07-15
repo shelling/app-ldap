@@ -2,11 +2,9 @@ package App::LDAP::Command::Del::Group;
 
 use Modern::Perl;
 
-use Namespace::Dispatch;
-
 use Moose;
 
-with 'MooseX::Getopt';
+with 'App::LDAP::Role::Command';
 
 use App::LDAP::LDIF::Group;
 

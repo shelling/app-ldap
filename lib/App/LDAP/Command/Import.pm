@@ -2,11 +2,9 @@ package App::LDAP::Command::Import;
 
 use Modern::Perl;
 
-use Namespace::Dispatch;
-
 use Moose;
 
-with 'MooseX::Getopt';
+with 'App::LDAP::Role::Command';
 
 use Net::LDAP::LDIF;
 

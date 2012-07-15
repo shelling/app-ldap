@@ -2,11 +2,9 @@ package App::LDAP::Command::Migrate::Group;
 
 use Modern::Perl;
 
-use Namespace::Dispatch;
-
 use Moose;
 
-with 'MooseX::Getopt';
+with 'App::LDAP::Role::Command';
 
 sub run {
 
