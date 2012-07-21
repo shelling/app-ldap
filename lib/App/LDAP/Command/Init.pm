@@ -24,9 +24,8 @@ sub run {
     for my $schema (keys %{$schemas}) {
         my $file = IO::String->new($schemas->{$schema});
         my $entry = Net::LDAP::LDIF->new($file, "r", onerror => "die")->read_entry();
-        say $entry->dump;
-        # my $msg = $ldap->add($entry);
-        # die $msg->error if $msg->code;
+        my $msg = $ldap->add($entry);
+        die $msg->error if $msg->code;
     }
 }
 
