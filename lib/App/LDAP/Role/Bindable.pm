@@ -37,14 +37,14 @@ no Moose;
 
 =head1 NAME
 
-App::LDAP::Role::Bindable - make a class itself bindable to a LDAP server
+App::LDAP::Role::Bindable - make a command itself bindable to a LDAP server
 
 =head1 SYNOPSIS
 
     package App::LDAP::Command::YourCommand;
     use Moose;
-    with 'App::LDAP::Role::Command';
-    with 'App::LDAP::Role::Bindable';
+    with qw( App::LDAP::Role::Command
+             App::LDAP::Role::Bindable );
 
     package main;
     App::LDAP::Command::YourCommand->new_with_options()->prepare()->run();
