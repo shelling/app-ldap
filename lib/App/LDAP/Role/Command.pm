@@ -1,21 +1,21 @@
 package App::LDAP::Role::Command;
 
 use Modern::Perl;
+use Moose::Role;
+with qw( MooseX::Getopt
+         App::LDAP::Role );
 
 sub prepare {
     my $self = shift;
     return $self;
 }
 
-{
-    package main;
-    use Namespace::Dispatch;
+use Namespace::Dispatch;
+use Sub::Delete;
+BEGIN {
+    delete_sub($_) for qw(dispatch leaves has_leaf);
 }
 
-use Modern::Perl;
-use Moose::Role;
-with qw( MooseX::Getopt
-         App::LDAP::Role );
 
 sub dispatch {
     Namespace::Dispatch::dispatch(@_);

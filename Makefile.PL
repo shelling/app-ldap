@@ -19,6 +19,7 @@ requires       'Term::Prompt';
 requires       'Authen::SASL';
 requires       'Crypt::Password'     => '0.28';
 requires       'Namespace::Dispatch' => '0.04';
+requires       'Sub::Delete';
 
 test_requires  'Test::More';
 
