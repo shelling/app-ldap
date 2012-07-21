@@ -106,3 +106,24 @@ __PACKAGE__->meta->make_immutable;
 no Moose;
 
 1;
+
+=pod
+
+=head1 NAME
+
+App::LDAP::Command::Passwd - manage the password in LDAP server
+
+=head1 SYNOPSIS
+
+    $ ldap passwd                  # change your own password
+
+    $ sudo ldap passwd             # change password of ldap admin
+
+    $ sudo ldap passwd shelling    # sudo the privilege of admin to change password of shelling
+
+    $ sudo ldap passwd shelling -l # lock shelling
+
+    $ sudo ldap passwd shelling -u # unlock shelling
+
+=cut
+
