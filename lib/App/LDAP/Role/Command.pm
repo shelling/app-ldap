@@ -1,5 +1,12 @@
 package App::LDAP::Role::Command;
 
+use Modern::Perl;
+
+sub prepare {
+    my $self = shift;
+    return $self;
+}
+
 {
     package main;
     use Namespace::Dispatch;

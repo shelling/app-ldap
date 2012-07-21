@@ -7,11 +7,7 @@ use Modern::Perl;
 use Moose;
 use MooseX::Singleton;
 
-use Term::ReadPassword;
-
 use App::LDAP::Command;
-use App::LDAP::Config;
-use App::LDAP::Connection;
 
 with 'App::LDAP::Role';
 
@@ -22,26 +18,11 @@ sub run {
 
   $self->handshake;
 
-  ($< == 0) ? $self->bindroot() : $self->binduser();
-
   App::LDAP::Command
       ->dispatch(@ARGV)
       ->new_with_options
+      ->prepare()
       ->run();
-}
-
-sub bindroot {
-    ldap()->bind(
-        config()->{rootbinddn},
-        password => read_password("ldap admin password: "),
-    );
-}
-
-sub binduser {
-    ldap()->bind(
-        find_user("uidNumber", $<)->dn,
-        password => read_password("your password: "),
-    );
 }
 
 sub handshake {

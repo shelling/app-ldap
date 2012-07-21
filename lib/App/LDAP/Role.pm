@@ -4,10 +4,12 @@ use Modern::Perl;
 
 use Moose::Role;
 
+use App::LDAP::Config;
 sub config {
     App::LDAP::Config->instance;
 }
 
+use App::LDAP::Connection;
 sub ldap {
     App::LDAP::Connection->instance;
 }
