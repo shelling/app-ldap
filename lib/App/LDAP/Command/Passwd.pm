@@ -4,7 +4,8 @@ use Modern::Perl;
 
 use Moose;
 
-with 'App::LDAP::Role::Command';
+with qw( App::LDAP::Role::Command
+         App::LDAP::Role::Bindable );
 
 has lock => (
     is  => "rw",
