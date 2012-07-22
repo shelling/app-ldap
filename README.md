@@ -46,8 +46,8 @@ to read the documentation online with your favorite pager.
 
 ## USAGE
 
-Assume your base is `dc=example,dc=com` which has been set up in /etc/ldap/ldap.conf or a acceptable place. and there are
-also some Organizational Units has been set up for nss and pam modules as following.
+Assume your base is `dc=example,dc=com` which has been set up in `/etc/ldap/ldap.conf` or a acceptable place. and there
+are also some Organizational Units has been set up for *nss* and *pam* modules as following.
 
 + ou=people,dc=example,dc=com
 + ou=groups,dc=example,dc=com
@@ -64,26 +64,26 @@ App::LDAP do it for you even better.
 
 ### add
 
-After accomplishing all prerequisites, The schemas have been supported in App::LDAP::LDIF::* can be added via command
+After accomplishing all prerequisites, The schemas have been supported in `App::LDAP::LDIF::*` can be added via command
 line.
 
-    $ sudo ldap add user shelling         # add posixAccount *uid=shelling*,ou=people,dc=example,dc=com
+    $ sudo ldap add user shelling         # add posixAccount uid=shelling,ou=people,dc=example,dc=com
 
-    $ sudo ldap add group maintainer      # add posixGroup *cn=maintainer*,ou=groups,dc=example,dc=com
+    $ sudo ldap add group maintainer      # add posixGroup cn=maintainer,ou=groups,dc=example,dc=com
 
-    $ sudo ldap add sudoer shelling       # add sudoer *cn=shelling*,ou=sudoers,dc=example,dc=com
+    $ sudo ldap add sudoer shelling       # add sudoer cn=shelling,ou=sudoers,dc=example,dc=com
 
-    $ sudo ldap add host dns              # add host *cn=dns*,ou=hosts,dc=example,dc=com
+    $ sudo ldap add host dns              # add host cn=dns,ou=hosts,dc=example,dc=com
 
-    $ sudo ldap add ou test               # add organizational unit *ou=test*,dc=example,dc=com
+    $ sudo ldap add ou test               # add organizational unit ou=test,dc=example,dc=com
 
 ### delete
 
 Every schema is also supported to be deleted from command line.
 
-    $ sudo ldap del user shelling         # delete posixAccount *uid=shelling*,ou=people,dc=example,dc=com
+    $ sudo ldap del user shelling         # delete posixAccount uid=shelling,ou=people,dc=example,dc=com
 
-    $ sudo ldap del group maintainer      # delete posixGroup *cn=maintainer*,dc=groups,dc=example,dc=com
+    $ sudo ldap del group maintainer      # delete posixGroup cn=maintainer,dc=groups,dc=example,dc=com
 
 ### password
 
