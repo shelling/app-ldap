@@ -46,7 +46,7 @@ to read the documentation online with your favorite pager.
 
 ## USAGE
 
-Assume your base is `dc=example,dc=org` which has been set up in /etc/ldap/ldap.conf or a acceptable place. and there are
+Assume your base is `dc=example,dc=com` which has been set up in /etc/ldap/ldap.conf or a acceptable place. and there are
 also some Organizational Units has been set up for nss and pam modules as following.
 
 + ou=people,dc=example,dc=com
