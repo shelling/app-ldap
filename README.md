@@ -54,12 +54,16 @@ also some Organizational Units has been set up for nss and pam modules as follow
 + ou=hosts,dc=exampke,dc=com
 + ou=sudoers,dc=example,dc=com
 
+### initialize
+
 App::LDAP also requires some third-party schemas to function. These schemas are shipped with the project in the folder
 `schema/`. You can import them into the LDAP server via `$ ldapadd -Y EXTERNAL -I LDAPI:/// -f filename.ldif` or let
 App::LDAP do it for you even better.
 
     $ sudo ldap init                      # configure server to load schema/* at runtime
-    
+
+### add
+
 After accomplishing all prerequisites, The schemas have been supported in App::LDAP::LDIF::* can be added via command
 line.
 
@@ -67,17 +71,21 @@ line.
 
     $ sudo ldap add group maintainer      # add posixGroup *cn=maintainer*,ou=groups,dc=example,dc=com
 
-    $ sudo ldap add sudoer shelling       # set sudoer *cn=shelling*,ou=sudoers,dc=example,dc=com
+    $ sudo ldap add sudoer shelling       # add sudoer *cn=shelling*,ou=sudoers,dc=example,dc=com
 
     $ sudo ldap add host dns              # add host *cn=dns*,ou=hosts,dc=example,dc=com
 
     $ sudo ldap add ou test               # add organizational unit *ou=test*,dc=example,dc=com
-    
+
+### delete
+
 Every schema is also supported to be deleted from command line.
 
     $ sudo ldap del user shelling         # delete posixAccount *uid=shelling*,ou=people,dc=example,dc=com
 
     $ sudo ldap del group maintainer      # delete posixGroup *cn=maintainer*,dc=groups,dc=example,dc=com
+
+### password
 
 App::LDAP can guess your role from your UID, and help you to change your password.
 
@@ -88,7 +96,9 @@ App::LDAP can guess your role from your UID, and help you to change your passwor
     $ sudo ldap passwd shelling --lock    # lock shelling
 
     $ sudo ldap passwd shelling --unlock  # unlock shelling
-    
+
+### backup and restoring
+
 Doing backup and restoring are also supported.
 
     $ sudo ldap import new.ldif           # add content of new.ldif
