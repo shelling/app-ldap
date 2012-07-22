@@ -8,7 +8,7 @@ with 'App::LDAP::Role::Command';
 
 sub run {
     my ($self,) = @_;
-    say "command->del";
+    ...
 }
 
 __PACKAGE__->meta->make_immutable;
