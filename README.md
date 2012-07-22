@@ -63,21 +63,21 @@ App::LDAP do it for you even better.
 After accomplishing all prerequisites, The schemas have been supported in App::LDAP::LDIF::* can be added via command
 line.
 
-    $ sudo ldap add user shelling         # add posixAccount uid=shelling,ou=people,dc=example,dc=com
+    $ sudo ldap add user shelling         # add posixAccount *uid=shelling*,ou=people,dc=example,dc=com
 
-    $ sudo ldap add group maintainer      # add posixGroup cn=maintainer,dc=groups,dc=example,dc=com
+    $ sudo ldap add group maintainer      # add posixGroup *cn=maintainer*,ou=groups,dc=example,dc=com
 
-    $ sudo ldap add sudoer shelling       # set sudoer cn=shelling,ou=sudoers,dc=example,dc=com
+    $ sudo ldap add sudoer shelling       # set sudoer *cn=shelling*,ou=sudoers,dc=example,dc=com
 
-    $ sudo ldap add host dns              # add host cn=dns,ou=hosts,dc=example,dc=com
+    $ sudo ldap add host dns              # add host *cn=dns*,ou=hosts,dc=example,dc=com
 
-    $ sudo ldap add ou test               # add organizational unit ou=test,dc=example,dc=com
+    $ sudo ldap add ou test               # add organizational unit *ou=test*,dc=example,dc=com
     
 Every schema is also supported to be deleted from command line.
 
-    $ sudo ldap del user shelling         # delete posixAccount uid=shelling,ou=people,dc=example,dc=com
+    $ sudo ldap del user shelling         # delete posixAccount *uid=shelling*,ou=people,dc=example,dc=com
 
-    $ sudo ldap del group maintainer      # delete posixGroup cn=maintainer,dc=groups,dc=example,dc=com
+    $ sudo ldap del group maintainer      # delete posixGroup *cn=maintainer*,dc=groups,dc=example,dc=com
 
 App::LDAP can guess your role from your UID, and help you to change your password.
 
