@@ -23,8 +23,11 @@ App::LDAP installation is straightforward. If your CPAN shell is set up,
 you should just be able to do
 
     $ cpan App::LDAP
+    
+You can also intall it into the [perlbrew](http://perlbrew.pl/) environment via
+[cpanm](https://github.com/miyagawa/cpanminus). Actually, this is the way used on developing App::LDAP.
 
-Download it, unpack it, then build it as per the usual:
+Of course, you can use the most basic way. Download it, unpack it, then build it as per the usual:
 
     $ perl Makefile.PL
     $ make && make test
@@ -52,27 +55,29 @@ also some Organizational Units has been set up for nss and pam modules as follow
 + ou=sudoers,dc=example,dc=com
 
 App::LDAP also requires some third-party schemas to function. These schemas are shipped with the project in the folder
-`schema/`. You can import them into the LDAP server via `$ ldapadd -Y EXTERNAL -I LDAPI:/// -f schema.ldif` or do it via
-App::LDAP.
+`schema/`. You can import them into the LDAP server via `$ ldapadd -Y EXTERNAL -I LDAPI:/// -f filename.ldif` or let
+App::LDAP do it for you even better.
 
     $ sudo ldap init                      # configure server to load schema/* at runtime
     
-After accomplishing all prerequisites, The schemas have been supported in App::LDAP::LDIF::* can be added or deleted vi
-command line.
+After accomplishing all prerequisites, The schemas have been supported in App::LDAP::LDIF::* can be added via command
+line.
 
-    $ sudo ldap add user shelling         # add posixAccount `uid=shelling,ou=people,dc=example,dc=com`
+    $ sudo ldap add user shelling         # add posixAccount uid=shelling,ou=people,dc=example,dc=com
 
-    $ sudo ldap add group maintainer      # add posixGroup `cn=maintainer,dc=groups,dc=example,dc=com`
+    $ sudo ldap add group maintainer      # add posixGroup cn=maintainer,dc=groups,dc=example,dc=com
 
-    $ sudo ldap del user shelling         # delete posixAccount `uid=shelling,ou=people,dc=example,dc=com`
+    $ sudo ldap add sudoer shelling       # set sudoer cn=shelling,ou=sudoers,dc=example,dc=com
 
-    $ sudo ldap del group maintainer      # delete posixGroup `cn=maintainer,dc=groups,dc=example,dc=com`
+    $ sudo ldap add host dns              # add host cn=dns,ou=hosts,dc=example,dc=com
 
-    $ sudo ldap add sudoer shelling       # set sudoer `cn=shelling,ou=sudoers,dc=example,dc=com`
+    $ sudo ldap add ou test               # add organizational unit ou=test,dc=example,dc=com
+    
+Every schema is also supported to be deleted from command line.
 
-    $ sudo ldap add host dns              # add host `cn=dns,ou=hosts,dc=example,dc=com`
+    $ sudo ldap del user shelling         # delete posixAccount uid=shelling,ou=people,dc=example,dc=com
 
-    $ sudo ldap add ou test               # add organizational unit `ou=test,dc=example,dc=com`
+    $ sudo ldap del group maintainer      # delete posixGroup cn=maintainer,dc=groups,dc=example,dc=com
 
 App::LDAP can guess your role from your UID, and help you to change your password.
 
@@ -88,7 +93,7 @@ Doing backup and restoring are also supported.
 
     $ sudo ldap import blah.ldif          # add content of blah.ldif
 
-    $ sudo ldap export out.ldif           # save all entries under `dc=example,dc=com` into out.ldif
+    $ sudo ldap export out.ldif           # save all entries under dc=example,dc=com into out.ldif
                                      
 ## LICENSE
 
