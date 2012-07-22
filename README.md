@@ -85,15 +85,15 @@ App::LDAP can guess your role from your UID, and help you to change your passwor
 
     $ sudo ldap passwd shelling           # using priviledge of ldap admin to change passwd of shelling
 
-    $ sudo ldap passwd shelling -l        # lock shelling
+    $ sudo ldap passwd shelling --lock    # lock shelling
 
-    $ sudo ldap passwd shelling -u        # unlock shelling
+    $ sudo ldap passwd shelling --unlock  # unlock shelling
     
 Doing backup and restoring are also supported.
 
-    $ sudo ldap import blah.ldif          # add content of blah.ldif
+    $ sudo ldap import new.ldif           # add content of new.ldif
 
-    $ sudo ldap export out.ldif           # save all entries under dc=example,dc=com into out.ldif
+    $ sudo ldap export all.ldif           # save all entries under dc=example,dc=com into all.ldif
                                      
 ## LICENSE
 
