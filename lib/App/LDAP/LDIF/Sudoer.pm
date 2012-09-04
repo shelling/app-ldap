@@ -86,3 +86,21 @@ __PACKAGE__->meta->make_immutable;
 no Moose;
 
 1;
+
+=pod
+
+=head1 NAME
+
+App::LDAP::LDIF::Sudoer - the representation of sudoers in LDAP
+
+=head1 SYNOPSIS
+
+    my $sudoer = App::LDAP::LDIF::Sudoer->new(
+        base => "ou=Sudoer,dc=example,dc=com",
+        name => "administrator",
+    );
+
+    my $entry = $sudoer->entry;
+
+=cut
+
