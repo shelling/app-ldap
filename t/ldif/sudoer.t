@@ -63,6 +63,33 @@ sudoHost: ALL
 sudoRunAsUser: ALL
 sudoCommand: ALL
 LDIF
+,
+    "can produce correct ldif",
 );
+
+use IO::String;
+
+my $ldif_string = IO::String->new(q{
+dn: cn=foo,ou=SUDOers,dc=ntucpel,dc=org
+objectClass: top
+objectClass: sudoRole
+cn: foo
+sudoUser: foo
+sudoHost: ALL
+sudoRunAsUser: ALL
+sudoCommand: ALL
+});
+
+my $entry = Net::LDAP::LDIF->new($ldif_string, "r", onerror => "die")->read_entry;
+
+my $new_from_entry = App::LDAP::LDIF::Sudoer->new($entry);
+
+is (
+    $new_from_entry->entry->ldif,
+    $entry->ldif,
+    "new from entry is identical to original",
+);
+
+
 
 done_testing;

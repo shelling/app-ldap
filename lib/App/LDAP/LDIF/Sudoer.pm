@@ -1,5 +1,7 @@
 package App::LDAP::LDIF::Sudoer;
 
+use Modern::Perl;
+
 use Moose;
 
 with 'App::LDAP::LDIF';
@@ -8,16 +10,26 @@ around BUILDARGS => sub {
     my $orig = shift;
     my $self = shift;
 
-    my $args = {@_};
-    my $base = $args->{base};
-    my $name = $args->{name};
+    if (ref($_[0]) eq 'Net::LDAP::Entry') {
+        my $entry = shift;
 
-    $self->$orig(
-        dn       => "cn=$name,$base",
-        cn       => $name,
-        sudoUser => $name,
-    );
+        my %attrs = map {
+            my $asref = $self->meta->get_attribute($_)->type_constraint->name ~~ /Ref/;
+            $_, $entry->get_value($_, asref => $asref);
+        } $entry->attributes;
 
+        $self->$orig(dn => $entry->dn, %attrs);
+    } else {
+        my $args = {@_};
+        my $base = $args->{base};
+        my $name = $args->{name};
+
+        $self->$orig(
+            dn       => "cn=$name,$base",
+            cn       => $name,
+            sudoUser => $name,
+        );
+    }
 };
 
 has dn => (
@@ -101,6 +113,10 @@ App::LDAP::LDIF::Sudoer - the representation of sudoers in LDAP
     );
 
     my $entry = $sudoer->entry;
+    # to be Net::LDAP::Entry;
+
+    my $sudoer = App::LDAP::LDIF::Sudoer->new($entry);
+    # new from a Net::LDAP::Entry;
 
 =cut
 
