@@ -70,7 +70,7 @@ LDIF
 use IO::String;
 
 my $ldif_string = IO::String->new(q{
-dn: cn=foo,ou=SUDOers,dc=ntucpel,dc=org
+dn: cn=foo,ou=SUDOers,dc=example,dc=com
 objectClass: top
 objectClass: sudoRole
 cn: foo
@@ -89,7 +89,5 @@ is (
     $entry->ldif,
     "new from entry is identical to original",
 );
-
-
 
 done_testing;
