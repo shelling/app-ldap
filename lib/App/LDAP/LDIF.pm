@@ -61,7 +61,7 @@ App::LDAP::LDIF - base class of models in App::LDAP
         isa => "Str",
     );
 
-    package Controler;
+    package Controller;
     my $dog = App::LDAP::LDIF::Animal->new( name => "lucky" );
 
     my $dog->save;
