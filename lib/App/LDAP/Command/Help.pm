@@ -7,7 +7,7 @@ use Moose;
 with 'App::LDAP::Role::Command';
 
 sub run {
-    ...
+
 }
 
 1;
