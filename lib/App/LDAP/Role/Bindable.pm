@@ -49,4 +49,8 @@ App::LDAP::Role::Bindable - make a command itself bindable to a LDAP server
     package main;
     App::LDAP::Command::YourCommand->new_with_options()->prepare()->run();
 
+=head1 DESCRIPTION
+
+This role hook the prepare() method to bind the handler through $UID to the LDAP server before running.
+
 =cut
