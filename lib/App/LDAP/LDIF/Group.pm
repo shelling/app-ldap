@@ -4,34 +4,24 @@ use Modern::Perl;
 
 use Moose;
 
-with 'App::LDAP::LDIF';
+with qw(
+    App::LDAP::LDIF
+    App::LDAP::Role::FromEntry
+);
 
-around BUILDARGS => sub {
-    my $orig = shift;
-    my $self = shift;
+sub params_to_args {
+    my ($self, %params) = @_;
 
-    if (ref($_[0]) eq 'Net::LDAP::Entry') {
-        my $entry = shift;
+    my $base = $params{base};
+    my $name = $params{name};
+    my $id   = $params{id};
 
-        my %attrs = map {
-            my $asref = $self->meta->get_attribute($_)->type_constraint->name ~~ /Ref/;
-            $_, $entry->get_value($_, asref => $asref);
-        } $entry->attributes;
-
-        $self->$orig(dn => $entry->dn, %attrs);
-    } else {
-        my $args = {@_};
-        my $base = $args->{base};
-        my $name = $args->{name};
-        my $id   = $args->{id};
-
-        $self->$orig(
-            dn        => "cn=$name,$base",
-            cn        => $name,
-            gidNumber => $id,
-        );
-    }
-};
+    return (
+        dn        => "cn=$name,$base",
+        cn        => $name,
+        gidNumber => $id,
+    );
+}
 
 has dn => (
     is       => "rw",
