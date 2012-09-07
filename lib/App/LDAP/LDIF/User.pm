@@ -1,5 +1,7 @@
 package App::LDAP::LDIF::User;
 
+use Modern::Perl;
+
 use Moose;
 
 with 'App::LDAP::LDIF';
@@ -8,22 +10,33 @@ around BUILDARGS => sub {
     my $orig = shift;
     my $self = shift;
 
-    my $args = {@_};
-    my $base     = $args->{base};
-    my $name     = $args->{name};
-    my $id       = $args->{id};
-    my $password = $args->{password};
 
-    $self->$orig(
-        dn            => "uid=$name,$base",
-        uid           => $name,
-        cn            => $name,
-        userPassword  => $password,
-        uidNumber     => $id,
-        gidNumber     => $id,
-        homeDirectory => "/home/$name",
-    );
+    if (ref($_[0]) eq 'Net::LDAP::Entry') {
+        my $entry = shift;
 
+        my %attrs = map {
+            my $asref = $self->meta->get_attribute($_)->type_constraint->name ~~ /Ref/;
+            $_, $entry->get_value($_, asref => $asref);
+        } $entry->attributes;
+
+        $self->$orig(dn => $entry->dn, %attrs);
+    } else {
+        my $args = {@_};
+        my $base     = $args->{base};
+        my $name     = $args->{name};
+        my $id       = $args->{id};
+        my $password = $args->{password};
+
+        $self->$orig(
+            dn            => "uid=$name,$base",
+            uid           => $name,
+            cn            => $name,
+            userPassword  => $password,
+            uidNumber     => $id,
+            gidNumber     => $id,
+            homeDirectory => "/home/$name",
+        );
+    }
 };
 
 has [qw(dn uid cn userPassword uidNumber gidNumber homeDirectory)] => (

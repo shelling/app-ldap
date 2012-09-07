@@ -105,4 +105,37 @@ LDIF
     "provide the same order as openldap utils",
 );
 
+use IO::String;
+
+my $ldif_string = IO::String->new(q{
+dn: uid=foo,ou=People,dc=ntucpel,dc=org
+uid: foo
+cn: foo
+objectClass: account
+objectClass: posixAccount
+objectClass: top
+objectClass: shadowAccount
+userPassword: {crypt}$6$PqFBTKAN$H9of7E7oITubjIQqWNIs3YrVkjVGgiUBzhWRc9G6EHvC1
+ VqVyHOJvf7nRoYeyCCVprZpH4otVQAHcxowOAmD91
+shadowLastChange: 11111
+shadowMax: 99999
+shadowWarning: 7
+loginShell: /bin/bash
+uidNumber: 2000
+gidNumber: 2000
+homeDirectory: /home/foo
+});
+
+my $entry = Net::LDAP::LDIF->new($ldif_string, "r", onerror => "die")->read_entry;
+
+say $entry->dump;
+
+my $new_from_entry = App::LDAP::LDIF::User->new($entry);
+
+is (
+    $new_from_entry->entry->ldif,
+    $entry->ldif,
+    "new from entry is identical to original",
+);
+
 done_testing;
