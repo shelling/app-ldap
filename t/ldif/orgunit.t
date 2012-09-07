@@ -28,6 +28,26 @@ dn: ou=People,dc=example,dc=com
 ou: People
 objectClass: organizationalUnit
 LDIF
+,
+    "provide the same order as openldap utils",
+);
+
+use IO::String;
+
+my $ldif_string = IO::String->new(q{
+dn: ou=People,dc=example,dc=com
+ou: People
+objectClass: organizationalUnit
+});
+
+my $entry = Net::LDAP::LDIF->new($ldif_string, "r", onerror => "die")->read_entry;
+
+my $new_from_entry = App::LDAP::LDIF::OrgUnit->new($entry);
+
+is (
+    $new_from_entry->entry->ldif,
+    $entry->ldif,
+    "new from entry is identical to original",
 );
 
 done_testing;
