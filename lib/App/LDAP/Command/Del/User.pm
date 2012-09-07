@@ -12,14 +12,15 @@ use App::LDAP::LDIF::User;
 sub run {
     my ($self) = shift;
 
-    my $user   = $self->extra_argv->[2] or die "no username specified";
+    my $username   = $self->extra_argv->[2] or die "no username specified";
 
-    App::LDAP::LDIF::User->delete(
+    my $user = App::LDAP::LDIF::User->search(
         base   => config()->{nss_base_passwd}->[0],
         scope  => config()->{nss_base_passwd}->[1],
-        filter => "uid=$user",
+        filter => "uid=$username",
     );
 
+    $user->delete;
 }
 
 __PACKAGE__->meta->make_immutable;

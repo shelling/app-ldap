@@ -12,14 +12,15 @@ use App::LDAP::LDIF::Group;
 sub run {
     my ($self) = shift;
 
-    my $group = $self->extra_argv->[2] or die "no group name specified";
+    my $groupname = $self->extra_argv->[2] or die "no group name specified";
 
-    App::LDAP::LDIF::Group->delete(
+    my $group = App::LDAP::LDIF::Group->search(
         base   => config()->{nss_base_group}->[0],
         scope  => config()->{nss_base_group}->[1],
-        filter => "cn=$group",
+        filter => "cn=$groupname",
     );
 
+    $group->delete;
 }
 
 __PACKAGE__->meta->make_immutable;

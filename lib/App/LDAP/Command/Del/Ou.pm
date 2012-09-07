@@ -17,14 +17,15 @@ use App::LDAP::LDIF::OrgUnit;
 sub run {
     my ($self, ) = @_;
 
-    my $ou = $self->extra_argv->[2] or die "no organization name specified";
+    my $ouname = $self->extra_argv->[2] or die "no organization name specified";
 
-    App::LDAP::LDIF::OrgUnit->delete(
+    my $ou = App::LDAP::LDIF::OrgUnit->search(
         base   => config()->{base},
         scope  => config()->{scope},
-        filter => "ou=$ou",
+        filter => "ou=$ouname",
     );
 
+    $ou->delete;
 }
 
 1;

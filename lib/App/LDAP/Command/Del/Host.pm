@@ -14,12 +14,13 @@ sub run {
 
     my $hostname = $self->extra_argv->[2] or die "no hostname specified";
 
-    App::LDAP::LDIF::Host->delete(
+    my $host = App::LDAP::LDIF::Host->search(
         base   => config()->{nss_base_hosts}->[0],
         scope  => config()->{nss_base_hosts}->[1],
         filter => "cn=$hostname",
     );
 
+    $host->delete;
 }
 
 __PACKAGE__->meta->make_immutable;

@@ -12,8 +12,16 @@ sub create {
 
 }
 
-sub read {
+sub search {
+    my ($class, %options) = @_;
 
+    my $search = ldap()->search(%options);
+
+    if ($search->count) {
+        return $class->new( $search->entry(0) );
+    } else {
+        die $options{filter} . " not found";
+    }
 }
 
 sub update {
@@ -22,18 +30,14 @@ sub update {
 
 sub delete {
     my ($self) = shift;
-    my %options = @_;
 
-    my $search = ldap()->search(@_);
+    my $msg = ldap()->delete($self->dn);
 
-    if ($search->count) {
-        ldap()->delete($search->entry(0)->dn);
-    } else {
-        die $options{filter}." not found";
-    }
+    die $msg->error if $msg->code;
 }
 
 sub save {
+    # not yet be able to modify()
     my ($self) = shift;
 
     my $msg = ldap()->add($self->entry);
