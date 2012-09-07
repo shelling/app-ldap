@@ -128,8 +128,6 @@ homeDirectory: /home/foo
 
 my $entry = Net::LDAP::LDIF->new($ldif_string, "r", onerror => "die")->read_entry;
 
-say $entry->dump;
-
 my $new_from_entry = App::LDAP::LDIF::User->new($entry);
 
 is (
