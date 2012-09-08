@@ -6,7 +6,6 @@ use Moose;
 
 with qw(
     App::LDAP::LDIF
-    App::LDAP::Role::FromEntry
 );
 
 sub params_to_args {

@@ -6,7 +6,10 @@ use Net::LDAP::Entry;
 
 use Moose::Role;
 
-with 'App::LDAP::Role';
+with qw(
+    App::LDAP::Role
+    App::LDAP::Role::FromEntry
+);
 
 around BUILDARGS => sub {
     my $orig = shift;
