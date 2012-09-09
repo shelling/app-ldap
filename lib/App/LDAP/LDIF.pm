@@ -34,7 +34,7 @@ sub search {
     if ($search->count) {
         return $class->new( $search->entry(0) );
     } else {
-        die $options{filter} . " not found";
+        return undef;
     }
 }
 
