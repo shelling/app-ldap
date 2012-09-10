@@ -37,7 +37,7 @@ sub run {
 
     my $username = $self->extra_argv->[2] or die "no username specified";
 
-    die "user $username has existed" if App::LDAP::LDIF::User->search(
+    die "user $username already exists" if App::LDAP::LDIF::User->search(
         base   => config()->{nss_base_passwd}->[0],
         scope  => config()->{nss_base_passwd}->[1],
         filter => "uid=$username",
