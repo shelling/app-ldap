@@ -19,6 +19,12 @@ sub run {
 
     my $sudoername = $self->extra_argv->[2] or die "no sudoer name specified";
 
+    die "sudoer $sudoername already exists" if App::LDAP::LDIF::Sudoer->search(
+        base   => config()->{sudoers_base}->[0],
+        scope  => config()->{sudoers_base}->[1] // "sub",
+        filter => "cn=$sudoername",
+    );
+
     my $sudoer = App::LDAP::LDIF::Sudoer->new(
         base => $self->base // config()->{sudoers_base}->[0],
         name => $sudoername,

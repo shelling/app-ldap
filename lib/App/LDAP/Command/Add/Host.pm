@@ -21,6 +21,12 @@ sub run {
 
     my $hostname = $self->extra_argv->[2] or die "no hostname specified";
 
+    die "host $hostname already exists" if App::LDAP::LDIF::Host->search(
+        base   => config()->{nss_base_hosts}->[0],
+        scope  => config()->{nss_base_hosts}->[1],
+        filter => "cn=$hostname",
+    );
+
     my $ip = prompt('x', 'ip address:', '', '');
 
     my $host = App::LDAP::LDIF::Host->new(

@@ -17,11 +17,17 @@ use App::LDAP::LDIF::OrgUnit;
 sub run {
     my ($self, ) = @_;
 
-    my $name = $self->extra_argv->[2] or die "no organization name specified";
+    my $ouname = $self->extra_argv->[2] or die "no organization name specified";
+
+    die "ou $ouname already exists" if App::LDAP::LDIF::OrgUnit->search(
+        base   => config()->{base},
+        scope  => config()->{scope},
+        filter => "ou=$ouname",
+    );
 
     my $ou = App::LDAP::LDIF::OrgUnit->new(
         base => $self->base // config()->{base},
-        name => $name,
+        name => $ouname,
     );
 
     $ou->save;

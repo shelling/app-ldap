@@ -22,6 +22,12 @@ sub run {
 
     my $groupname = $self->extra_argv->[2] or die "no group name specified";
 
+    die "group $groupname already exists" if App::LDAP::LDIF::Group->search(
+        base   => config()->{nss_base_group}->[0],
+        scope  => config()->{nss_base_group}->[1],
+        filter => "cn=$groupname",
+    );
+
     my $group = App::LDAP::LDIF::Group->new(
         base => $self->base // config()->{nss_base_group}->[0],
         name => $groupname,
