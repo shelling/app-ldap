@@ -42,7 +42,7 @@ as describing in MooseX::Getopt, invoking helpers from App::LDAP::Role, and disp
 
 use Modern::Perl;
 use Moose::Role;
-with qw( MooseX::Getopt
+with qw( MooseX::Getopt::Dashes
          App::LDAP::Role );
 
 =head1 METHODS
