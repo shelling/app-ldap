@@ -54,14 +54,14 @@ has shadowLastChange => (
 
 has shadowMax => (
     is      => "rw",
-    isa     => "Str",
-    default => "99999",
+    isa     => "Num",
+    default => 99999,
 );
 
 has shadowWarning => (
     is      => "rw",
-    isa     => "Str",
-    default => "7",
+    isa     => "Num",
+    default => 7,
 );
 
 has loginShell => (
