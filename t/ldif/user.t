@@ -28,6 +28,7 @@ is_deeply (
               uidNumber
               gidNumber
               gecos
+              description
               homeDirectory )],
     "ensure the attributes",
 );

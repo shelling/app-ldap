@@ -88,6 +88,11 @@ has gecos => (
     isa => "Str",
 );
 
+has description => (
+    is  => "rw",
+    isa => "Str",
+);
+
 sub entry {
     my ($self) = shift;
 
