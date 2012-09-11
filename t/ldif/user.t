@@ -23,6 +23,7 @@ is_deeply (
               loginShell
               uidNumber
               gidNumber
+              gecos
               homeDirectory )],
     "ensure the attributes",
 );
