@@ -18,8 +18,12 @@ is_deeply (
               objectClass
               userPassword
               shadowLastChange
+              shadowMin
               shadowMax
               shadowWarning
+              shadowInactive
+              shadowExpire
+              shadowFlag
               loginShell
               uidNumber
               gidNumber

@@ -52,6 +52,13 @@ has shadowLastChange => (
     default => "11111",
 );
 
+has shadowMin => (
+    is      => "rw",
+    isa     => "Num",
+    default => 0,
+);
+
+
 has shadowMax => (
     is      => "rw",
     isa     => "Num",
@@ -63,6 +70,12 @@ has shadowWarning => (
     isa     => "Num",
     default => 7,
 );
+
+has [qw( shadowInactive shadowExpire shadowFlag )] => (
+    is  => "rw",
+    isa => "Num",
+);
+
 
 has loginShell => (
     is      => "rw",
