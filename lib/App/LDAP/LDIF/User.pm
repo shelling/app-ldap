@@ -70,6 +70,11 @@ has loginShell => (
     default => "/bin/bash",
 );
 
+has gecos => (
+    is  => "rw",
+    isa => "Str",
+);
+
 sub entry {
     my ($self) = shift;
 
