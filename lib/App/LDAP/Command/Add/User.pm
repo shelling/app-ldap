@@ -26,8 +26,9 @@ has group => (
 );
 
 has base => (
-    is  => "rw",
-    isa => "Str",
+    is            => "rw",
+    isa           => "Str",
+    documentation => 'the organizational unit this user belongs to. default /etc/ldap/ldap.conf nss_base_passwd.',
 );
 
 use App::LDAP::LDIF::User;
