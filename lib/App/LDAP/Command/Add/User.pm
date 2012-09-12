@@ -29,6 +29,16 @@ has base => (
 
 use App::LDAP::LDIF::User;
 
+around prepare => sub {
+    my $orig = shift;
+    my $self = shift;
+
+    $self->group($self->extra_argv->[2]) unless $self->group;
+    # $self->group is the same as user name if undefined
+
+    $self->$orig(@_);
+};
+
 # {{{ sub run
 sub run {
     my ($self) = shift;
