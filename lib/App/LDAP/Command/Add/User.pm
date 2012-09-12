@@ -8,18 +8,21 @@ with qw( App::LDAP::Role::Command
          App::LDAP::Role::Bindable );
 
 has shell => (
-    is  => "rw",
-    isa => "Str",
+    is            => "rw",
+    isa           => "Str",
+    documentation => "the login shell. default /bin/bash.",
 );
 
 has home => (
-    is  => "rw",
-    isa => "Str",
+    is            => "rw",
+    isa           => "Str",
+    documentation => 'the home directory. default /home/\$username',
 );
 
 has group => (
-    is  => "rw",
-    isa => "Str",
+    is            => "rw",
+    isa           => "Str",
+    documentation => 'the group name. default $username',
 );
 
 has base => (
