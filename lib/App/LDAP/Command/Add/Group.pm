@@ -37,6 +37,8 @@ sub run {
     $group->save;
 
     $gid->replace(gidNumber => $gid->get_value("gidNumber")+1)->update(ldap());
+
+    $group;
 }
 # }}}
 

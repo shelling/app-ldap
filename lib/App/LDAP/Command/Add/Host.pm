@@ -36,6 +36,8 @@ sub run {
     );
 
     $host->save;
+
+    $host;
 }
 
 __PACKAGE__->meta->make_immutable;

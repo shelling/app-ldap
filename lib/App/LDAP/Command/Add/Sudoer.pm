@@ -32,6 +32,7 @@ sub run {
 
     $sudoer->save;
 
+    $sudoer;
 }
 
 __PACKAGE__->meta->make_immutable;

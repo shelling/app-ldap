@@ -71,6 +71,7 @@ sub run {
 
     $uid->replace(uidNumber => $uid->get_value("uidNumber")+1)->update(ldap());
 
+    $user;
 }
 # }}}
 
