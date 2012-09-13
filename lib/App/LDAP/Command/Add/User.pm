@@ -136,9 +136,13 @@ App::LDAP::Command::Add::User - handler for adding users
 
 =head1 SYNOPSIS
 
-    # ldap add user hello
+    # ldap add user hello --mail hello@example.com
 
-    # ldap add user mark --shell zsh --home /home/developer/mark
+    # ldap add user mark --mail mark@facebook.com \
+                         --surname Zuckerberg \
+                         --group founder \
+                         --shell zsh \
+                         --home /home/developer/mark
 
 
 =cut
