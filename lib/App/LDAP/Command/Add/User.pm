@@ -31,6 +31,22 @@ has base => (
     documentation => 'the organizational unit this user belongs to. default /etc/ldap/ldap.conf nss_base_passwd.',
 );
 
+# inetOrgPerson
+
+has surname => (
+    is            => "rw",
+    isa           => "Str",
+    default       => "NULL",
+    documentation => 'the surname. default $username',
+);
+
+has mail => (
+    is            => "rw",
+    isa           => "ArrayRef",
+    required      => 1,
+    documentation => "the email addresses. this option can be multiple values"
+);
+
 use App::LDAP::LDIF::User;
 
 around prepare => sub {
@@ -58,10 +74,13 @@ sub run {
     );
 
     my $user = App::LDAP::LDIF::User->new(
-        base     => $self->base // config()->{nss_base_passwd}->[0],
-        name     => $username,
-        password => encrypt(new_password()),
-        id       => $uid->get_value("uidNumber"),
+        base      => $self->base // config()->{nss_base_passwd}->[0],
+        name      => $username,
+        password  => encrypt(new_password()),
+        uidNumber => $uid->get_value("uidNumber"),
+        gidNumber => $self->gid_of( $self->group ),
+        sn        => $self->surname,
+        mail      => $self->mail,
     );
 
     $user->loginShell    ( $self->shell )  if $self->shell;
@@ -80,6 +99,28 @@ sub next_uid {
         base   => config()->{base},
         filter => "(objectClass=uidnext)",
     )->entry(0);
+}
+
+sub gid_of {
+    my ($self, $groupname) = @_;
+
+    use App::LDAP::LDIF::Group;
+    my $group = App::LDAP::LDIF::Group->search(
+        base   => config()->{nss_base_group}->[0],
+        scope  => config()->{nss_base_group}->[1],
+        filter => "cn=$groupname",
+    );
+
+    return $group ? $group->gidNumber : $self->create_group($groupname)->gidNumber;
+}
+
+sub create_group {
+    my ($self, $groupname) = @_;
+
+    use App::LDAP::Command::Add::Group;
+    local *ARGV = ['add', 'group', $groupname];
+
+    App::LDAP::Command::Add::Group->new_with_options->run;
 }
 
 __PACKAGE__->meta->make_immutable;
