@@ -58,7 +58,6 @@ has shadowMin => (
     default => 0,
 );
 
-
 has shadowMax => (
     is      => "rw",
     isa     => "Num",
@@ -75,7 +74,6 @@ has [qw( shadowInactive shadowExpire shadowFlag )] => (
     is  => "rw",
     isa => "Num",
 );
-
 
 has loginShell => (
     is      => "rw",
@@ -156,7 +154,6 @@ has [qw( audio
     is  => "rw",
     isa => "Str",
 );
-
 
 sub entry {
     my ($self) = shift;
