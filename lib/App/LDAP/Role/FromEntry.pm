@@ -10,7 +10,7 @@ sub entry_to_args {
     my ($self, $entry) = @_;
 
     my %attrs = map {
-        my $asref = $self->meta->get_attribute($_)->type_constraint->name ~~ /Ref/;
+        my $asref = $self->meta->find_attribute_by_name($_)->type_constraint->name ~~ /Ref/;
         $_, $entry->get_value($_, asref => $asref);
     } $entry->attributes;
 
