@@ -123,6 +123,12 @@ is (
 );
 
 is (
+    $user->shadowMin,
+    0,
+    "shadowMin has default 0",
+);
+
+is (
     $user->shadowMax,
     "99999",
     "shadowMax has default",
