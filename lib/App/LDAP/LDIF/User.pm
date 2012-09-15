@@ -7,6 +7,7 @@ use Moose;
 extends qw(
     App::LDAP::ObjectClass::PosixAccount
     App::LDAP::ObjectClass::ShadowAccount
+    App::LDAP::ObjectClass::InetOrgPerson
 );
 
 with qw(
@@ -77,66 +78,8 @@ has '+shadowWarning' => (
 
 # inetOrgPerson
 
-has sn => (                     # person
-    is       => "rw",
-    isa      => "Str",
+has '+mail' => (
     required => 1,
-);
-
-has mail => (                   # inetOrgPerson
-    is       => "rw",
-    isa      => "ArrayRef[Str]",
-    required => 1,
-);
-
-has [qw( audio
-         businessCategory
-         carLicense
-         departmentNumber
-         displayName
-         employeeNumber
-         employeeType
-         givenName
-         homePhone
-         homePostalAddress
-         initials
-         jpegPhoto
-         labeledURI
-         manager
-         mobile
-         o
-         pager
-         photo
-         roomNumber
-         secretary
-         userCertificate
-         x500uniqueIdentifier
-         preferredLanguage
-         userSMIMECertificate
-         userPKCS12
-
-         title
-         x121Address
-         registeredAddress
-         destinationIndicator
-         preferredDeliveryMethod
-         telexNumber
-         teletexTerminalIdentifier
-         telephoneNumber
-         internationaliSDNNumber
-         facsimileTelephoneNumber
-         street
-         postOfficeBox
-         postalCode
-         postalAddress
-         physicalDeliveryOfficeName
-         ou
-         st
-         l
-
-         seeAlso )] => (
-    is  => "rw",
-    isa => "Str",
 );
 
 sub entry {
