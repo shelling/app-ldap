@@ -74,13 +74,13 @@ sub run {
     );
 
     my $user = App::LDAP::LDIF::User->new(
-        base      => $self->base // config()->{nss_base_passwd}->[0],
-        name      => $username,
-        password  => encrypt(new_password()),
-        uidNumber => $uid->get_value("uidNumber"),
-        gidNumber => $self->gid_of( $self->group ),
-        sn        => $self->surname,
-        mail      => $self->mail,
+        base         => $self->base // config()->{nss_base_passwd}->[0],
+        uid          => $username,
+        userPassword => encrypt(new_password()),
+        uidNumber    => $uid->get_value("uidNumber"),
+        gidNumber    => $self->gid_of( $self->group ),
+        sn           => $self->surname,
+        mail         => $self->mail,
     );
 
     $user->loginShell    ( $self->shell )  if $self->shell;

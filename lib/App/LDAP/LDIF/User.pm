@@ -17,14 +17,8 @@ with qw(
 sub params_to_args {
     my ($self, %params) = @_;
 
-    my $base     = delete $params{base};
-    my $name     = delete $params{name};
-    my $password = delete $params{password};
-
     return (
-        dn            => "uid=$name,$base",
-        uid           => $name,
-        userPassword  => $password,
+        dn => "uid=".$params{uid}.",".$params{base},
         %params,
     );
 }

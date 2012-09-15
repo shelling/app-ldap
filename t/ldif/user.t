@@ -4,14 +4,14 @@ use Test::More;
 use App::LDAP::LDIF::User;
 
 my $user = App::LDAP::LDIF::User->new(
-    base      => "ou=People,dc=example,dc=com",
-    name      => "nobody",
-    password  => "appldap0000",
-    uidNumber => 1001,
-    gidNumber => 1001,
-    sn        => "nobody",
-    mail      => ['nobody@example.com'],
-    title     => "Engineer",
+    base         => "ou=People,dc=example,dc=com",
+    uid          => "nobody",
+    userPassword => "appldap0000",
+    uidNumber    => 1001,
+    gidNumber    => 1001,
+    sn           => "nobody",
+    mail         => ['nobody@example.com'],
+    title        => "Engineer",
 );
 
 is_deeply (
