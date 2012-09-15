@@ -86,12 +86,21 @@ is_deeply (
     "ensure the attributes",
 );
 
-for (qw( objectClass sn cn uid uidNumber gidNumber homeDirectory )) {
-    ok (
-        App::LDAP::LDIF::User->meta->find_attribute_by_name($_)->is_required,
-        "$_ is required in LDIF::User",
-    );
-}
+is_deeply (
+    [sort map { $_->name } grep { $_->is_required } App::LDAP::LDIF::User->meta->get_all_attributes],
+    [sort qw( objectClass
+              sn
+              cn
+              uid
+              uidNumber
+              gidNumber
+              homeDirectory
+
+              dn
+              mail
+              userPassword )],
+    "make sure required attributes",
+);
 
 is (
     $user->dn,
