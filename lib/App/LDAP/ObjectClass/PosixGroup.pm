@@ -12,10 +12,16 @@ has [qw(cn gidNumber)] => (
     required => 1,
 );
 
-has [qw(userPassword memberUid description)] => (
+has [qw(userPassword description)] => (
     is  => "rw",
     isa => "Str",
 );
+
+has memberUid => (
+    is  => "rw",
+    isa => "ArrayRef[Str]",
+);
+
 
 __PACKAGE__->meta->make_immutable;
 no Moose;
