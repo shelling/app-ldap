@@ -6,6 +6,7 @@ use Moose;
 
 extends qw(
     App::LDAP::ObjectClass::PosixAccount
+    App::LDAP::ObjectClass::ShadowAccount
 );
 
 with qw(
@@ -56,33 +57,22 @@ has '+loginShell' => (
     default => "/bin/bash",
 );
 
-has shadowLastChange => (
-    is      => "rw",
-    isa     => "Str",
-    default => "11111",
+has '+shadowLastChange' => (
+    default => sub {
+        11111
+    },
 );
 
-has shadowMin => (
-    is      => "rw",
-    isa     => "Num",
+has '+shadowMin' => (
     default => 0,
 );
 
-has shadowMax => (
-    is      => "rw",
-    isa     => "Num",
+has '+shadowMax' => (
     default => 99999,
 );
 
-has shadowWarning => (
-    is      => "rw",
-    isa     => "Num",
+has '+shadowWarning' => (
     default => 7,
-);
-
-has [qw( shadowInactive shadowExpire shadowFlag )] => (
-    is  => "rw",
-    isa => "Num",
 );
 
 # inetOrgPerson
