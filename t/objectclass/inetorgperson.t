@@ -39,4 +39,11 @@ for (qw( audio
     );
 }
 
+for (qw( cn sn objectClass )) {
+    ok (
+        App::LDAP::ObjectClass::InetOrgPerson->meta->find_attribute_by_name($_)->is_required,
+        "$_ is required in inetOrgPerson",
+    );
+}
+
 done_testing;
