@@ -200,6 +200,12 @@ like (
 
 like (
     $user->entry->ldif,
+    qr{shadowLastChange:},
+    "shadowLastChange has been exported",
+);
+
+like (
+    $user->entry->ldif,
     qr{uidNumber: 1001},
     "uidNumber has been exported",
 );
@@ -230,7 +236,7 @@ objectClass: top
 objectClass: shadowAccount
 userPassword: {crypt}$6$PqFBTKAN$H9of7E7oITubjIQqWNIs3YrVkjVGgiUBzhWRc9G6EHvC1
  VqVyHOJvf7nRoYeyCCVprZpH4otVQAHcxowOAmD91
-shadowLastChange: 11111
+shadowLastChange: 22222
 shadowMax: 99999
 shadowWarning: 7
 loginShell: /bin/bash
@@ -278,6 +284,12 @@ is (
     $new_from_entry->title,
     "Engineer",
     "title is correct",
+);
+
+is (
+    $new_from_entry->shadowLastChange,
+    "22222",
+    "shadowLastChange is correct",
 );
 
 done_testing;
