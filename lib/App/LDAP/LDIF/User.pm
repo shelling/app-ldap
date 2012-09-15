@@ -4,6 +4,10 @@ use Modern::Perl;
 
 use Moose;
 
+extends qw(
+    App::LDAP::ObjectClass::PosixAccount
+);
+
 with qw(
     App::LDAP::LDIF
 );
@@ -27,15 +31,13 @@ sub params_to_args {
 
 # posixAccount and shadowAccount
 
-has [qw(dn uid cn userPassword uidNumber gidNumber homeDirectory)] => (
+has dn => (
     is       => "rw",
     isa      => "Str",
     required => 1,
 );
 
-has objectClass => (
-    is      => "rw",
-    isa     => "ArrayRef[Str]",
+has '+objectClass' => (
     default => sub {
         [
             qw( inetOrgPerson
@@ -44,6 +46,14 @@ has objectClass => (
                 shadowAccount )
         ],
     },
+);
+
+has '+userPassword' => (
+    required => 1,
+);
+
+has '+loginShell' => (
+    default => "/bin/bash",
 );
 
 has shadowLastChange => (
@@ -73,22 +83,6 @@ has shadowWarning => (
 has [qw( shadowInactive shadowExpire shadowFlag )] => (
     is  => "rw",
     isa => "Num",
-);
-
-has loginShell => (
-    is      => "rw",
-    isa     => "Str",
-    default => "/bin/bash",
-);
-
-has gecos => (
-    is  => "rw",
-    isa => "Str",
-);
-
-has description => (
-    is  => "rw",
-    isa => "Str",
 );
 
 # inetOrgPerson
