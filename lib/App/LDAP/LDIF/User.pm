@@ -140,10 +140,6 @@ App::LDAP::LDIF::User - the representation of users in LDAP
 
 =head1 DESCRIPTION
 
-
-
-=head1 objectClass
-
 App::LDAP::LDIF::User is composed of objectClass top, posixAccount, shadowAccount and inetOrgPerson.
 
 The objectClass top is described in RFC2256 (core.schema of OpenLDAP) indicating this kind of entry MUST have objectClass.
@@ -155,70 +151,6 @@ The objectClass posixAccount and shadowAccount are described in RFC2307 (nis.sch
 
 The objectClass inetOrgPerson is described in RFC2798 (inetorgperson.schema of OpenLDAP). The inetOrgPerson is derived
 from organizationalPerson which is derived from person.
-
-Here is the copy of the definitions of these objectClass:
-
-=head2 posixAccount
-
-    objectclass ( 1.3.6.1.1.1.2.0 NAME 'posixAccount'
-        DESC 'Abstraction of an account with POSIX attributes'
-        SUP top AUXILIARY
-        MUST ( cn $ uid $ uidNumber $ gidNumber $ homeDirectory )
-        MAY ( userPassword $ loginShell $ gecos $ description )
-    )
-
-=head2 shadowAccount
-
-    objectclass ( 1.3.6.1.1.1.2.1
-        NAME 'shadowAccount'
-        DESC 'Additional attributes for shadow passwords'
-        SUP top AUXILIARY
-        MUST uid
-        MAY ( userPassword $ shadowLastChange $ shadowMin $
-              shadowMax $ shadowWarning $ shadowInactive $
-              shadowExpire $ shadowFlag $ description )
-    )
-
-=head2 inetOrgPerson
-
-    objectclass	( 2.16.840.1.113730.3.2.2
-        NAME 'inetOrgPerson'
-        DESC 'RFC2798: Internet Organizational Person'
-        SUP organizationalPerson
-        STRUCTURAL
-        MAY (
-            audio $ businessCategory $ carLicense $ departmentNumber $
-            displayName $ employeeNumber $ employeeType $ givenName $
-            homePhone $ homePostalAddress $ initials $ jpegPhoto $
-            labeledURI $ mail $ manager $ mobile $ o $ pager $
-            photo $ roomNumber $ secretary $ uid $ userCertificate $
-            x500uniqueIdentifier $ preferredLanguage $
-            userSMIMECertificate $ userPKCS12
-        )
-    )
-
-=head2 organizationalPerson
-
-    objectclass ( 2.5.6.7 NAME 'organizationalPerson'
-        DESC 'RFC2256: an organizational person'
-        SUP person STRUCTURAL
-        MAY (
-            title $ x121Address $ registeredAddress $ destinationIndicator $
-            preferredDeliveryMethod $ telexNumber $ teletexTerminalIdentifier $
-            telephoneNumber $ internationaliSDNNumber $ 
-            facsimileTelephoneNumber $ street $ postOfficeBox $ postalCode $
-            postalAddress $ physicalDeliveryOfficeName $ ou $ st $ l
-        )
-    )
-
-=head2 person
-
-    objectclass ( 2.5.6.6 NAME 'person'
-        DESC 'RFC2256: a person'
-        SUP top STRUCTURAL
-        MUST ( sn $ cn )
-        MAY ( userPassword $ telephoneNumber $ seeAlso $ description )
-    )
 
 =head1 NOTES
 
@@ -236,5 +168,27 @@ MUST be a attribute of a user. Since the inetOrgPerson has sn as a required attr
 
 the objectClass inetOrgPerson defines mail MAY be an attributes of a user. However, in most situations that
 inetOrgPerson is applied, mail is a necessary attribute. Since, App::LDAP defines mail as an required attribute here.
+
+=head2 loginShell
+
+default /bin/bash
+
+=head2 shadowMin
+
+the minimum days that user can change their password.
+
+default 0
+
+=head2 shadowMax
+
+the maximun days that user have to change their password.
+
+default 99999
+
+=head2 shadowWarning
+
+the day that user would be warned before password to be expired
+
+default 7
 
 =cut
