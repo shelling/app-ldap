@@ -118,19 +118,16 @@ App::LDAP::LDIF::User - the representation of users in LDAP
 =head1 SYNOPSIS
 
     my $user = App::LDAP::LDIF::User->new(
-        base      => $base,       # the OU (organization unit) which the user belongs to
-        name      => $name,       # user name
-        password  => $password,   # the password used by the user
-        uidNumber => $uid,        # the uid of the user
-        gidNumber => $gid,        # the gid of the user
-        sn        => $sn,         # the surname of this user
-        mail      => [$mail],     # mail addresses, obviously
+        base         => $base,       # the OU (organization unit) which the user belongs to
+        uid          => $name,       # user name
+        userPassword => $password,   # the password used by the user
+        uidNumber    => $uid,        # the uid of the user
+        gidNumber    => $gid,        # the gid of the user
+        sn           => $sn,         # the surname of this user
+        mail         => [$mail],     # mail addresses, obviously
     );
     # these 7 parameters are required
     # extra parameters of attributes such as title of User can be provided in constructor, too.
-    # attributes dn, uid, userPassword would be
-    # derived from base, name and password
-    # DO NOT give these attributes in constructor
 
     $user->loginShell("/bin/zsh")
     # set zsh as the user's shell
