@@ -86,6 +86,13 @@ is_deeply (
     "ensure the attributes",
 );
 
+for (qw( objectClass sn cn uid uidNumber gidNumber homeDirectory )) {
+    ok (
+        App::LDAP::LDIF::User->meta->find_attribute_by_name($_)->is_required,
+        "$_ is required in LDIF::User",
+    );
+}
+
 is (
     $user->dn,
     "uid=nobody,ou=People,dc=example,dc=com",
