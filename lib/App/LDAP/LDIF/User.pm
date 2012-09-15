@@ -24,9 +24,7 @@ sub params_to_args {
     return (
         dn            => "uid=$name,$base",
         uid           => $name,
-        cn            => $name,
         userPassword  => $password,
-        homeDirectory => "/home/$name",
         %params,
     );
 }
@@ -37,6 +35,13 @@ has dn => (
     is       => "rw",
     isa      => "Str",
     required => 1,
+);
+
+has '+cn' => (
+    lazy    => 1,
+    default => sub {
+        shift->uid
+    },
 );
 
 has '+objectClass' => (
@@ -56,6 +61,13 @@ has '+userPassword' => (
 
 has '+loginShell' => (
     default => "/bin/bash",
+);
+
+has '+homeDirectory' => (
+    lazy    => 1,
+    default => sub {
+        "/home/" . shift->uid;
+    },
 );
 
 has '+shadowLastChange' => (
@@ -122,7 +134,7 @@ App::LDAP::LDIF::User - the representation of users in LDAP
     );
     # these 7 parameters are required
     # extra parameters of attributes such as title of User can be provided in constructor, too.
-    # attributes dn, uid, cn, userPassword and homeDirectory would be
+    # attributes dn, uid, userPassword would be
     # derived from base, name and password
     # DO NOT give these attributes in constructor
 
@@ -164,6 +176,10 @@ designed for working with pam_ldap, userPassword is defined as a required attrib
 The objectClass inetOrgPerson is derived from organizationalPerson which is derived from person. The person defines sn
 MUST be a attribute of a user. Since the inetOrgPerson has sn as a required attribute.
 
+=head2 cn
+
+default $self->uid
+
 =head2 mail
 
 the objectClass inetOrgPerson defines mail MAY be an attributes of a user. However, in most situations that
@@ -190,5 +206,9 @@ default 99999
 the day that user would be warned before password to be expired
 
 default 7
+
+=head2 homeDirectory
+
+default "/home/" . $self->uid
 
 =cut
