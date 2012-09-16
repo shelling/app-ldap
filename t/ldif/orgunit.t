@@ -45,7 +45,7 @@ is_deeply (
 
 my $ou = App::LDAP::LDIF::OrgUnit->new(
     base => "dc=example,dc=com",
-    name => "People",
+    ou   => "People",
 );
 
 is (

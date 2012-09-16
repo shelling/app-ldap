@@ -15,12 +15,8 @@ with qw(
 sub params_to_args {
     my ($self, %params) = @_;
 
-    my $base = $params{base};
-    my $name = $params{name};
-
     return (
-        dn => "ou=$name,$base",
-        ou => $name,
+        dn => "ou=" .$params{ou} ."," . $params{base},
         %params,
     );
 }
@@ -56,7 +52,7 @@ App::LDAP::LDIF::OrgUnit - the representation of organization unit in LDAP
 
     my $ou = App::LDAP::LDIF::OrgUnit->new(
         base => $base,
-        name => $name,
+        ou   => $name,
     );
 
 =cut
