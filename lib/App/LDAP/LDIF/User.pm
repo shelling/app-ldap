@@ -106,7 +106,7 @@ App::LDAP::LDIF::User - the representation of users in LDAP
         userPassword => $password,   # the password used by the user
         uidNumber    => $uid,        # the uid of the user
         gidNumber    => $gid,        # the gid of the user
-        sn           => $sn,         # the surname of this user
+        sn           => [$sn],         # the surname of this user
         mail         => [$mail],     # mail addresses, obviously
     );
     # these 7 parameters are required
@@ -152,7 +152,7 @@ MUST be a attribute of a user. Since the inetOrgPerson has sn as a required attr
 
 =head2 cn
 
-default $self->uid
+required attributes. default [ $self->uid ]
 
 =head2 mail
 
