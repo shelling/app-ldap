@@ -5,8 +5,8 @@ use App::LDAP::LDIF::Group;
 
 my $group = App::LDAP::LDIF::Group->new(
     base        => "ou=Group,dc=example,dc=com",
-    name        => "nobody",
-    id          => 1001,
+    cn          => "nobody",
+    gidNumber   => 1001,
     memberUid   => [qw(foo bar)],
     description => "this is a nobody group",
 );

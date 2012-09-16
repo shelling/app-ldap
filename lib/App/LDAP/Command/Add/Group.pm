@@ -12,6 +12,11 @@ has base => (
     isa => "Str",
 );
 
+has member => (
+    is      => "rw",
+    isa     => "ArrayRef[Str]",
+);
+
 use App::LDAP::LDIF::Group;
 
 # {{{
@@ -29,10 +34,12 @@ sub run {
     );
 
     my $group = App::LDAP::LDIF::Group->new(
-        base => $self->base // config()->{nss_base_group}->[0],
-        name => $groupname,
-        id   => $gid->get_value("gidNumber"),
+        base      => $self->base // config()->{nss_base_group}->[0],
+        cn        => $groupname,
+        gidNumber => $gid->get_value("gidNumber"),
     );
+
+    $group->memberUid( $self->member ) if $self->member;
 
     $group->save;
 
