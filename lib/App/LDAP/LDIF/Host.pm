@@ -4,6 +4,11 @@ use Modern::Perl;
 
 use Moose;
 
+extends qw(
+    App::LDAP::ObjectClass::IpHost
+    App::LDAP::ObjectClass::Device
+);
+
 with qw (
     App::LDAP::LDIF
 );
@@ -17,7 +22,7 @@ sub params_to_args {
 
     return (
         dn           => "cn=$name,$base",
-        cn           => $name,
+        cn           => [$name],
         ipHostNumber => $ip,
     );
 }
@@ -28,15 +33,7 @@ has dn => (
     required => 1,
 );
 
-has cn => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
-has objectClass => (
-    is      => "rw",
-    isa     => "ArrayRef[Str]",
+has '+objectClass' => (
     default => sub {
         [
             qw( top
@@ -44,12 +41,6 @@ has objectClass => (
                 device )
         ]
     },
-);
-
-has ipHostNumber => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
 );
 
 sub entry {

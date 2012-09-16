@@ -3,6 +3,34 @@ use Test::More;
 
 use App::LDAP::LDIF::Host;
 
+is_deeply (
+    [sort map {$_->name} App::LDAP::LDIF::Host->meta->get_all_attributes],
+    [sort qw( dn
+
+              objectClass
+              cn
+              serialNumber
+              seeAlso
+              owner
+              ou
+              o
+              l
+              description
+
+              ipHostNumber
+              manager )],
+    "make sure attributes",
+);
+
+is_deeply (
+    [sort map {$_->name} grep {$_->is_required} App::LDAP::LDIF::Host->meta->get_all_attributes],
+    [sort qw( dn
+              objectClass
+              cn
+              ipHostNumber )],
+    "make sure required attributes",
+);
+
 my $host = App::LDAP::LDIF::Host->new(
     base => "ou=Hosts,dc=example,dc=com",
     name => "perl-taiwan",
@@ -15,9 +43,9 @@ is (
     "dn is composed of name and ou",
 );
 
-is (
+is_deeply (
     $host->cn,
-    "perl-taiwan",
+    ["perl-taiwan"],
     "cn is name",
 );
 
@@ -31,6 +59,16 @@ is (
     $host->ipHostNumber,
     "140.112.1.1",
     "ipHostNumber is ip",
+);
+
+like (
+    $host->entry->ldif,
+    qr{
+objectClass: top
+objectClass: ipHost
+objectClass: device
+},
+    "objectClass has been exported",
 );
 
 use IO::String;
