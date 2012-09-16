@@ -12,29 +12,29 @@ dies_ok (
 );
 
 dies_ok (
-    sub { App::LDAP::ObjectClass::Person->new(objectClass => ["person"], sn => "surname") },
+    sub { App::LDAP::ObjectClass::Person->new(objectClass => ["person"], sn => ["surname"]) },
     "should die if no cn",
 );
 
 dies_ok (
-    sub { App::LDAP::ObjectClass::Person->new(objectClass => ["person"], cn => "common name") },
+    sub { App::LDAP::ObjectClass::Person->new(objectClass => ["person"], cn => ["common name"]) },
     "should die if no sn",
 );
 
 dies_ok (
-    sub { App::LDAP::ObjectClass::Person->new(sn => "surname", cn => "common name") },
+    sub { App::LDAP::ObjectClass::Person->new(sn => ["surname"], cn => ["common name"]) },
     "should die if no objectClass",
 );
 
 lives_ok (
-    sub { App::LDAP::ObjectClass::Person->new(objectClass => ["person"], sn => "surname", cn => "common name") },
+    sub { App::LDAP::ObjectClass::Person->new(objectClass => ["person"], sn => ["surname"], cn => ["common name"]) },
     "should live if providing objectClass, sn and cn",
 );
 
 my $person = App::LDAP::ObjectClass::Person->new(
     objectClass     => ["person"],
-    sn              => "surname",
-    cn              => "common name",
+    sn              => ["surname"],
+    cn              => ["common name"],
     telephoneNumber => "000-000-000",
     userPassword    => "{crypt}x",
     seeAlso         => "core.schema",

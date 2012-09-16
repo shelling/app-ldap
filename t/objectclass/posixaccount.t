@@ -33,7 +33,7 @@ is_deeply (
 
 my %params = (
     objectClass   => ['posixAccount'],
-    cn            => "foo",
+    cn            => ["foo"],
     uid           => "foo",
     uidNumber     => "2000",
     gidNumber     => "2000",

@@ -8,7 +8,7 @@ extends qw(App::LDAP::ObjectClass::Top);
 
 has [qw(sn cn)] => (
     is       => "rw",
-    isa      => "Str",
+    isa      => "ArrayRef[Str]",
     required => 1,
 );
 

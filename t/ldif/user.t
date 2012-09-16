@@ -9,7 +9,7 @@ my $user = App::LDAP::LDIF::User->new(
     userPassword => "appldap0000",
     uidNumber    => 1001,
     gidNumber    => 1001,
-    sn           => "nobody",
+    sn           => ["nobody"],
     mail         => ['nobody@example.com'],
     title        => "Engineer",
 );
@@ -114,9 +114,9 @@ is (
     "uid is name",
 );
 
-is (
+is_deeply (
     $user->cn,
-    "nobody",
+    ["nobody"],
     "cn is name",
 );
 
@@ -162,9 +162,9 @@ is (
     "default shell should be bash",
 );
 
-is (
+is_deeply (
     $user->sn,
-    "nobody",
+    ["nobody"],
     "user has sn",
 );
 
@@ -268,9 +268,9 @@ is (
     "gidNumber is correct",
 );
 
-is (
+is_deeply (
     $new_from_entry->sn,
-    "foo",
+    ["foo"],
     "sn is correct",
 );
 

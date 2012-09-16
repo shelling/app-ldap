@@ -34,7 +34,7 @@ has dn => (
 has '+cn' => (
     lazy    => 1,
     default => sub {
-        shift->uid
+        [shift->uid]
     },
 );
 
