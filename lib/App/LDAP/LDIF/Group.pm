@@ -4,6 +4,10 @@ use Modern::Perl;
 
 use Moose;
 
+extends qw(
+    App::LDAP::ObjectClass::PosixGroup
+);
+
 with qw(
     App::LDAP::LDIF
 );
@@ -19,6 +23,7 @@ sub params_to_args {
         dn        => "cn=$name,$base",
         cn        => $name,
         gidNumber => $id,
+        %params,
     );
 }
 
@@ -28,9 +33,7 @@ has dn => (
     required => 1,
 );
 
-has objectClass => (
-    is      => "rw",
-    isa     => "ArrayRef[Str]",
+has '+objectClass' => (
     default => sub {
         [
             qw( posixGroup
@@ -39,23 +42,8 @@ has objectClass => (
     },
 );
 
-has cn => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
-has userPassword => (
-    is      => "rw",
-    isa     => "Str",
+has '+userPassword' => (
     default => "{crypt}x",
-);
-
-
-has gidNumber => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
 );
 
 sub entry {

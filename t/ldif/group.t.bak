@@ -6,36 +6,9 @@ use App::LDAP::LDIF::Group;
 my $group = App::LDAP::LDIF::Group->new(
     base        => "ou=Group,dc=example,dc=com",
     name        => "nobody",
-    id          => 1001,
+    gidNumber   => 1001,
     memberUid   => [qw(foo bar)],
     description => "this is a nobody group",
-);
-
-is_deeply (
-    [sort map {$_->name} App::LDAP::LDIF::Group->meta->get_all_attributes],
-    [sort qw( dn
-
-              objectClass
-              cn
-              gidNumber
-              userPassword
-              memberUid
-              description )],
-    "make sure attributes",
-);
-
-is_deeply (
-    [sort map {
-        $_->name
-    } grep {
-        $_->is_required
-    } App::LDAP::LDIF::Group->meta->get_all_attributes],
-    [sort qw( dn
-
-              objectClass
-              cn
-              gidNumber )],
-    "make sure required attributes",
 );
 
 is (
@@ -105,6 +78,21 @@ like (
     $group->entry->ldif,
     qr{gidNumber: 1001},
     "gidNumber has been exported",
+);
+
+like (
+    $group->entry->ldif,
+    qr{
+memberUid: foo
+memberUid: bar
+},
+    "memberUid has been exported",
+);
+
+like (
+    $group->entry->ldif,
+    qr{description: this is a nobody group},
+    "description has been exported",
 );
 
 use IO::String;
