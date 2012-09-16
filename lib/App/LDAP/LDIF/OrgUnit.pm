@@ -4,6 +4,10 @@ use Modern::Perl;
 
 use Moose;
 
+extends qw(
+    App::LDAP::ObjectClass::OrganizationalUnit
+);
+
 with qw(
     App::LDAP::LDIF
 );
@@ -17,18 +21,17 @@ sub params_to_args {
     return (
         dn => "ou=$name,$base",
         ou => $name,
+        %params,
     );
 }
 
-has [qw(dn ou)] => (
+has dn => (
     is       => "rw",
     isa      => "Str",
     required => 1,
 );
 
-has objectClass => (
-    is      => "rw",
-    isa     => "ArrayRef[Str]",
+has '+objectClass' => (
     default => sub {
         [
             qw( organizationalUnit )
@@ -64,8 +67,8 @@ App::LDAP::LDIF::OrgUnit - the representation of organization unit in LDAP
 =head1 SYNOPSIS
 
     my $ou = App::LDAP::LDIF::OrgUnit->new(
-        name => $name,
         base => $base,
+        name => $name,
     );
 
 =cut
