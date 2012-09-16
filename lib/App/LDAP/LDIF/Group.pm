@@ -16,7 +16,7 @@ sub params_to_args {
     my ($self, %params) = @_;
 
     return (
-        dn => "cn=" .$params{cn} . "," . $params{base},
+        dn => "cn=" .$params{cn}[0] . "," . $params{base},
         %params,
     );
 }

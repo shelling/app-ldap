@@ -6,7 +6,13 @@ use Moose;
 
 extends qw(App::LDAP::ObjectClass::Top);
 
-has [qw(cn gidNumber)] => (
+has cn => (
+    is       => "rw",
+    isa      => "ArrayRef[Str]",
+    required => 1,
+);
+
+has gidNumber => (
     is       => "rw",
     isa      => "Str",
     required => 1,

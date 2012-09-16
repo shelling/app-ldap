@@ -5,7 +5,7 @@ use App::LDAP::LDIF::Group;
 
 my $group = App::LDAP::LDIF::Group->new(
     base        => "ou=Group,dc=example,dc=com",
-    cn          => "nobody",
+    cn          => ["nobody", "unknown"],
     gidNumber   => 1001,
     memberUid   => [qw(foo bar)],
     description => "this is a nobody group",
@@ -41,7 +41,7 @@ is_deeply (
 is (
     $group->dn,
     "cn=nobody,ou=Group,dc=example,dc=com",
-    "dn is compose of name and ou",
+    "dn is compose of first cn and ou",
 );
 
 is_deeply (
@@ -50,10 +50,10 @@ is_deeply (
     "objectClass has default value",
 );
 
-is (
+is_deeply (
     $group->cn,
-    "nobody",
-    "cn is name",
+    ["nobody", "unknown"],
+    "cn is correct",
 );
 
 is (
@@ -152,9 +152,9 @@ is_deeply (
     "objectClass is read",
 );
 
-is (
+is_deeply (
     $new_from_entry->cn,
-    "foo",
+    ["foo"],
     "cn is read",
 );
 
