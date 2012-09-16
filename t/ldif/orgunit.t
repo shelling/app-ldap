@@ -88,4 +88,16 @@ my $entry = Net::LDAP::LDIF->new($ldif_string, "r", onerror => "die")->read_entr
 
 my $new_from_entry = App::LDAP::LDIF::OrgUnit->new($entry);
 
+is (
+    $new_from_entry->ou,
+    "People",
+    "ou is read",
+);
+
+is_deeply (
+    $new_from_entry->objectClass,
+    ['organizationalUnit'],
+    "objectClass is read",
+);
+
 done_testing;
