@@ -35,6 +35,7 @@ my $host = App::LDAP::LDIF::Host->new(
     base         => "ou=Hosts,dc=example,dc=com",
     cn           => ["perl-taiwan", "perl.tw"],
     ipHostNumber => "140.112.1.1",
+    description  => "website of perl taiwan community",
 );
 
 is (
@@ -69,6 +70,12 @@ objectClass: ipHost
 objectClass: device
 },
     "objectClass has been exported",
+);
+
+like (
+    $host->entry->ldif,
+    qr{description: website of perl taiwan community},
+    "description has been exported",
 );
 
 use IO::String;
