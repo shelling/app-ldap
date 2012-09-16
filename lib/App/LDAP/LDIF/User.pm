@@ -88,23 +88,6 @@ has '+mail' => (
     required => 1,
 );
 
-sub entry {
-    my ($self) = shift;
-
-    my $entry = Net::LDAP::Entry->new( $self->dn );
-
-    $entry->add($_ => $self->$_)
-      for grep {
-          $self->$_
-      } grep {
-          !/dn/
-      } map {
-          $_->name
-      } $self->meta->get_all_attributes;
-
-    $entry;
-}
-
 __PACKAGE__->meta->make_immutable;
 no Moose;
 1;
