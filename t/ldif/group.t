@@ -107,6 +107,21 @@ like (
     "gidNumber has been exported",
 );
 
+like (
+    $group->entry->ldif,
+    qr{
+memberUid: foo
+memberUid: bar
+},
+    "memberUid has been exported",
+);
+
+like (
+    $group->entry->ldif,
+    qr{description: this is a nobody group},
+    "description has been exported",
+);
+
 use IO::String;
 
 my $ldif_string = IO::String->new(q{

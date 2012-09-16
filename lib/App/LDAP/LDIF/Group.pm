@@ -52,10 +52,13 @@ sub entry {
     my $entry = Net::LDAP::Entry->new( $self->dn );
 
     $entry->add($_ => $self->$_)
-      for qw( objectClass
-              cn
-              userPassword
-              gidNumber );
+      for grep {
+          $self->$_
+      } grep {
+          !/dn/
+      } map {
+          $_->name
+      } $self->meta->get_all_attributes;
 
     $entry;
 }
