@@ -32,21 +32,21 @@ is_deeply (
 );
 
 my $host = App::LDAP::LDIF::Host->new(
-    base => "ou=Hosts,dc=example,dc=com",
-    name => "perl-taiwan",
-    ip   => "140.112.1.1",
+    base         => "ou=Hosts,dc=example,dc=com",
+    cn           => ["perl-taiwan", "perl.tw"],
+    ipHostNumber => "140.112.1.1",
 );
 
 is (
     $host->dn,
     "cn=perl-taiwan,ou=Hosts,dc=example,dc=com",
-    "dn is composed of name and ou",
+    "dn is composed of first cn and ou",
 );
 
 is_deeply (
     $host->cn,
-    ["perl-taiwan"],
-    "cn is name",
+    ["perl-taiwan", "perl.tw"],
+    "cn is correct",
 );
 
 is_deeply (

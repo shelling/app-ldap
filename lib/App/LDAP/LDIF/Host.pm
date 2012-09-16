@@ -16,14 +16,9 @@ with qw (
 sub params_to_args {
     my ($self, %params) = @_;
 
-    my $base = $params{base};
-    my $name = $params{name};
-    my $ip   = $params{ip};
-
     return (
-        dn           => "cn=$name,$base",
-        cn           => [$name],
-        ipHostNumber => $ip,
+        dn => "cn=" . $params{cn}[0] ."," . $params{base},
+        %params,
     );
 }
 
@@ -69,11 +64,15 @@ App::LDAP::LDIF::Host - the representation of hosts in LDAP
 =head1 SYNOPSIS
 
     my $host = App::LDAP::LDIF::Host->new(
-        base => $base,           # the OU (organization unit) which the host belongs to
-        name => $name,           # the host name
-        ip   => $ip,             # the ip of this host
+        base         => $base,               # the OU (organization unit) which the host belongs to
+        cn           => [$name1, $name2],    # the host name
+        ipHostNumber => $ipHostNumber,       # the ip of this host
     );
 
-    my $entry = $host->entry;    # get the host as a instance of Net::Ldap::Entry
+    my $entry = $host->entry;
+    # get the host as a instance of Net::Ldap::Entry
+
+    my $host = App::LDAP::LDIF::Host->new($entry)
+    # new from a Net::LDAP::Entry instance
 
 =cut
