@@ -35,8 +35,8 @@ has base => (
 
 has surname => (
     is            => "rw",
-    isa           => "Str",
-    default       => "NULL",
+    isa           => "ArrayRef[Str]",
+    default       => sub { ["NULL"] },
     documentation => 'the surname. default $username',
 );
 
