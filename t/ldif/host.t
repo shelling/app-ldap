@@ -33,21 +33,6 @@ is (
     "ipHostNumber is ip",
 );
 
-is (
-    $host->entry->ldif,
-<<LDIF
-
-dn: cn=perl-taiwan,ou=Hosts,dc=example,dc=com
-cn: perl-taiwan
-objectClass: top
-objectClass: ipHost
-objectClass: device
-ipHostNumber: 140.112.1.1
-LDIF
-,
-    "$host->entry shows the same order as openldap utils",
-);
-
 use IO::String;
 
 my $ldif_string = IO::String->new(q{
@@ -62,11 +47,5 @@ ipHostNumber: 192.168.1.1
 my $entry = Net::LDAP::LDIF->new($ldif_string, "r", onerror => "die")->read_entry;
 
 my $new_from_entry = App::LDAP::LDIF::Host->new($entry);
-
-is (
-    $new_from_entry->entry->ldif,
-    $entry->ldif,
-    "new from entry is identical to original",
-);
 
 done_testing;
