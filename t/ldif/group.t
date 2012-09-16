@@ -33,21 +33,6 @@ is (
     "userPassword has default value",
 );
 
-is (
-    $group->entry->ldif,
-<<LDIF
-
-dn: cn=nobody,ou=Group,dc=example,dc=com
-objectClass: posixGroup
-objectClass: top
-cn: nobody
-userPassword: {crypt}x
-gidNumber: 1001
-LDIF
-,
-    "$group->entry() provide the same order as openldap utils",
-);
-
 use IO::String;
 
 my $ldif_string = IO::String->new(q{
@@ -62,11 +47,5 @@ gidNumber: 2000
 my $entry = Net::LDAP::LDIF->new($ldif_string, "r", onerror => "die")->read_entry;
 
 my $new_from_entry = App::LDAP::LDIF::Group->new($entry);
-
-is (
-    $new_from_entry->entry->ldif,
-    $entry->ldif,
-    "new from entry is identical to original",
-);
 
 done_testing;
