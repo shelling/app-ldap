@@ -1,7 +1,47 @@
 use Modern::Perl;
 use Test::More;
 
-use App::LDAP::LDIF::OrgUnit;
+BEGIN {
+    use_ok 'App::LDAP::LDIF::OrgUnit';
+}
+
+is_deeply (
+    [sort map {$_->name} App::LDAP::LDIF::OrgUnit->meta->get_all_attributes],
+    [sort qw( dn
+              objectClass
+
+              ou
+              userPassword
+              searchGuide
+              seeAlso
+              businessCategory
+              x121Address
+              registeredAddress
+              destinationIndicator
+              preferredDeliveryMethod
+              telexNumber
+              teletexTerminalIdentifier
+              telephoneNumber
+              internationaliSDNNumber
+              facsimileTelephoneNumber
+              street
+              postOfficeBox
+              postalCode
+              postalAddress
+              physicalDeliveryOfficeName
+              st
+              l
+              description )],
+    "make sure attributes",
+);
+
+is_deeply (
+    [sort map {$_->name} grep {$_->is_required} App::LDAP::LDIF::OrgUnit->meta->get_all_attributes],
+    [sort qw( dn
+              objectClass
+              ou )],
+    "make sure required attributes",
+);
 
 my $ou = App::LDAP::LDIF::OrgUnit->new(
     base => "dc=example,dc=com",
