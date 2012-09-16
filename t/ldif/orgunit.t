@@ -60,6 +60,22 @@ is_deeply (
     "objectClass has default value",
 );
 
+like (
+    $ou->entry->ldif,
+    qr{
+objectClass: organizationalUnit
+},
+    "objectClass has been exported",
+);
+
+like (
+    $ou->entry->ldif,
+    qr{
+ou: People
+},
+    "ou has been exported",
+);
+
 use IO::String;
 
 my $ldif_string = IO::String->new(q{
