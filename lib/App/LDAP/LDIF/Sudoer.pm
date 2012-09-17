@@ -41,19 +41,20 @@ has '+objectClass' => (
 );
 
 has '+sudoUser' => (
+    isa      => "Str",
     required => 1,
 );
 
 has '+sudoHost' => (
-    default => "ALL",
+    default => sub { ["ALL"] },
 );
 
 has '+sudoRunAsUser' => (
-    default => "ALL",
+    default => sub { ["ALL"] },
 );
 
 has '+sudoCommand' => (
-    default => "ALL",
+    default => sub { ["ALL"] },
 );
 
 __PACKAGE__->meta->make_immutable;

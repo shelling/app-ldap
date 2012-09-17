@@ -57,21 +57,21 @@ is (
     "sudoUser is name",
 );
 
-is (
+is_deeply (
     $sudoer->sudoHost,
-    "ALL",
+    ["ALL"],
     "sudoHost has default value ALL",
 );
 
-is (
+is_deeply (
     $sudoer->sudoRunAsUser,
-    "ALL",
+    ["ALL"],
     "sudoRunAsUser has default value ALL",
 );
 
-is (
+is_deeply (
     $sudoer->sudoCommand,
-    "ALL",
+    ["ALL"],
     "sudoCommand has default value ALL",
 );
 

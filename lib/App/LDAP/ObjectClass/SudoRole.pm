@@ -21,7 +21,7 @@ has [qw( sudoUser
          sudoOption
          description )] => (
     is  => "rw",
-    isa => "Str",
+    isa => "ArrayRef[Str]",
 );
 
 __PACKAGE__->meta->make_immutable;
