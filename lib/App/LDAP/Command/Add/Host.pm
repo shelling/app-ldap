@@ -30,9 +30,9 @@ sub run {
     my $ip = prompt('x', 'ip address:', '', '');
 
     my $host = App::LDAP::LDIF::Host->new(
-        base => $self->base // config()->{nss_base_hosts}->[0],
-        name => $hostname,
-        ip   => $ip,
+        base         => $self->base // config()->{nss_base_hosts}->[0],
+        cn           => [$hostname],
+        ipHostNumber => $ip,
     );
 
     $host->save;

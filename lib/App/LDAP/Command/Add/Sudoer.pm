@@ -26,8 +26,8 @@ sub run {
     );
 
     my $sudoer = App::LDAP::LDIF::Sudoer->new(
-        base => $self->base // config()->{sudoers_base}->[0],
-        name => $sudoername,
+        base     => $self->base // config()->{sudoers_base}->[0],
+        sudoUser => $sudoername,
     );
 
     $sudoer->save;

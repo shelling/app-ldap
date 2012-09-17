@@ -27,7 +27,7 @@ sub run {
 
     my $ou = App::LDAP::LDIF::OrgUnit->new(
         base => $self->base // config()->{base},
-        name => $ouname,
+        ou   => $ouname,
     );
 
     $ou->save;
