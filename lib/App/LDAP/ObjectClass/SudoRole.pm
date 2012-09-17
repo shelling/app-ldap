@@ -48,4 +48,16 @@ App::LDAP::ObjectClass::SudoRole - schema of sudoRole
               sudoRunAsUser $ sudoRunAsGroup $ sudoOption $ description )
     )
 
+=head1 NOTES
+
+This definition is coming with sudo 1.7.0.
+
+A sudoRole must contain at least one sudoUser, sudoHost and sudoCommand. Even the schema shows these three MAY be
+attributes of a sudoRole.
+
+As of 1.7.0, sudoRunAs is deprecated. The attribute sudoRunAsUser is the replacement.
+
+As of 1.7.5, three more attributes sudoNotBefore, sudoNotAfter and sudoOrder are defined. These three attributes would
+be supported when 1.7.5 is widely used.
+
 =cut
