@@ -29,14 +29,14 @@ is_deeply (
 );
 
 my $sudoer = App::LDAP::LDIF::Sudoer->new(
-    base => "ou=Sudoer,dc=example,dc=com",
-    name => "first",
+    base     => "ou=Sudoer,dc=example,dc=com",
+    sudoUser => "first",
 );
 
 is (
     $sudoer->dn,
     "cn=first,ou=Sudoer,dc=example,dc=com",
-    "dn is composed of name and ou",
+    "dn is composed of sudoUser and ou",
 );
 
 is_deeply (
@@ -48,13 +48,13 @@ is_deeply (
 is_deeply (
     $sudoer->cn,
     ["first"],
-    "cn is name",
+    "default cn is sudoUser",
 );
 
 is (
     $sudoer->sudoUser,
     "first",
-    "sudoUser is name",
+    "sudoUser is correct",
 );
 
 is_deeply (

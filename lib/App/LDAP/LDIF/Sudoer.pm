@@ -15,12 +15,9 @@ with qw(
 sub params_to_args {
     my ($self, %params) = @_;
 
-    my $base = $params{base};
-    my $name = $params{name};
-
     return (
-        dn       => "cn=$name,$base",
-        sudoUser => $name,
+        dn => "cn=" . $params{sudoUser} . "," . $params{base},
+        %params,
     );
 }
 
@@ -77,8 +74,8 @@ App::LDAP::LDIF::Sudoer - the representation of sudoers in LDAP
 =head1 SYNOPSIS
 
     my $sudoer = App::LDAP::LDIF::Sudoer->new(
-        base => "ou=Sudoer,dc=example,dc=com",
-        name => "administrator",
+        base     => "ou=Sudoer,dc=example,dc=com",
+        sudoUser => "administrator",
     );
 
     my $entry = $sudoer->entry;
