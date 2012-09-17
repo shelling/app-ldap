@@ -12,13 +12,8 @@ has cn => (
     required => 1,
 );
 
-has sudoUser => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
-has [qw( sudoHost
+has [qw( sudoUser
+         sudoHost
          sudoCommand
          sudoRunAs
          sudoRunAsUser
