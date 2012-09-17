@@ -1,7 +1,32 @@
 use Modern::Perl;
 use Test::More;
 
-use App::LDAP::LDIF::Sudoer;
+BEGIN {
+    use_ok 'App::LDAP::LDIF::Sudoer';
+}
+
+is_deeply (
+    [sort map {$_->name} App::LDAP::LDIF::Sudoer->meta->get_all_attributes],
+    [sort qw( dn
+              objectClass
+
+              cn
+              sudoUser
+              sudoHost
+              sudoCommand
+              sudoRunAs
+              sudoRunAsUser
+              sudoRunAsGroup
+              sudoOption
+              description )],
+    "make sure attributes",
+);
+
+is_deeply (
+    [sort map {$_->name} grep {$_->is_required} App::LDAP::LDIF::Sudoer->meta->get_all_attributes],
+    [sort qw(dn objectClass cn sudoUser)],
+    "make sure required attributes",
+);
 
 my $sudoer = App::LDAP::LDIF::Sudoer->new(
     base => "ou=Sudoer,dc=example,dc=com",
@@ -20,9 +45,9 @@ is_deeply (
     "objectClass has default value",
 );
 
-is (
+is_deeply (
     $sudoer->cn,
-    "first",
+    ["first"],
     "cn is name",
 );
 
@@ -50,21 +75,13 @@ is (
     "sudoCommand has default value ALL",
 );
 
-is (
+like (
     $sudoer->entry->ldif,
-<<LDIF
-
-dn: cn=first,ou=Sudoer,dc=example,dc=com
+    qr{
 objectClass: top
 objectClass: sudoRole
-cn: first
-sudoUser: first
-sudoHost: ALL
-sudoRunAsUser: ALL
-sudoCommand: ALL
-LDIF
-,
-    "can produce correct ldif",
+},
+    "objectClass has been exported",
 );
 
 use IO::String;
@@ -83,11 +100,5 @@ sudoCommand: ALL
 my $entry = Net::LDAP::LDIF->new($ldif_string, "r", onerror => "die")->read_entry;
 
 my $new_from_entry = App::LDAP::LDIF::Sudoer->new($entry);
-
-is (
-    $new_from_entry->entry->ldif,
-    $entry->ldif,
-    "new from entry is identical to original",
-);
 
 done_testing;

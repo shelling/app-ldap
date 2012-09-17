@@ -4,6 +4,10 @@ use Modern::Perl;
 
 use Moose;
 
+extends qw(
+    App::LDAP::ObjectClass::SudoRole
+);
+
 with qw(
     App::LDAP::LDIF
 );
@@ -16,7 +20,7 @@ sub params_to_args {
 
     return (
         dn       => "cn=$name,$base",
-        cn       => $name,
+        cn       => [$name],
         sudoUser => $name,
     );
 }
@@ -27,9 +31,7 @@ has dn => (
     required => 1,
 );
 
-has objectClass => (
-    is      => "rw",
-    isa     => "ArrayRef[Str]",
+has '+objectClass' => (
     default => sub {
         [
             qw( top
@@ -38,50 +40,21 @@ has objectClass => (
     },
 );
 
-has cn => (
-    is       => "rw",
-    isa      => "Str",
+has '+sudoUser' => (
     required => 1,
 );
 
-has sudoUser => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
-has sudoHost => (
-    is      => "rw",
-    isa     => "Str",
+has '+sudoHost' => (
     default => "ALL",
 );
 
-has sudoRunAsUser => (
-    is      => "rw",
-    isa     => "Str",
+has '+sudoRunAsUser' => (
     default => "ALL",
 );
 
-has sudoCommand => (
-    is      => "rw",
-    isa     => "Str",
+has '+sudoCommand' => (
     default => "ALL",
 );
-
-sub entry {
-    my ($self) = shift;
-    my $entry = Net::LDAP::Entry->new( $self->dn );
-
-    $entry->add($_ => $self->$_)
-      for qw( objectClass
-              cn
-              sudoUser
-              sudoHost
-              sudoRunAsUser
-              sudoCommand );
-
-    $entry;
-}
 
 __PACKAGE__->meta->make_immutable;
 no Moose;
