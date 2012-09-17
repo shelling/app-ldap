@@ -20,7 +20,6 @@ sub params_to_args {
 
     return (
         dn       => "cn=$name,$base",
-        cn       => [$name],
         sudoUser => $name,
     );
 }
@@ -37,6 +36,13 @@ has '+objectClass' => (
             qw( top
                 sudoRole )
         ]
+    },
+);
+
+has '+cn' => (
+    lazy    => 1,
+    default => sub {
+        [shift->sudoUser]
     },
 );
 
