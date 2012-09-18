@@ -1,7 +1,9 @@
 use Modern::Perl;
 use Test::More;
 
-use App::LDAP::LDIF::Host;
+BEGIN {
+    use_ok 'App::LDAP::LDIF::Host';
+}
 
 is_deeply (
     [sort map {$_->name} App::LDAP::LDIF::Host->meta->get_all_attributes],

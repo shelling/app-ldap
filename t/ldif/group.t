@@ -1,7 +1,9 @@
 use Modern::Perl;
 use Test::More;
 
-use App::LDAP::LDIF::Group;
+BEGIN {
+    use_ok 'App::LDAP::LDIF::Group';
+}
 
 my $group = App::LDAP::LDIF::Group->new(
     base        => "ou=Group,dc=example,dc=com",

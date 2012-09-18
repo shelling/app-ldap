@@ -1,7 +1,9 @@
 use Modern::Perl;
 use Test::More;
 
-use App::LDAP::LDIF::User;
+BEGIN {
+    use_ok 'App::LDAP::LDIF::User';
+}
 
 my $user = App::LDAP::LDIF::User->new(
     base         => "ou=People,dc=example,dc=com",
