@@ -11,3 +11,6 @@ MANIFEST.bak
 *.sw[po]
 App-LDAP-*.tar.gz
 MYMETA.*
+*.bak
+*.pl
+*.ldif
