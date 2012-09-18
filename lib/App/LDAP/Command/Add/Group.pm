@@ -35,7 +35,7 @@ sub run {
 
     my $group = App::LDAP::LDIF::Group->new(
         base      => $self->base // config()->{nss_base_group}->[0],
-        cn        => $groupname,
+        cn        => [$groupname],
         gidNumber => $gid->get_value("gidNumber"),
     );
 

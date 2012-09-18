@@ -55,7 +55,7 @@ App::LDAP::LDIF::Group - the representation of groups in LDAP
 
     my $group = App::LDAP::LDIF::Group->new(
         base      => $base,            # The OU (organization unit) which the group belongs to
-        cn        => $name,            # the group name
+        cn        => [$name],          # the group name
         gidNumber => $id,              # the gid of the group
     );
     # these three attributes are required
