@@ -20,12 +20,6 @@ around BUILDARGS => sub {
 
 # posixAccount and shadowAccount
 
-has dn => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
 has '+cn' => (
     lazy    => 1,
     default => sub {

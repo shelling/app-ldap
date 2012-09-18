@@ -16,12 +16,6 @@ around BUILDARGS => sub {
     $self->$orig(@_);
 };
 
-has dn => (
-    is       => "rw",
-    isa      => "Str",
-    required => 1,
-);
-
 has '+objectClass' => (
     default => sub {
         [

@@ -11,6 +11,12 @@ with qw(
     App::LDAP::Role::FromEntry
 );
 
+has dn => (
+    is       => "rw",
+    isa      => "Str",
+    required => 1,
+);
+
 sub create {
 
 }
