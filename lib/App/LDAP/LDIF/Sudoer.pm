@@ -43,15 +43,7 @@ has '+sudoUser' => (
     required => 1,
 );
 
-has '+sudoHost' => (
-    default => sub { ["ALL"] },
-);
-
-has '+sudoRunAsUser' => (
-    default => sub { ["ALL"] },
-);
-
-has '+sudoCommand' => (
+has ['+sudoHost', '+sudoRunAsUser', '+sudoCommand'] => (
     default => sub { ["ALL"] },
 );
 
