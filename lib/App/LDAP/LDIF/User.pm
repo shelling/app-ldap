@@ -8,9 +8,6 @@ extends qw(
     App::LDAP::ObjectClass::PosixAccount
     App::LDAP::ObjectClass::ShadowAccount
     App::LDAP::ObjectClass::InetOrgPerson
-);
-
-with qw(
     App::LDAP::LDIF
 );
 

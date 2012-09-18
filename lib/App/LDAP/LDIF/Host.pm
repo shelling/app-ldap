@@ -7,9 +7,6 @@ use Moose;
 extends qw(
     App::LDAP::ObjectClass::IpHost
     App::LDAP::ObjectClass::Device
-);
-
-with qw (
     App::LDAP::LDIF
 );
 

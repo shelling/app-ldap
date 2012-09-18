@@ -4,7 +4,7 @@ use Modern::Perl;
 
 use Net::LDAP::Entry;
 
-use Moose::Role;
+use Moose;
 
 with qw(
     App::LDAP::Role
@@ -64,6 +64,9 @@ sub entry {
 
     $entry;
 }
+
+__PACKAGE__->meta->make_immutable;
+no Moose;
 
 1;
 

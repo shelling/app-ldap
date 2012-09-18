@@ -6,9 +6,6 @@ use Moose;
 
 extends qw(
     App::LDAP::ObjectClass::OrganizationalUnit
-);
-
-with qw(
     App::LDAP::LDIF
 );
 

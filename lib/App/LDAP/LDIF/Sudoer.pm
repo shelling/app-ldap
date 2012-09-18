@@ -6,9 +6,6 @@ use Moose;
 
 extends qw(
     App::LDAP::ObjectClass::SudoRole
-);
-
-with qw(
     App::LDAP::LDIF
 );
 

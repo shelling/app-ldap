@@ -6,9 +6,6 @@ use Moose;
 
 extends qw(
     App::LDAP::ObjectClass::PosixGroup
-);
-
-with qw(
     App::LDAP::LDIF
 );
 
