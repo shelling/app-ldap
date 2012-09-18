@@ -6,6 +6,13 @@ use Moose::Role;
 
 with qw( App::LDAP::Role );
 
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $self = shift;
+    @_ = $self->entry_to_args(@_) if ref($_[0]) eq 'Net::LDAP::Entry';
+    $self->$orig(@_);
+};
+
 sub entry_to_args {
     my ($self, $entry) = @_;
 

@@ -11,17 +11,6 @@ with qw(
     App::LDAP::Role::FromEntry
 );
 
-around BUILDARGS => sub {
-    my $orig = shift;
-    my $self = shift;
-
-    if (ref($_[0]) eq 'Net::LDAP::Entry') {
-        $self->$orig( $self->entry_to_args(@_) );
-    } else {
-        $self->$orig(@_);
-    }
-};
-
 sub create {
 
 }
