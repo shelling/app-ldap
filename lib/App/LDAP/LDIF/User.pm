@@ -14,14 +14,12 @@ with qw(
     App::LDAP::LDIF
 );
 
-sub params_to_args {
-    my ($self, %params) = @_;
-
-    return (
-        dn => "uid=".$params{uid}.",".$params{base},
-        %params,
-    );
-}
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $self = shift;
+    push @_, (dn => "uid=".{@_}->{uid}.",".{@_}->{base}) if grep /^base$/, @_;
+    $self->$orig(@_);
+};
 
 # posixAccount and shadowAccount
 

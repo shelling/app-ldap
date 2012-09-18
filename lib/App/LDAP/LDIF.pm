@@ -18,7 +18,7 @@ around BUILDARGS => sub {
     if (ref($_[0]) eq 'Net::LDAP::Entry') {
         $self->$orig( $self->entry_to_args(@_) );
     } else {
-        $self->$orig( $self->params_to_args(@_) );
+        $self->$orig(@_);
     }
 };
 

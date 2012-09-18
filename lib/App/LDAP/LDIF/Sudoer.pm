@@ -12,14 +12,12 @@ with qw(
     App::LDAP::LDIF
 );
 
-sub params_to_args {
-    my ($self, %params) = @_;
-
-    return (
-        dn => "cn=" . $params{sudoUser} . "," . $params{base},
-        %params,
-    );
-}
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $self = shift;
+    push @_, ( dn => "cn=" . {@_}->{sudoUser} . "," . {@_}->{base} ) if grep /^base$/, @_;
+    $self->$orig(@_);
+};
 
 has dn => (
     is       => "rw",
