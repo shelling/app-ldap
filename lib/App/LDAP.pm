@@ -16,22 +16,18 @@ sub run {
 
   App::LDAP::Config->read;
 
-  $self->handshake;
+  App::LDAP::Connection->new(
+      config()->{uri},
+      port       => config()->{port},
+      version    => config()->{ldap_version},
+      onerror    => 'die',
+  );
 
   App::LDAP::Command
       ->dispatch(@ARGV)
       ->new_with_options
       ->prepare()
       ->run();
-}
-
-sub handshake {
-    App::LDAP::Connection->new(
-        config()->{uri},
-        port       => config()->{port},
-        version    => config()->{ldap_version},
-        onerror    => 'die',
-    );
 }
 
 __PACKAGE__->meta->make_immutable;
