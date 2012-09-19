@@ -21,6 +21,7 @@ requires       'Crypt::Password'     => '0.28';
 requires       'Namespace::Dispatch' => '0.04';
 requires       'Sub::Delete';
 requires       'IO::String';
+requires       'Date::Calc';
 
 test_requires  'Test::More';
 
