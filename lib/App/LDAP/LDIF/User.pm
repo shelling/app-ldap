@@ -55,7 +55,11 @@ has '+homeDirectory' => (
 
 has '+shadowLastChange' => (
     default => sub {
-        11111
+        use Date::Calc qw(Today Delta_Days);
+        Delta_Days(
+            1970, 1, 1,
+            Today()
+        );
     },
 );
 
@@ -151,6 +155,12 @@ inetOrgPerson is applied, mail is a necessary attribute. Since, App::LDAP define
 =head2 loginShell
 
 default /bin/bash
+
+=head2 shadowLastChange
+
+the days from Unix Epoch that last time you changed password.
+
+default value is calculated via Date::Calc::Delta_Days().
 
 =head2 shadowMin
 

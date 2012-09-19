@@ -134,9 +134,8 @@ is (
     "password should be assigned",
 );
 
-is (
+ok (
     $user->shadowLastChange,
-    "11111",
     "shadowLastChange has default",
 );
 
