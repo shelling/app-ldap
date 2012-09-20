@@ -15,6 +15,7 @@ sub run {
   my ($self,) = @_;
 
   App::LDAP::Config->read;
+  App::LDAP::Secret->read;
 
   App::LDAP::Connection->new(
       config()->{uri},

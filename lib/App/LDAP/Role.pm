@@ -9,6 +9,11 @@ sub config {
     App::LDAP::Config->instance;
 }
 
+use App::LDAP::Secret;
+sub secret {
+    App::LDAP::Secret->instance->secret;
+}
+
 use App::LDAP::Connection;
 sub ldap {
     App::LDAP::Connection->instance;

@@ -1,5 +1,7 @@
 package App::LDAP::Role::Bindable;
 
+use Modern::Perl;
+
 use Moose::Role;
 
 use Term::ReadPassword;
@@ -18,14 +20,14 @@ around prepare => sub {
 sub bindroot {
     ldap()->bind(
         config()->{rootbinddn},
-        password => read_password("ldap admin password: "),
+        password => secret() // read_password("ldap admin password: "),
     );
 }
 
 sub binduser {
     ldap()->bind(
         find_user("uidNumber", $<)->dn,
-        password => read_password("your password: "),
+        password => secret() // read_password("your password: "),
     );
 }
 
