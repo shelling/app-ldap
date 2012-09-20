@@ -56,8 +56,10 @@ sub distinguish {
 
 sub change_password {
     my $user = shift;
+    use Date::Calc qw(Today Delta_Days);
     $user->replace(
-        userPassword => encrypt(new_password())
+        userPassword     => encrypt(new_password()),
+        shadowLastChange => Delta_Days(1970, 1, 1, Today()),
     )->update(ldap());
 }
 
