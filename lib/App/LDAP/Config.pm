@@ -20,26 +20,30 @@ our @has_scope = qw(
 );
 
 sub read {
-  my ($class, ) = @_;
-  my $self = $class->new;
-  for (@locations) {
-    if (-f $_) {
-      open my $config, "<", $_;
-      while (<$config>) {
-        unless ($_ =~ /(^#|^\n)/) {
-          my ($key, $value) = split /\s+/, $_;
-          my @value = split /\?/, $value;
-          if ($key ~~ @has_scope) {
-              $self->{$key} = [@value];
-          } else {
-              $self->{$key} = $value;
-          }
-        }
-      }
-      last;
-    }
-  }
-  $self;
+    my ($class, ) = @_;
+    my $self = $class->new;
+    my @locations = grep { -f $_ } @locations;
+    die "no config file found" unless scalar @locations;
+    $self->read_config_file(@locations);
+    $self;
+}
+
+sub read_config_file {
+    my ($self, $file) = @_;
+    open my $config, "<", $file;
+    $self->config_from_line($_) while <$config>;
+}
+
+sub config_from_line {
+    my ($self, $line) = @_;
+    return if $line =~ /(^#|^\n)/;
+
+    my ($key, $value) = split /\s+/, $line;
+    $self->{$key} = ( 
+        $key ~~ @has_scope ? 
+        [split /\?/, $value] :
+        $value
+    );
 }
 
 1;
