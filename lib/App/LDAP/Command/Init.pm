@@ -4,7 +4,8 @@ use Modern::Perl;
 
 use Moose;
 
-with qw( App::LDAP::Role::Command );
+with qw( App::LDAP::Role::Command
+         App::LDAP::Role::Bindable );
 
 use Authen::SASL;
 use IO::String;
@@ -27,6 +28,10 @@ sub run {
         my $msg = $ldap->add($entry);
         die $msg->error if $msg->code;
     }
+
+    ldap()->add($self->create_gidnext);
+    ldap()->add($self->create_uidnext);
+
 }
 
 $schemas->{idnext} = <<'IDNEXT';
@@ -73,6 +78,30 @@ olcObjectClasses: {0}( 1.3.6.1.4.1.15953.9.2.1 NAME 'sudoRole' DESC 'Sudoer En
  udoRunAs $ sudoRunAsUser $ sudoRunAsGroup $ sudoOption $ description ) )
 SUDO
 
+sub create_uidnext {
+    my ($self, ) = @_;
+    my $base = config()->{base};
+    my $uidnext = Net::LDAP::Entry->new("cn=uidnext,$base");
+    $uidnext->add(
+        cn          => "uidnext",
+        objectClass => "uidNext",
+        uidNumber   => 1001,
+    );
+    return $uidnext;
+}
+
+sub create_gidnext {
+    my ($self, ) = @_;
+    my $base = config()->{base};
+    my $gidnext = Net::LDAP::Entry->new("cn=gidnext,$base");
+    $gidnext->add(
+        cn          => "gidnext",
+        objectClass => "gidNext",
+        gidNumber   => 1001,
+    );
+    return $gidnext;
+}
+
 __PACKAGE__->meta->make_immutable;
 no Moose;
 
@@ -87,6 +116,18 @@ App::LDAP::Command::Init - setup the prerequisites needed by App::LDAP
 =head1 SYNOPSIS
 
     $ sudo ldap init
+
+=head1 DESCRIPTION
+
+This command initailizes the environment of LDAP server for App::LDAP to function.
+
+1. import the schema of idnext
+
+2. import the schema of sudo
+
+3. add a entry of uidnext, uidNumber 1001
+
+4. add a entry of gidnext, gidNumber 1001
 
 =cut
 
