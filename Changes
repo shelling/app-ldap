@@ -1,5 +1,21 @@
 Revision history for Perl extension App::LDAP
 
+0.1.0   Fri Sep 21 18:00:48 2012
+        - App::LDAP::Role as the base of Roles
+        - refactor functions every commands used into App::LDAP::Role::Command
+        - separate App::LDAP::Utils into different Roles
+        - Role::Bindable for the command need to bind itself
+        - Role::Stem for the command has subcommands
+        - Role::FromEntry to make LDIF::* can new from a Net::LDAP::Entry
+        - tranlate schemas into ObjectClass::*
+        - reform LDIF::* via extending them from ObjectClass::*
+        - make sure LDIF::* satisfy the schema in tests
+        - change constructors of LDIF::* not to transform args in BUILDARG() except dn
+        - fix shadowLastChange to get correct day
+        - App::LDAP::Secret to load the secret file automatically
+        - LDIF#search for LDIF::*
+        - Command::Del::* use LDIF#search
+
 0.07    Sat Jul 14 18:32:12 2012
         - reorganize tests suit
         - reimplement existed command modules 

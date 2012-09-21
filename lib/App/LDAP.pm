@@ -1,6 +1,6 @@
 package App::LDAP;
 
-our $VERSION = '0.07';
+our $VERSION = '0.1.0';
 
 use Modern::Perl;
 
