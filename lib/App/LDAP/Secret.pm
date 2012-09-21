@@ -3,7 +3,6 @@ package App::LDAP::Secret;
 use Modern::Perl;
 use Moose;
 use MooseX::Singleton;
-use File::Slurp;
 
 our @locations = qw(
     /etc/ldap.secret
@@ -37,7 +36,8 @@ sub read_secret {
     my $file = shift;
     return undef unless $file;
 
-    my $secret = read_file($file);
+    open FILE, " < $file";
+    my $secret = <FILE>;
     chomp $secret;
     return $secret;
 }
