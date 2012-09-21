@@ -20,7 +20,25 @@ sub run {
         filter => "uid=$username",
     );
 
+    $self->delete_group_of_user($user);
+
     $user->delete;
+}
+
+sub delete_group_of_user {
+    my ($self, $user) = @_;
+
+    my $cn        = $user->uid;
+    my $gidNumber = $user->gidNumber;
+
+    use App::LDAP::LDIF::Group;
+    my $group = App::LDAP::LDIF::Group->search(
+        base   => config()->{nss_base_group}->[0],
+        scope  => config()->{nss_base_group}->[1],
+        filter => "(& (gidNumber=$gidNumber) (cn=$cn))",
+    );
+
+    $group->delete if $group;
 }
 
 __PACKAGE__->meta->make_immutable;
