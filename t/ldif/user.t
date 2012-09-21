@@ -99,7 +99,6 @@ is_deeply (
               homeDirectory
 
               dn
-              mail
               userPassword )],
     "make sure required attributes",
 );

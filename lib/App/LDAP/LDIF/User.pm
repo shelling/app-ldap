@@ -18,8 +18,6 @@ around BUILDARGS => sub {
     $self->$orig(@_);
 };
 
-# posixAccount and shadowAccount
-
 has '+cn' => (
     lazy    => 1,
     default => sub {
@@ -75,12 +73,6 @@ has '+shadowWarning' => (
     default => 7,
 );
 
-# inetOrgPerson
-
-has '+mail' => (
-    required => 1,
-);
-
 __PACKAGE__->meta->make_immutable;
 no Moose;
 1;
@@ -99,10 +91,9 @@ App::LDAP::LDIF::User - the representation of users in LDAP
         userPassword => $password,   # the password used by the user
         uidNumber    => $uid,        # the uid of the user
         gidNumber    => $gid,        # the gid of the user
-        sn           => [$sn],         # the surname of this user
-        mail         => [$mail],     # mail addresses, obviously
+        sn           => [$sn],       # the surname of this user
     );
-    # these 7 parameters are required
+    # these 6 parameters are required
     # extra parameters of attributes such as title of User can be provided in constructor, too.
 
     $user->loginShell("/bin/zsh")
@@ -146,11 +137,6 @@ MUST be a attribute of a user. Since the inetOrgPerson has sn as a required attr
 =head2 cn
 
 required attributes. default [ $self->uid ]
-
-=head2 mail
-
-the objectClass inetOrgPerson defines mail MAY be an attributes of a user. However, in most situations that
-inetOrgPerson is applied, mail is a necessary attribute. Since, App::LDAP defines mail as an required attribute here.
 
 =head2 loginShell
 
