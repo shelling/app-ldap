@@ -139,6 +139,6 @@ sub new_password {
     }
 }
 
-no Moose;
+no Moose::Role;
 
 1;

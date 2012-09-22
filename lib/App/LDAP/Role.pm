@@ -33,6 +33,6 @@ sub find_user {
     }
 }
 
-no Moose;
+no Moose::Role;
 
 1;

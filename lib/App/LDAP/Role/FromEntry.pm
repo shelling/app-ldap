@@ -24,6 +24,6 @@ sub entry_to_args {
     return (dn => $entry->dn, %attrs);
 }
 
-no Moose;
+no Moose::Role;
 
 1;

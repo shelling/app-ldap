@@ -37,7 +37,7 @@ sub current_handler {
     return $command;
 }
 
-no Moose;
+no Moose::Role;
 
 1;
 

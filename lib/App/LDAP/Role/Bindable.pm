@@ -31,7 +31,7 @@ sub binduser {
     );
 }
 
-no Moose;
+no Moose::Role;
 
 1;
 
