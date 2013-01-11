@@ -18,7 +18,7 @@ requires       'Term::ReadPassword';
 requires       'Term::Prompt';
 requires       'Authen::SASL';
 requires       'Crypt::Password'     => '0.28';
-requires       'Namespace::Dispatch' => '0.04';
+requires       'Namespace::Dispatch' => '0.05';
 requires       'Sub::Delete';
 requires       'IO::String';
 requires       'Date::Calc';

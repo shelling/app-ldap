@@ -63,10 +63,6 @@ sub prepare {
 }
 
 use Namespace::Dispatch;
-use Sub::Delete;
-BEGIN {
-    delete_sub($_) for qw(dispatch leaves has_leaf);
-}
 
 =head2 dispatch()
 
@@ -74,35 +70,17 @@ the wrapper of Namespace::Dispatch::dispatch()
 
     $class->dispatch(@consequences)
 
-=cut
-
-sub dispatch {
-    Namespace::Dispatch::dispatch(@_);
-}
-
 =head2 has_leaf()
 
 the wrapper of Namespace::Dispatch::has_leaf()
 
     $class->has_leaf('name');
 
-=cut
-
-sub has_leaf {
-    Namespace::Dispatch::has_leaf(@_);
-}
-
 =head2 leaves
 
 the wrapper of Namespace::Dispatch::leaves()
 
     $submodules = $class->leaves();
-
-=cut
-
-sub leaves {
-    Namespace::Dispatch::leaves(@_);
-}
 
 =head2 encrypt($plain)
 
