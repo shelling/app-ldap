@@ -1,5 +1,8 @@
 Revision history for Perl extension App::LDAP
 
+0.1.1   Fri Jan 11 15:03:39 CST 2013
+        - use Namespace::Dispatch 0.05
+
 0.1.0   Fri Sep 21 18:00:48 2012
         - App::LDAP::Role as the base of Roles
         - refactor functions every commands used into App::LDAP::Role::Command

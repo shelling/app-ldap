@@ -47,3 +47,15 @@ sub config_from_line {
 }
 
 1;
+
+=pod
+
+=head1 NAME
+
+App::LDAP::Config - loader of config files
+
+=head1 DESCRIPTION
+
+This module would be called automatically in App::LDAP::run() to load the configurations.
+
+=cut

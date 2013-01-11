@@ -43,3 +43,16 @@ sub read_secret {
 }
 
 1;
+
+=pod
+
+=head1 NAME
+
+App::LDAP::Secret - loader of secret file
+
+=head1 DESCRIPTION
+
+this module would be called automatically in App::LDAP::run() to load the password for binding
+
+=cut
+

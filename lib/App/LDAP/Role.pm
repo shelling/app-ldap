@@ -36,3 +36,18 @@ sub find_user {
 no Moose::Role;
 
 1;
+
+=pod
+
+=head1 NAME
+
+App::LDAP::Role - base of all roles in App::LDAP
+
+=head1 DESCRIPTION
+
+This role provides common helpers for almost all packages in App::LDAP, including ldap() for getting singleton of
+App::LDAP::Connection, config() for getting singleton of App::LDAP::Config and secret() for getting singleton of
+App::LDAP::Secret.
+
+=cut
+
