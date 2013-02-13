@@ -3,8 +3,9 @@ perl:
   - "5.10"
   - "5.12"
   - "5.14"
+  - "5.16"
 before_install: 
   - "cpanm --notest Module::Install"
   - "cpanm --notest Module::Install::AuthorTests"
 install:
-  - "cpanm --notest --installdeps ."
+  - "cpanm --mirror http://cpan.mirrors.travis-ci.org/ --notest --installdeps ."
