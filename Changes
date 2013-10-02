@@ -1,5 +1,8 @@
 Revision history for Perl extension App::LDAP
 
+0.1.2   Wed Oct  2 15:13:46 CST 2013
+        - correct behavior of Command::Help
+
 0.1.1   Fri Jan 11 15:03:39 CST 2013
         - use Namespace::Dispatch 0.05
 
